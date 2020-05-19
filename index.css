@@ -28,12 +28,6 @@ span {
     align-items: center;
 }
 
-.home {
-    display: block;
-    justify-content: end;
-    align-items: baseline;
-}
-
 .container {
     height: auto;
     width: 50px;
