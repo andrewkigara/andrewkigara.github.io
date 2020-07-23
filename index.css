@@ -2,7 +2,7 @@ body, head {
 	margin: 0;
 	padding: 0;
 	height: 500px;
-	background-image: url(programmer.jpg);
+	background-image: url("programmer.jpg");
 	background-position: auto;
 	background-size: 100%;
 	background-repeat: no-repeat;
