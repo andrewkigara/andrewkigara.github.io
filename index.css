@@ -2,10 +2,12 @@ body, head {
 	margin: 0;
 	padding: 0;
 	height: 500px;
-	background-image: url("programmer.jpg");
-	background-position: auto;
-	background-size: 100%;
-	background-repeat: no-repeat;
+	background: url("programmer.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	/* background-repeat: no-repeat; */
 	animation: 10000ms ease-in-out infinite color-change;
 }
 
