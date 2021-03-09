@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,YACE,sBAAuB,CACvB,WAAY,CACZ,UACF","file":"main.63c0f23f.chunk.css","sourcesContent":[".redditDude {\n  justify-content: center;\n  height: 30vh;\n  width: auto;\n}\n"]}

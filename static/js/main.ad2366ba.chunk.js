@@ -1,0 +1,2 @@
+(this["webpackJsonpnew-website"]=this["webpackJsonpnew-website"]||[]).push([[0],{10:function(e,t,n){"use strict";n.r(t);n(1);var c=n(3),s=n.n(c),i=(n(8),n.p+"static/media/redditDude.4569bfef.png"),r=n(0);var d=function(){return Object(r.jsx)("div",{className:"container text-center justify-content-center",children:Object(r.jsx)("img",{className:"redditDude mt-3",src:i,alt:"reddit dude"})})};s.a.render(Object(r.jsx)(d,{}),document.getElementById("root"))},8:function(e,t,n){}},[[10,1,2]]]);
+//# sourceMappingURL=main.ad2366ba.chunk.js.map
