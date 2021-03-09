@@ -1,3 +1,8 @@
+body {
+    background-image: url("./assets/wavy.jpg");
+}
+
+
 .redditDude {
   justify-content: center;
   height: 30vh;
