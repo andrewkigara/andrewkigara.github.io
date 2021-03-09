@@ -1,5 +1,7 @@
 body {
     background-image: url("./assets/wavy.jpg");
+    background-size: auto;
+    background-repeat: no-repeat;
 }
 
 
