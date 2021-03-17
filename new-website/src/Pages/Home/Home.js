@@ -27,8 +27,6 @@ export const Home = () => {
                                 1000,
                                 'a graphic designer',
                                 1000,
-                                'an amazing Twin according to my Twin ',
-                                1000,
                             ]}
                         />
                     </p>
