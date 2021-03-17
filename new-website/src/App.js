@@ -7,8 +7,8 @@ import './App.css';
 // import { AutoType } from './Components/AutoType';
 
 // ----- Pages ----//
-import { Home } from './Pages/Home';
-// import { About } from './Pages/About';
+import { Home } from './Pages/Home/Home';
+// import { About } from './Pages/About/About';
 
 
 class App extends Component {
