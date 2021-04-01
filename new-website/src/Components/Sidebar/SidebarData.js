@@ -18,19 +18,19 @@ export const SidebarData = [
     },
     {
         title: 'Recommendations',
-        path: '/',
+        path: '/recommendations',
         icon: <IoIcons.IoMdPeople />,
         cName: 'nav-text'
     },
     {
         title: 'Gallery',
-        path: '/',
+        path: '/gallery',
         icon: <IoIcons.IoMdPeople />,
         cName: 'nav-text'
     },
     {
         title: 'Contact me',
-        path: '/',
+        path: '/contact',
         icon: <FaIcons.FaEnvelopeOpenText />,
         cName: 'nav-text'
     },

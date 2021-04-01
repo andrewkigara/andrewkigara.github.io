@@ -10,6 +10,9 @@ import { Sidebar } from './Components/Sidebar/Sidebar';
 // ----- Pages ----//
 import { Home } from './Pages/Home/Home';
 import { About } from './Pages/About/About';
+import { Gallery } from './Pages/Gallery/Gallery';
+import { Contact } from './Pages/Contact/Contact';
+import { Recommendations } from './Pages/Recommendations/Recommendations';
 
 
 class App extends Component {
@@ -25,9 +28,13 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/about" component={About}/>
+            <Route path="/gallery" component={Gallery}/>
+            <Route path='/recommendations' component={Recommendations} />
+            <Route path="/contact" component={Contact}/>
           </Switch>
 
           {/* Footer */}
+          
         </Router>
       </React.Fragment>
     )
