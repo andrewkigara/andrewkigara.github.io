@@ -7,15 +7,17 @@ export const Home = () => {
         <div className="container">
             <div className="row">
                 {/* Reddit dude */}
-                <div className="col-4 align-self-start">
+                {/* <div className="col-4 align-self-start">
                     <img src={redditDude} alt="reddit man" height="auto" width="60%"/>
-                </div>
+                </div> */}
+
+
                 {/* Auto-type */}
-                <div className="col-4 align-self-center">
+                {/* <div className="col-4 align-self-center">
                     <h1>Hello :)</h1>
                     <h3>My name is André</h3>
                     <p>I am {' '}
-                        {/* <Typical
+                        <Typical
                             loop={Infinity}
                             wrapper="b"
                             steps={[
@@ -28,9 +30,13 @@ export const Home = () => {
                                 'a graphic designer',
                                 1000,
                             ]}
-                        /> */}
+                        />
                     </p>
-                </div>
+                </div> */}
+
+
+
+                
                 {/* Buttons */}
 
             </div>

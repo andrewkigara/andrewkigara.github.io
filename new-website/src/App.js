@@ -9,7 +9,7 @@ import { Sidebar } from './Components/Sidebar/Sidebar';
 
 // ----- Pages ----//
 import { Home } from './Pages/Home/Home';
-// import { About } from './Pages/About/About';
+import { About } from './Pages/About/About';
 
 
 class App extends Component {
@@ -24,6 +24,7 @@ class App extends Component {
           {/* Pages */}
           <Switch>
             <Route exact path="/" component={Home}/>
+            <Route path="/about" component={About}/>
           </Switch>
 
           {/* Footer */}
