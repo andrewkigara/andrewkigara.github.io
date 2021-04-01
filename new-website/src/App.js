@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
+import { Sidebar } from './Components/Sidebar/Sidebar';
 
 // ----- Components ----//
 // import { AutoType } from './Components/AutoType';
@@ -15,18 +16,18 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* Nav */}
-
-
-        {/* Pages */}
         <Router>
+          {/* Nav */}
+          <Sidebar/>
+
+
+          {/* Pages */}
           <Switch>
             <Route exact path="/" component={Home}/>
           </Switch>
+
+          {/* Footer */}
         </Router>
-
-
-        {/* Footer */}
       </React.Fragment>
     )
   }
