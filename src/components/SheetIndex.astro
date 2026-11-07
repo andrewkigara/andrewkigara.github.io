@@ -1,0 +1,364 @@
+---
+/**
+ * The phone sheet index. Rendered as the /sheets page (the no-JS menu) and,
+ * on every sheet, inside a full-screen <dialog> that the SHEETS button opens.
+ */
+import { getEntry } from 'astro:content';
+import { SHEETS, buildDate, pad2 } from '../lib/sheets';
+import Mark from './Mark.astro';
+import ModeToggle from './ModeToggle.astro';
+import WrightBand from './WrightBand.astro';
+
+interface Props {
+  current?: string;
+  variant: 'page' | 'dialog';
+}
+const { current, variant } = Astro.props;
+const site = (await getEntry('site', 'site'))!.data;
+const { github, linkedin, email } = site.links;
+const contacts = [
+  { label: 'GITHUB ↗', link: github, external: true },
+  { label: 'LINKEDIN ↗', link: linkedin, external: true },
+  {
+    label: 'EMAIL',
+    link: { ...email, href: email.href ? `mailto:${email.href.replace(/^mailto:/, '')}` : null },
+    external: false,
+  },
+];
+const Heading = variant === 'page' ? 'h1' : 'h2';
+const headingId = `si-title-${variant}`;
+---
+<div class="si">
+  <div class="si-grid" aria-hidden="true"><div></div><div></div><div></div></div>
+  <div class="si-bubbles" aria-hidden="true">
+    <div><span class="bub bub--a">A</span></div>
+    <div><span class="bub">B</span></div>
+    <div><span class="bub">C</span></div>
+  </div>
+
+  <header class="si-head">
+    <a class="brand" href="/">
+      <Mark size={26} />
+      <span class="brand-text">
+        <span class="brand-name">A. KIGARA</span>
+        <span class="brand-sub">REV {site.rev}</span>
+      </span>
+    </a>
+    {
+      variant === 'dialog' ? (
+        <form method="dialog">
+          <button class="si-close" type="submit">
+            CLOSE <span aria-hidden="true">✕</span>
+          </button>
+        </form>
+      ) : (
+        <a class="si-close" href="/" data-close-back>
+          CLOSE <span aria-hidden="true">✕</span>
+        </a>
+      )
+    }
+  </header>
+
+  <div class="si-title">
+    <Heading id={headingId} class="si-h">INDEX OF SHEETS</Heading>
+    <span class="si-count">{pad2(SHEETS.length)} SHEETS</span>
+  </div>
+
+  <nav class="si-nav" aria-label="Sheet index">
+    {
+      SHEETS.map((s) => (
+        <a class="si-row" href={s.href} aria-current={s.no === current ? 'page' : undefined}>
+          <span class="si-col">
+            <span class="si-top">
+              <span class="si-no">{s.no}</span>
+              {s.no === current && (
+                <span class="si-here">
+                  <span class="si-dot" aria-hidden="true" />
+                  YOU ARE HERE
+                </span>
+              )}
+            </span>
+            <span class="si-name">{s.name}</span>
+            <span class="si-desc">{s.menu}</span>
+          </span>
+          <span class="si-arrow" aria-hidden="true">→</span>
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="si-foot">
+    <ModeToggle variant="full" class="si-mode" />
+    <ul class="si-links" aria-label="Contact">
+      {
+        contacts.map(({ label, link, external }) => (
+          <li>
+            {link.href ? (
+              <a href={link.href} rel={external ? 'me noopener' : undefined}>
+                {label}
+              </a>
+            ) : (
+              <span>{label}</span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <span class="si-rev">DRAWING SET · REV {site.rev} · {buildDate()}</span>
+  </div>
+
+  <WrightBand sheet="menu" />
+</div>
+
+<script>
+  // On the /sheets page, CLOSE returns to the sheet you came from when possible.
+  document.querySelectorAll<HTMLAnchorElement>('[data-close-back]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      try {
+        if (document.referrer && new URL(document.referrer).origin === location.origin) {
+          e.preventDefault();
+          history.back();
+        }
+      } catch {
+        /* fall through to the link */
+      }
+    });
+  });
+</script>
+
+<style>
+  .si {
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--l35);
+    max-width: var(--sheet-max);
+    margin: 0 auto;
+  }
+  .si-grid,
+  .si-bubbles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .si-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .si-grid > * + * {
+    border-left: 1px dashed var(--l10);
+  }
+  .si-bubbles {
+    position: relative;
+    z-index: 1;
+    height: 34px;
+    border-bottom: 1px solid var(--l18);
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .si-bubbles > div {
+    position: relative;
+  }
+  .bub {
+    position: absolute;
+    left: -11px;
+    top: 6px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--l40);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+  }
+  .bub--a {
+    left: 8px;
+    background: none;
+  }
+  .si-head {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--l18);
+    background: var(--bg);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+  .brand-sub {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .si-head form {
+    margin: 0;
+  }
+  .si-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--l55);
+    background: transparent;
+    color: var(--fg);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+  .si-title {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 24px 16px 12px;
+    border-bottom: 1px solid var(--l35);
+  }
+  .si-h {
+    font-family: var(--font-display);
+    font-size: 15px;
+    letter-spacing: 0.12em;
+  }
+  .si-count {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .si-nav {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+  .si-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 20px;
+    align-items: center;
+    gap: 12px;
+    min-height: 116px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--l18);
+    text-decoration: none;
+  }
+  .si-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .si-top {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .si-no {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: 0.04em;
+  }
+  .si-here {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+  }
+  .si-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .si-name {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .si-desc {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .si-arrow {
+    color: var(--accent);
+  }
+  .si-foot {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 16px 18px;
+    border-top: 1px solid var(--l35);
+    background: var(--bg);
+  }
+  .si-foot :global(.si-mode) {
+    align-self: flex-start;
+  }
+  .si-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--l35);
+  }
+  .si-links li + li {
+    border-left: 1px solid var(--l18);
+  }
+  .si-links a,
+  .si-links span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+  .si-links span {
+    color: var(--muted);
+  }
+  .si-rev {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  /* Sheet numbers are 28px from iPad up (only seen on the /sheets page). */
+  @media (min-width: 640px) {
+    .si-no {
+      font-size: 28px;
+    }
+    .si-desc {
+      font-size: 13px;
+    }
+    .si-name {
+      font-size: 12px;
+    }
+  }
+</style>

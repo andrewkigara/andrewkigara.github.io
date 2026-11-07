@@ -1,0 +1,73 @@
+---
+/**
+ * The signature horizontal: an 8px Cherokee red band that starts at a per-sheet
+ * offset and runs past the sheet's right border to the viewport edge, with a
+ * thin line 10px below that starts further left.
+ */
+interface Props {
+  sheet: 'A-000' | 'A-101' | 'A-201' | 'A-301' | 'A-401' | 'menu';
+}
+const { sheet } = Astro.props;
+---
+<div class="wb" data-sheet={sheet} aria-hidden="true">
+  <div class="wb-band"></div>
+  <div class="wb-line"></div>
+</div>
+
+<style>
+  .wb {
+    position: relative;
+    z-index: 1;
+    padding: 0 0 28px;
+  }
+  .wb-band,
+  .wb-line {
+    margin-right: calc(-1 * var(--to-edge));
+  }
+  .wb-band {
+    height: 6px;
+    background: var(--band);
+  }
+  .wb-line {
+    height: 1px;
+    margin-top: 8px;
+    background: var(--l50);
+  }
+  /* Band start / line start, per sheet */
+  [data-sheet='A-000'] .wb-band, [data-sheet='menu'] .wb-band { margin-left: 34%; }
+  [data-sheet='A-000'] .wb-line, [data-sheet='menu'] .wb-line { margin-left: 18%; }
+  [data-sheet='A-101'] .wb-band { margin-left: 38%; }
+  [data-sheet='A-101'] .wb-line { margin-left: 16%; }
+  [data-sheet='A-201'] .wb-band { margin-left: 46%; }
+  [data-sheet='A-201'] .wb-line { margin-left: 26%; }
+  [data-sheet='A-301'] .wb-band { margin-left: 30%; }
+  [data-sheet='A-301'] .wb-line { margin-left: 12%; }
+  [data-sheet='A-401'] .wb-band { margin-left: 42%; }
+  [data-sheet='A-401'] .wb-line { margin-left: 22%; }
+
+  /* The cover's band sits directly under the hero. */
+  [data-sheet='A-000'] {
+    padding: 20px 0 0;
+  }
+  [data-sheet='menu'] {
+    padding: 0 0 18px;
+  }
+
+  @media (min-width: 640px) {
+    .wb {
+      padding-bottom: 36px;
+    }
+    .wb-band {
+      height: 8px;
+    }
+    .wb-line {
+      margin-top: 10px;
+    }
+    [data-sheet='A-000'] {
+      padding: 22px 0 0;
+    }
+    [data-sheet='A-401'] {
+      padding-bottom: 32px;
+    }
+  }
+</style>

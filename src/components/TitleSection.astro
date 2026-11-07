@@ -1,0 +1,64 @@
+---
+/** Eyebrow, sheet title (h1) and lead, with an optional aside on the right. */
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  class?: string;
+  /** Narrower text column for sheets with an aside (album: 620px). */
+  narrow?: boolean;
+}
+const { eyebrow, title, lead, class: className, narrow = false } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+<section class:list={['ts', { 'ts--aside': hasAside, 'ts--narrow': narrow }, className]}>
+  <div class="ts-main">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 class="sheet-title"><slot name="title">{title}</slot></h1>
+    <p class="lead">{lead}</p>
+  </div>
+  {hasAside && <div class="ts-aside"><slot name="aside" /></div>}
+</section>
+
+<style>
+  .ts {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 32px var(--side) 20px;
+  }
+  .ts-main {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 760px;
+  }
+  @media (min-width: 640px) {
+    .ts {
+      padding: 40px var(--side) 24px;
+    }
+    .ts-main {
+      gap: 14px;
+    }
+    .ts--aside {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px 40px;
+    }
+    .ts--aside .ts-main {
+      max-width: 640px;
+    }
+    .ts--narrow .ts-main {
+      max-width: 620px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .ts {
+      padding: 48px var(--side) 28px;
+    }
+  }
+</style>

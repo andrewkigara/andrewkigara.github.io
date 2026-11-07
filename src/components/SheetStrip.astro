@@ -1,0 +1,55 @@
+---
+/** Phone only: previous / current / next sheet, wrapping at both ends. */
+import { SHEETS, neighbours, pad2 } from '../lib/sheets';
+
+interface Props {
+  current: string;
+}
+const { current } = Astro.props;
+const { index, prev, next } = neighbours(current);
+---
+<nav class="strip phone-only" aria-label="Previous and next sheet">
+  <a class="strip-link" href={prev.href} rel="prev">
+    <span aria-hidden="true">←</span><span class="visually-hidden">Previous sheet:</span> {prev.no}
+  </a>
+  <span class="strip-cur">
+    <span class="visually-hidden">Current sheet:</span>
+    {current}{index >= 0 && ` · ${pad2(index + 1)} / ${pad2(SHEETS.length)}`}
+  </span>
+  <a class="strip-link strip-next" href={next.href} rel="next">
+    <span class="visually-hidden">Next sheet:</span>
+    {next.no} <span aria-hidden="true">→</span>
+  </a>
+</nav>
+
+<style>
+  .strip {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--l18);
+    background: var(--bg);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .strip-link {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+    min-height: 44px;
+    padding: 0 12px;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .strip-link:hover {
+    color: var(--fg);
+  }
+  .strip-next {
+    justify-content: flex-end;
+  }
+  .strip-cur {
+    letter-spacing: 0.14em;
+  }
+</style>

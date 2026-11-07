@@ -1,0 +1,78 @@
+---
+export type Status = 'active' | 'dormant' | 'complete' | 'construction' | 'current' | 'plain';
+interface Props {
+  status: Status;
+  /** Override the label (defaults to the status name). */
+  label?: string;
+  size?: 'sm' | 'md';
+  class?: string;
+}
+const { status, label, size = 'md', class: className } = Astro.props;
+const text =
+  label ??
+  {
+    active: 'ACTIVE',
+    dormant: 'DORMANT',
+    complete: 'COMPLETE',
+    construction: 'UNDER CONSTRUCTION',
+    current: 'CURRENT LEVEL',
+    plain: '',
+  }[status];
+---
+<span class:list={['tag', `tag--${status}`, `tag--${size}`, className]}>
+  {status === 'active' && <span class="dot" aria-hidden="true" />}
+  {status === 'complete' && <span aria-hidden="true">✓ </span>}
+  {text}
+</span>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 3px 8px;
+    border: 1px solid transparent;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+  }
+  .tag--sm {
+    gap: 5px;
+    padding: 2px 6px;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .tag--sm .dot {
+    width: 5px;
+    height: 5px;
+  }
+  .tag--active,
+  .tag--construction {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .tag--dormant {
+    border: 1px dashed var(--m80);
+    color: var(--muted);
+  }
+  .tag--complete {
+    gap: 0;
+    border-color: var(--line);
+    color: var(--line);
+  }
+  .tag--current {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .tag--plain {
+    border-color: var(--l55);
+    color: var(--muted);
+  }
+</style>
