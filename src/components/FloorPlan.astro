@@ -1,0 +1,359 @@
+---
+/**
+ * A-301's floor plan: one room per quest inside a 4px exterior wall.
+ * Rooms are anchor links to their quest logs; with JavaScript they become
+ * toggle buttons (aria-pressed) and the selection lives in the URL hash.
+ * Room placement comes from each quest's `plan` (desktop and phone).
+ */
+import MarkupNote from './MarkupNote.astro';
+import StatusTag from './StatusTag.astro';
+import { roomId, roomSize, roomSizePhone, type Quest } from '../lib/quests';
+
+interface Props {
+  quests: Quest[];
+}
+const { quests } = Astro.props;
+
+// Fixed structure: the entry hall.
+const ENTRY = { desktop: '4 / 4 / 5 / 7', phone: '6 / 1 / 7 / 3' };
+const css = [
+  ...quests.map((q) => `[data-room="${q.room}"]{grid-area:${q.plan.phone}}`),
+  `.plan-entry{grid-area:${ENTRY.phone}}`,
+  '@container plan (min-width: 560px){',
+  ...quests.map((q) => `[data-room="${q.room}"]{grid-area:${q.plan.desktop}}`),
+  `.plan-entry{grid-area:${ENTRY.desktop}}`,
+  '}',
+].join('');
+---
+<style is:inline set:html={css}></style>
+<div class="fp">
+  <div class="fp-head">
+    <h2 class="fp-h">FLOOR PLAN — LEVEL 3</h2>
+    <span class="fp-aside">SCALE: 1 ROOM = 1 OBSESSION</span>
+  </div>
+  <div class="fp-scroll">
+    <div class="plan" role="group" aria-label="Rooms" data-plan>
+      {
+        quests.map((q) => (
+          <a
+            class="room"
+            href={`#${roomId(q)}`}
+            data-room={q.room}
+            data-size={roomSize(q)}
+            data-size-phone={roomSizePhone(q)}
+            aria-controls={roomId(q)}
+          >
+            <span class="rn">{q.room}</span>
+            <span class="rt">{q.name}</span>
+            <StatusTag status={q.status} class="rtag" />
+          </a>
+        ))
+      }
+      <div class="plan-entry">
+        <span class="entry-t">ENTRY</span>
+        <span class="entry-s">ALL QUESTS START HERE</span>
+        <span class="door-gap" aria-hidden="true"></span>
+        <span class="door-swing" aria-hidden="true"></span>
+        <span class="door-leaf" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+  <div class="fp-legend">
+    <p class="legend">
+      <span>WALL = QUEST BOUNDARY</span>
+      <span class="not-phone">DOOR = WHERE IT ALL STARTED</span>
+    </p>
+    <MarkupNote tilt={2} size="md">
+      <span class="not-phone">pick a room, any room →</span>
+      <span class="phone-only">tap a room ↓</span>
+    </MarkupNote>
+  </div>
+</div>
+
+<style>
+  .fp {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .fp-head {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--l35);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+  .fp-h {
+    font-size: inherit;
+  }
+  .fp-aside {
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .fp-scroll {
+    container: plan / inline-size;
+  }
+  .plan {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(6, 92px);
+    border: 4px solid var(--line);
+    background: var(--bg);
+  }
+  .room {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--fg);
+    font-family: var(--font-mono);
+    text-align: left;
+    text-decoration: none;
+  }
+  .room:hover {
+    color: var(--fg);
+    background: var(--l06);
+  }
+  .room:focus-visible {
+    outline-offset: -3px;
+  }
+  .room[aria-pressed='true']::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--l10);
+    box-shadow: inset 0 0 0 2px var(--accent);
+    pointer-events: none;
+  }
+  .rn {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  .rt {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  .room[data-size-phone='l'] {
+    padding: 14px;
+  }
+  .room[data-size-phone='l'] .rt {
+    font-size: 14px;
+  }
+  .room :global(.rtag) {
+    margin-top: auto;
+    gap: 5px;
+    padding: 2px 6px;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+  }
+  .plan-entry {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+  }
+  .entry-t {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+  .entry-s {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* The door: a gap in the exterior wall, a 2px leaf and a dashed swing. */
+  .door-gap,
+  .door-swing,
+  .door-leaf {
+    position: absolute;
+    left: 18px;
+  }
+  .door-gap {
+    bottom: -6px;
+    width: 46px;
+    height: 8px;
+    background: var(--bg);
+  }
+  .door-swing {
+    bottom: -2px;
+    width: 44px;
+    height: 44px;
+    border-top: 1px dashed var(--l60);
+    border-right: 1px dashed var(--l60);
+    border-top-right-radius: 44px;
+  }
+  .door-leaf {
+    bottom: -2px;
+    width: 2px;
+    height: 44px;
+    background: var(--line);
+  }
+  .fp-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px 14px;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  @media (min-width: 640px) {
+    .fp-head {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px 16px;
+    }
+    .fp-aside {
+      font-size: 11px;
+    }
+    .legend {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+    .fp-legend {
+      gap: 10px 20px;
+    }
+  }
+
+  /* Plan layout follows the plan's own width. */
+  @container plan (min-width: 560px) {
+    .plan {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-rows: repeat(4, 104px);
+    }
+    .room,
+    .room[data-size-phone='l'] {
+      gap: 6px;
+      padding: 12px 14px;
+    }
+    .rn {
+      font-size: 11px;
+    }
+    .rt,
+    .room[data-size-phone='l'] .rt {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+    .room[data-size='s'] {
+      padding: 12px;
+    }
+    .room[data-size='s'] .rt {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+    .room[data-size='l'] {
+      padding: 14px 16px;
+    }
+    .room[data-size='l'] .rt {
+      font-size: 15px;
+    }
+    .room :global(.rtag) {
+      gap: 6px;
+      padding: 3px 8px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
+    .plan-entry {
+      padding: 12px 16px;
+    }
+    .entry-t {
+      font-size: 13px;
+    }
+    .entry-s {
+      font-size: 11px;
+    }
+    .door-gap,
+    .door-swing,
+    .door-leaf {
+      left: 22px;
+    }
+    .door-gap {
+      width: 52px;
+    }
+    .door-swing {
+      width: 50px;
+      height: 50px;
+      border-color: var(--l60);
+      border-top-right-radius: 50px;
+    }
+    .door-leaf {
+      height: 50px;
+    }
+  }
+  /* Desktop: taller rows; the plan scrolls inside its own container if squeezed. */
+  @media (min-width: 1024px) {
+    .fp-scroll {
+      overflow-x: auto;
+    }
+    .plan {
+      min-width: 600px;
+    }
+    @container plan (min-width: 560px) {
+      .plan {
+        grid-template-rows: repeat(4, 118px);
+      }
+    }
+  }
+</style>
+
+<script>
+  // Rooms become toggle buttons; the selection is mirrored in the URL hash.
+  const plan = document.querySelector<HTMLElement>('[data-plan]');
+  const logs = document.querySelector<HTMLElement>('[data-quest-logs]');
+  if (plan && logs) {
+    const rooms = new Map<string, HTMLButtonElement>();
+    plan.querySelectorAll<HTMLAnchorElement>('a.room').forEach((a) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      for (const { name, value } of Array.from(a.attributes)) {
+        if (name !== 'href') b.setAttribute(name, value);
+      }
+      b.append(...Array.from(a.childNodes));
+      b.setAttribute('aria-pressed', 'false');
+      a.replaceWith(b);
+      rooms.set(b.dataset.room!, b);
+    });
+    const first = rooms.keys().next().value as string;
+
+    const select = (room: string) => {
+      if (!rooms.has(room)) room = first;
+      rooms.forEach((b, r) => b.setAttribute('aria-pressed', String(r === room)));
+      logs.querySelectorAll<HTMLElement>('[data-log]').forEach((log) => {
+        log.classList.toggle('is-active', log.dataset.log === room);
+      });
+      logs.classList.add('is-ready');
+    };
+    const fromHash = () => /^#room-(\d+)$/.exec(location.hash)?.[1] ?? first;
+
+    rooms.forEach((b, room) => {
+      b.addEventListener('click', () => {
+        select(room);
+        history.replaceState(null, '', `#room-${room}`);
+      });
+    });
+    window.addEventListener('hashchange', () => select(fromHash()));
+    select(fromHash());
+  }
+</script>

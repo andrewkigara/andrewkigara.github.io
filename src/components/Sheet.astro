@@ -1,0 +1,168 @@
+---
+/**
+ * The page frame shared by every sheet: structural grid, axis bubbles, header,
+ * the phone sheet strip, the page content and the title-block footer.
+ */
+import { getEntry } from 'astro:content';
+import { buildDate, getSheet } from '../lib/sheets';
+import SheetHeader from './SheetHeader.astro';
+import SheetIndex from './SheetIndex.astro';
+import SheetStrip from './SheetStrip.astro';
+import TitleBlock from './TitleBlock.astro';
+
+interface Props {
+  sheet: string;
+  notesLabel?: 'GENERAL NOTES' | 'REVISIONS';
+  notes: string[];
+}
+const { sheet, notesLabel = 'GENERAL NOTES', notes } = Astro.props;
+const info = getSheet(sheet);
+const site = (await getEntry('site', 'site'))!.data;
+const COLS = ['A', 'B', 'C', 'D', 'E', 'F'];
+---
+<div class="page">
+  <div class="sheet" data-sheet={sheet}>
+    <div class="grid" aria-hidden="true">{COLS.map(() => <div />)}</div>
+    <div class="bubbles" aria-hidden="true">
+      {COLS.map((c) => <div><span class="bub">{c}</span></div>)}
+    </div>
+
+    <SheetHeader current={sheet} rev={site.rev} />
+    <SheetStrip current={sheet} />
+
+    <main id="main" class="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <TitleBlock
+      label={notesLabel}
+      notes={notes}
+      sheetNo={info.no}
+      sheetTitle={info.title}
+      scale={info.scale}
+      date={buildDate()}
+    />
+  </div>
+</div>
+
+<dialog id="sheet-index" class="si-dialog" aria-labelledby="si-title-dialog">
+  <SheetIndex current={sheet} variant="dialog" />
+</dialog>
+
+<script>
+  // SHEETS links to /sheets; with JavaScript it opens the same index as a dialog.
+  const dialog = document.getElementById('sheet-index') as HTMLDialogElement | null;
+  document.querySelectorAll<HTMLAnchorElement>('[data-sheet-index-open]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      if (!dialog || typeof dialog.showModal !== 'function') return;
+      e.preventDefault();
+      dialog.showModal();
+    });
+  });
+  // Close if the viewport grows past the phone layout while the index is open.
+  matchMedia('(min-width: 640px)').addEventListener('change', (e) => {
+    if (e.matches && dialog?.open) dialog.close();
+  });
+</script>
+
+<style>
+  .page {
+    padding: var(--page-pad);
+  }
+  .sheet {
+    position: relative;
+    max-width: var(--sheet-max);
+    margin: 0 auto;
+    border: 1px solid var(--l35);
+  }
+  .grid,
+  .bubbles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .grid > * + * {
+    border-left: 1px dashed var(--l10);
+  }
+  .bubbles {
+    position: relative;
+    z-index: 1;
+    height: 34px;
+    border-bottom: 1px solid var(--l18);
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .bubbles > div {
+    position: relative;
+  }
+  .grid > :nth-child(n + 4),
+  .bubbles > :nth-child(n + 4) {
+    display: none;
+  }
+  .bub {
+    position: absolute;
+    left: -11px;
+    top: 6px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--l40);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+  }
+  .bubbles > :first-child .bub {
+    left: 8px;
+    background: none;
+  }
+  .main {
+    position: relative;
+    z-index: 1;
+    display: block;
+  }
+  .main:focus {
+    outline: none;
+  }
+  @media (min-width: 640px) {
+    .grid,
+    .bubbles {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .grid > :nth-child(4),
+    .bubbles > :nth-child(4) {
+      display: block;
+    }
+  }
+  @media (min-width: 1024px) {
+    .grid,
+    .bubbles {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .grid > *,
+    .bubbles > * {
+      display: block !important;
+    }
+  }
+
+  .si-dialog {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: var(--page-pad);
+    border: 0;
+    background: var(--bg);
+    color: var(--fg);
+    overflow-y: auto;
+  }
+  .si-dialog::backdrop {
+    background: var(--bg);
+  }
+</style>

@@ -1,0 +1,82 @@
+/*
+ * Design tokens for both color modes.
+ * Blueprint (dark) is the default; Trace Paper (light) is opt-in or follows the
+ * system. The inline script in <head> sets data-mode on <html> before first
+ * paint; without JavaScript, the prefers-color-scheme block below takes over.
+ */
+:root,
+:root[data-mode="dark"] {
+  --bg: #0a1626;      /* deep navy */
+  --fg: #eaf2f6;      /* primary text */
+  --muted: #8fb3c7;   /* labels, metadata */
+  --soft: #c9d8e2;    /* secondary body text */
+  --line: #5cc8e8;    /* cyan linework */
+  --accent: #e06a55;  /* Cherokee red, lifted for dark backgrounds */
+  --fill: #0f2236;    /* placeholder and photo-frame fill */
+  --water: #13304a;   /* key plan river */
+  --band: #a63d2a;    /* Cherokee red band, same in both modes */
+  color-scheme: dark;
+}
+:root[data-mode="light"] {
+  --bg: #f3f0e8;      /* vellum */
+  --fg: #2b2b29;      /* graphite */
+  --muted: #5e5c57;
+  --soft: #3d3c39;
+  --line: #2b2b29;
+  --accent: #9e3522;  /* deep Cherokee red */
+  --fill: #e8e3d7;
+  --water: #ddd7c9;
+  --band: #a63d2a;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-mode]) {
+    --bg: #f3f0e8;
+    --fg: #2b2b29;
+    --muted: #5e5c57;
+    --soft: #3d3c39;
+    --line: #2b2b29;
+    --accent: #9e3522;
+    --fill: #e8e3d7;
+    --water: #ddd7c9;
+    color-scheme: light;
+  }
+}
+
+/* Opacity scale: every translucent color is line or background mixed with transparency. */
+:root {
+  --l04: color-mix(in srgb, var(--line) 4%, transparent);
+  --l06: color-mix(in srgb, var(--line) 6%, transparent);
+  --l07: color-mix(in srgb, var(--line) 7%, transparent);  /* current floor tint */
+  --l10: color-mix(in srgb, var(--line) 10%, transparent); /* grid lines, selected room, hatch */
+  --l13: color-mix(in srgb, var(--line) 13%, transparent); /* foundation hatch */
+  --l18: color-mix(in srgb, var(--line) 18%, transparent); /* header, bubble row, dividers */
+  --l30: color-mix(in srgb, var(--line) 30%, transparent); /* panel header rule */
+  --l32: color-mix(in srgb, var(--line) 32%, transparent);
+  --l35: color-mix(in srgb, var(--line) 35%, transparent); /* sheet border, section rules */
+  --l40: color-mix(in srgb, var(--line) 40%, transparent); /* axis bubbles, slab columns */
+  --l45: color-mix(in srgb, var(--line) 45%, transparent);
+  --l50: color-mix(in srgb, var(--line) 50%, transparent); /* line under the Wright band */
+  --l55: color-mix(in srgb, var(--line) 55%, transparent); /* dimension lines, secondary buttons */
+  --l60: color-mix(in srgb, var(--line) 60%, transparent);
+  --m80: color-mix(in srgb, var(--muted) 80%, transparent);
+  --b86: color-mix(in srgb, var(--bg) 86%, transparent);   /* panels over the curve field */
+  --b90: color-mix(in srgb, var(--bg) 90%, transparent);
+
+  --font-display: 'Michroma', 'Arial Narrow', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-hand: 'Architects Daughter', 'Comic Sans MS', cursive;
+
+  /* Frame metrics: phone first, then iPad (640px) and desktop (1024px). */
+  --page-pad: 12px;
+  --side: 16px;
+  --sheet-max: 1400px;
+  /* Distance from the sheet's right border to the viewport edge. */
+  --to-edge: calc(var(--page-pad) + 1px + max(0px, (100vw - 2 * var(--page-pad) - var(--sheet-max)) / 2));
+}
+@media (min-width: 640px) {
+  :root { --page-pad: 16px; --side: 24px; }
+}
+@media (min-width: 1024px) {
+  :root { --page-pad: 20px; --side: 28px; }
+}

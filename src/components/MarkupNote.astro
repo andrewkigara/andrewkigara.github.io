@@ -1,0 +1,28 @@
+---
+/** Hand-lettered red markup. Personality only, never essential information. */
+interface Props {
+  tilt?: 2 | 3;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+const { tilt = 2, size = 'md', class: className } = Astro.props;
+---
+<span class:list={['note', `note--t${tilt}`, `note--${size}`, className]}><slot /></span>
+
+<style>
+  .note {
+    display: inline-block;
+    font-family: var(--font-hand);
+    color: var(--accent);
+  }
+  .note--t2 { transform: rotate(-2deg); }
+  .note--t3 { transform: rotate(-3deg); }
+  .note--sm { font-size: 15px; }
+  .note--md { font-size: 16px; }
+  .note--lg { font-size: 18px; }
+  @media (min-width: 640px) {
+    .note--sm { font-size: 17px; }
+    .note--md { font-size: 18px; }
+    .note--lg { font-size: 21px; }
+  }
+</style>

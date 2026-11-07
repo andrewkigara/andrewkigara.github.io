@@ -1,0 +1,283 @@
+---
+/**
+ * A-401's key plan (viewBox 600×540): river, contours, roads, buildings and a
+ * north arrow, with one marker per frame at its hand-set keyPlan position.
+ * The drawing is role="img"; markers are links to their frames.
+ */
+import { facing } from '../lib/compass';
+import { frameId, type Frame } from '../lib/album';
+
+interface Props {
+  frames: Frame[];
+}
+const { frames } = Astro.props;
+
+const cx = 330;
+const cy = 250;
+const contours = [40, 72, 104, 136, 170, 206].map((r, k) => {
+  const pts = Array.from({ length: 40 }, (_, j) => {
+    const a = (2 * Math.PI * j) / 40;
+    const rr = r * (1 + 0.16 * Math.sin(3 * a + 0.6 * k) + 0.08 * Math.cos(5 * a - 0.4 * k));
+    return [cx + rr * Math.cos(a) * 1.25 - k * 6, cy + rr * Math.sin(a) * 0.9 + k * 4];
+  });
+  return { d: 'M' + pts.map(([x, y]) => `${x!.toFixed(1)} ${y!.toFixed(1)}`).join(' L') + ' Z', index: k === 3 };
+});
+const river =
+  'M0 470 C140 440 220 520 360 488 C460 466 520 400 600 392 L600 406 C520 414 460 480 360 502 C220 534 140 454 0 484 Z';
+const sets = (['field', 'archive'] as const).map((key) => ({
+  key,
+  frames: frames.filter((f) => f.collection === key).sort((a, b) => a.frame - b.frame),
+}));
+// Two marker sizes: the phone plan is drawn smaller, so its markers are drawn bigger.
+const sizes = [
+  { cls: 'mk-desk', r: 12, sw: 1.5, wedge: 'M0 0 L44 -17 A47 47 0 0 1 44 17 Z', ty: 4 },
+  { cls: 'mk-phone', r: 17, sw: 2.4, wedge: 'M0 0 L58 -22 A62 62 0 0 1 58 22 Z', ty: 6 },
+];
+---
+<section class="kp" aria-labelledby="kp-h">
+  <div class="panel__head">
+    <h2 id="kp-h" class="kp-h">KEY PLAN</h2>
+    <span class="aside"><span class="not-phone">NOT TO SCALE</span><span class="phone-only">NTS</span></span>
+  </div>
+  <svg class="kp-svg" viewBox="0 0 600 540" data-keyplan>
+    <g role="img" aria-label="Key plan, not to scale: a river along the south edge, contour lines rising to a hill in the middle, two roads crossing in the northeast with three buildings beside them, and a north arrow.">
+      <path class="kp-river" d={river}></path>
+      <g class="kp-contours" fill="none">
+        {contours.map((c) => <path d={c.d} class:list={{ 'kp-index': c.index }} />)}
+      </g>
+      <g class="kp-roads">
+        <line x1="0" y1="62" x2="600" y2="62"></line>
+        <line x1="0" y1="74" x2="600" y2="74"></line>
+        <line x1="464" y1="0" x2="464" y2="540"></line>
+        <line x1="476" y1="0" x2="476" y2="540"></line>
+      </g>
+      <g class="kp-bldg">
+        <rect x="490" y="90" width="44" height="28"></rect>
+        <rect x="490" y="126" width="28" height="36"></rect>
+        <rect x="414" y="88" width="36" height="30"></rect>
+      </g>
+      <g class="kp-north mk-desk" transform="translate(548 478)" fill="none">
+        <circle r="18"></circle>
+        <path d="M0 -14 L7 12 L0 6 L-7 12 Z"></path>
+      </g>
+      <text class="kp-n mk-desk" x="548" y="452" text-anchor="middle">N</text>
+      <g class="kp-north mk-phone" transform="translate(548 478)" fill="none">
+        <circle r="20"></circle>
+        <path d="M0 -15 L8 13 L0 7 L-8 13 Z"></path>
+      </g>
+      <text class="kp-n kp-n--lg mk-phone" x="548" y="448" text-anchor="middle">N</text>
+    </g>
+    {
+      sets.map((set) => (
+        <g class="kp-set" data-collection={set.key}>
+          {sizes.map((s) => (
+            <g class={s.cls}>
+              {set.frames.map((f) => (
+                <a
+                  class="kp-mk"
+                  href={`#${frameId(f)}`}
+                  data-frame={frameId(f)}
+                  aria-label={`Frame ${f.frame}, camera facing ${facing(f.keyPlan.bearing)}`}
+                >
+                  <g transform={`translate(${f.keyPlan.x} ${f.keyPlan.y})`}>
+                    <path class="kp-wedge" transform={`rotate(${f.keyPlan.bearing})`} d={s.wedge} />
+                    <circle class="kp-dot" r={s.r} stroke-width={s.sw} />
+                    <text class="kp-num" y={s.ty} text-anchor="middle">
+                      {f.frame}
+                    </text>
+                  </g>
+                </a>
+              ))}
+            </g>
+          ))}
+        </g>
+      ))
+    }
+  </svg>
+  <div class="kp-foot">
+    <span class="kp-legend">CIRCLE = FRAME NO. · WEDGE = CAMERA DIRECTION</span>
+    <span class="kp-note"><span class="note">locations rounded on purpose</span></span>
+  </div>
+</section>
+
+<style>
+  .kp {
+    border: 1px solid var(--l55);
+    background: var(--bg);
+    min-width: 0;
+  }
+  .kp .panel__head {
+    padding: 10px 12px;
+  }
+  .kp-h {
+    font-size: inherit;
+  }
+  .kp-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .kp-river {
+    fill: var(--water);
+    stroke: var(--line);
+    stroke-opacity: 0.55;
+    stroke-width: 1.6;
+  }
+  .kp-contours {
+    stroke: var(--line);
+    stroke-opacity: 0.3;
+    stroke-width: 1.6;
+  }
+  .kp-contours .kp-index {
+    stroke-width: 2.2;
+    stroke-opacity: 0.45;
+  }
+  .kp-roads {
+    stroke: var(--line);
+    stroke-opacity: 0.6;
+    stroke-width: 1.6;
+  }
+  .kp-bldg {
+    fill: var(--line);
+    fill-opacity: 0.12;
+    stroke: var(--line);
+    stroke-opacity: 0.6;
+    stroke-width: 1.6;
+  }
+  .kp-north {
+    stroke: var(--line);
+    stroke-width: 1.6;
+  }
+  .kp-north path {
+    fill: var(--line);
+  }
+  .kp-n {
+    fill: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .kp-n--lg {
+    font-size: 18px;
+  }
+  .mk-desk {
+    display: none;
+  }
+  .kp-wedge {
+    fill: var(--accent);
+    fill-opacity: 0.16;
+    stroke: var(--accent);
+    stroke-opacity: 0.6;
+  }
+  .mk-phone .kp-wedge {
+    fill-opacity: 0.18;
+    stroke-width: 1.6;
+  }
+  .kp-dot {
+    fill: var(--bg);
+    stroke: var(--accent);
+  }
+  .kp-num {
+    fill: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .mk-phone .kp-num {
+    font-size: 18px;
+  }
+  /* Collection: field by default; archive when ?c=archive. */
+  :global(:root:not([data-c='archive'])) .kp-set[data-collection='archive'],
+  :global(:root[data-c='archive']) .kp-set[data-collection='field'] {
+    display: none;
+  }
+  /* Linked highlight with the contact sheet. */
+  .kp-mk {
+    cursor: pointer;
+    outline: none;
+  }
+  .kp-mk:focus-visible .kp-dot,
+  .kp-mk:hover .kp-dot,
+  .kp-mk.is-hl .kp-dot {
+    fill: var(--accent);
+  }
+  .kp-mk:focus-visible .kp-num,
+  .kp-mk:hover .kp-num,
+  .kp-mk.is-hl .kp-num {
+    fill: var(--bg);
+  }
+  .kp-mk:focus-visible .kp-wedge,
+  .kp-mk:hover .kp-wedge,
+  .kp-mk.is-hl .kp-wedge {
+    fill-opacity: 0.4;
+    stroke-opacity: 1;
+  }
+  .kp-mk:focus-visible .kp-dot {
+    stroke: var(--fg);
+    stroke-width: 3;
+  }
+  .kp-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    border-top: 1px solid var(--l30);
+  }
+  .kp-legend {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .kp-note {
+    align-self: flex-end;
+  }
+  .note {
+    display: inline-block;
+    font-family: var(--font-hand);
+    font-size: 16px;
+    color: var(--accent);
+    transform: rotate(-2deg);
+  }
+  @media (min-width: 640px) {
+    .kp .panel__head {
+      padding: 10px 14px;
+    }
+    .mk-desk {
+      display: inline;
+    }
+    .mk-phone {
+      display: none;
+    }
+    .kp-river,
+    .kp-contours,
+    .kp-roads,
+    .kp-bldg,
+    .kp-north {
+      stroke-width: 1;
+    }
+    .kp-contours {
+      stroke-opacity: 0.26;
+    }
+    .kp-contours .kp-index {
+      stroke-width: 1.5;
+    }
+    .kp-foot {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px 16px;
+      padding: 10px 14px;
+    }
+    .kp-legend {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+    .kp-note {
+      align-self: auto;
+    }
+    .note {
+      font-size: 18px;
+    }
+  }
+</style>

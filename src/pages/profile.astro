@@ -1,0 +1,373 @@
+---
+import { getEntry } from 'astro:content';
+import DimensionString from '../components/DimensionString.astro';
+import DrawingTitle from '../components/DrawingTitle.astro';
+import MarkupNote from '../components/MarkupNote.astro';
+import TitleSection from '../components/TitleSection.astro';
+import WrightBand from '../components/WrightBand.astro';
+import SheetLayout from '../layouts/SheetLayout.astro';
+import { pad2 } from '../lib/sheets';
+
+const site = (await getEntry('site', 'site'))!.data;
+const { github, linkedin, email, resume } = site.links;
+const contacts = [
+  { key: 'GITHUB', label: `${github.label} ↗`, href: github.href, rel: 'me noopener' },
+  { key: 'LINKEDIN', label: `${linkedin.label} ↗`, href: linkedin.href, rel: 'me noopener' },
+  { key: 'EMAIL', label: email.label, href: email.href ? `mailto:${email.href.replace(/^mailto:/, '')}` : null },
+  { key: 'RÉSUMÉ', label: `${resume.label} ↓`, href: resume.href, download: true },
+];
+---
+<SheetLayout
+  sheet="A-101"
+  title="A-101 Profile · Andrew Kigara"
+  description="Profile of Andrew Kigara: software engineer at Geico, based in Maryland, trained at Drexel. Interested in AI, cybersecurity, and architecture."
+  notes={[
+    "Work details stay at the level Geico's public-profile policy allows.",
+    '"Currently on site" is updated by hand; the date shows when it was last true.',
+  ]}
+>
+  <TitleSection
+    eyebrow="SHEET A-101 — PROFILE"
+    title="PROFILE"
+    lead="Software engineer at Geico, based in Maryland, trained at Drexel. Interested in AI, cybersecurity, and buildings I can't stop looking at."
+  />
+
+  <WrightBand sheet="A-101" />
+
+  <div class="body">
+    <figure class="elev">
+      <div class="elev-frame">
+        <div class="portrait" role="img" aria-label="Portrait placeholder">
+          <span class="chip">[PORTRAIT]</span>
+        </div>
+        <DimensionString label="PORTRAIT · 4:5" vertical />
+      </div>
+      <DimensionString label={site.base.toUpperCase()} class="elev-dim" />
+      <figcaption class="elev-title">
+        <DrawingTitle num="1" title="ELEVATION — SUBJECT" caption="SCALE 1:1" />
+      </figcaption>
+    </figure>
+
+    <div class="text">
+      <section class="block" aria-labelledby="narrative-h">
+        <div class="block-head">
+          <h2 id="narrative-h" class="label">NARRATIVE</h2>
+          <MarkupNote tilt={2} size="sm">always under construction</MarkupNote>
+        </div>
+        <p class="narrative">{site.narrative}</p>
+      </section>
+
+      <section class="block block--specs" aria-labelledby="specs-h">
+        <h2 id="specs-h" class="label block-head">SPECIFICATIONS</h2>
+        <dl class="specs">
+          {
+            site.specifications.map((s, i) => (
+              <div class="spec">
+                <span class="spec-no" aria-hidden="true">{pad2(i + 1)}</span>
+                <dt>{s.label}</dt>
+                <dd>{s.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+    </div>
+
+    <div class="panels">
+      <section class="panel panel--strong" aria-labelledby="onsite-h">
+        <div class="panel__head">
+          <h2 id="onsite-h" class="ph">CURRENTLY ON SITE</h2>
+          <span class="aside"><time>{site.currentlyOnSite.date}</time></span>
+        </div>
+        <dl class="onsite">
+          {
+            site.currentlyOnSite.items.map((item) => (
+              <div class="onsite-row">
+                <span class="sq" aria-hidden="true" />
+                <dt>{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section id="contact" class="panel panel--strong" aria-labelledby="contact-h">
+        <div class="panel__head">
+          <h2 id="contact-h" class="ph">CONSULTANTS &amp; CONTACT</h2>
+        </div>
+        <ul class="contacts">
+          {
+            contacts.map((c) => (
+              <li>
+                {c.href ? (
+                  <a class="contact" href={c.href} rel={c.rel} download={c.download ? '' : undefined}>
+                    <span class="contact-k">{c.key}</span>
+                    <span class="contact-v">{c.label}</span>
+                  </a>
+                ) : (
+                  <span class="contact contact--todo">
+                    <span class="contact-k">{c.key}</span>
+                    <span class="contact-v">{c.label}</span>
+                  </span>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+</SheetLayout>
+
+<style>
+  .body {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 0 var(--side) 32px;
+    align-items: start;
+  }
+  .elev {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .elev-frame {
+    display: flex;
+    gap: 10px;
+  }
+  .portrait {
+    flex: 1;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--l60);
+    background-color: var(--fill);
+    background-image:
+      repeating-linear-gradient(45deg, var(--l10) 0 1px, transparent 1px 10px),
+      repeating-linear-gradient(-45deg, var(--l06) 0 1px, transparent 1px 10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chip {
+    background: var(--bg);
+    padding: 3px 8px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+  .elev :global(.elev-dim) {
+    padding-right: 30px;
+  }
+  .elev-title {
+    margin-top: 4px;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    min-width: 0;
+  }
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .block--specs {
+    gap: 0;
+  }
+  .block-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--l40);
+  }
+  .narrative {
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 720px;
+  }
+  .specs {
+    margin: 0;
+  }
+  .spec {
+    display: grid;
+    grid-template-columns: 32px minmax(96px, 112px) minmax(0, 1fr);
+    gap: 0 8px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--l18);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .spec-no {
+    color: var(--muted);
+  }
+  .spec dt {
+    padding-top: 2px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  .spec dd {
+    margin: 0;
+  }
+  .panels {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    min-width: 0;
+  }
+  .panel--strong {
+    display: flex;
+    flex-direction: column;
+    border-color: var(--l55);
+  }
+  .ph {
+    font-size: inherit;
+    letter-spacing: inherit;
+  }
+  .onsite {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px;
+  }
+  .onsite-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .sq {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    background: var(--accent);
+  }
+  .onsite-row dt {
+    width: 76px;
+    flex-shrink: 0;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  .onsite-row dd {
+    margin: 0;
+    font-size: 13px;
+  }
+  .contacts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .contacts li:nth-child(odd) {
+    border-right: 1px solid var(--l18);
+  }
+  .contacts li:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--l18);
+  }
+  .contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    height: 100%;
+    min-height: 76px;
+    padding: 8px 14px;
+    text-decoration: none;
+  }
+  .contact-k {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .contact-v {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  /* iPad: 280px portrait beside the text; panels side by side below */
+  @media (min-width: 640px) {
+    .body {
+      grid-template-columns: 280px minmax(0, 1fr);
+      grid-template-areas: 'elev text' 'panels panels';
+      gap: 32px;
+      padding-bottom: 44px;
+    }
+    .elev {
+      grid-area: elev;
+      gap: 14px;
+    }
+    .elev-frame {
+      gap: 12px;
+    }
+    .elev :global(.elev-dim) {
+      padding-right: 34px;
+    }
+    .elev-title {
+      margin-top: 6px;
+    }
+    .text {
+      grid-area: text;
+      gap: 32px;
+    }
+    .block {
+      gap: 12px;
+    }
+    .block--specs {
+      gap: 0;
+    }
+    .narrative {
+      font-size: 15px;
+    }
+    .spec {
+      grid-template-columns: 44px minmax(110px, 180px) minmax(0, 1fr);
+      gap: 0 12px;
+      font-size: 14px;
+    }
+    .spec dt {
+      font-size: 11px;
+    }
+    .panels {
+      grid-area: panels;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .onsite {
+      padding: 16px 14px;
+    }
+    .onsite-row {
+      gap: 12px;
+    }
+    .onsite-row dt {
+      width: 84px;
+      font-size: 11px;
+    }
+    .onsite-row dd {
+      font-size: 14px;
+    }
+    .contact-v {
+      font-size: 13px;
+    }
+  }
+
+  /* Desktop: portrait column beside narrative, specifications and panels */
+  @media (min-width: 1024px) {
+    .body {
+      grid-template-columns: 340px minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      grid-template-areas: 'elev text' 'elev panels';
+      gap: 32px 40px;
+    }
+    .panels {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      align-self: start;
+    }
+  }
+</style>

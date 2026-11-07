@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <style>
+    .bg { fill: #0a1626; }
+    .l { stroke: #5cc8e8; fill: none; }
+    .a { fill: #e06a55; }
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #f3f0e8; }
+      .l { stroke: #2b2b29; }
+      .a { fill: #9e3522; }
+    }
+  </style>
+  <rect class="bg" width="30" height="30"/>
+  <rect class="l" x="1" y="1" width="28" height="28" stroke-width="1.2"/>
+  <path class="l" d="M10 1V29M20 1V29M1 10H29M10 20H29" stroke-width="1"/>
+  <rect class="a" x="20.5" y="10.5" width="8" height="9"/>
+</svg>

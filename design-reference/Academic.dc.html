@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A-201 Academic</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Michroma&amp;display=swap">
+<style>
+body{margin:0}
+.ds{--bg:#0a1626;--fg:#eaf2f6;--muted:#8fb3c7;--soft:#c9d8e2;--line:#5cc8e8;--accent:#e06a55;--fill:#0f2236;--water:#13304a}
+.ds[data-mode="light"]{--bg:#f3f0e8;--fg:#2b2b29;--muted:#5e5c57;--soft:#3d3c39;--line:#2b2b29;--accent:#9e3522;--fill:#e8e3d7;--water:#ddd7c9}
+.ds a{color:var(--fg)}.ds a:hover{color:var(--muted)}
+.ds a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ds button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+</style>
+</helmet>
+<div class="ds" data-mode="{{mode}}" style="background: var(--bg); color: var(--fg); font-family: 'JetBrains Mono', ui-monospace, monospace; padding: 20px; overflow: hidden; box-sizing: border-box">
+<div style="position: relative; max-width: 1400px; margin: 0 auto; border: 1px solid color-mix(in srgb, var(--line) 35%, transparent)">
+
+<sc-if value="{{showGrid}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); pointer-events: none; z-index: 0">
+<div></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 10%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 10%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 10%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 10%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 10%, transparent)"></div>
+</div>
+</sc-if>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); height: 34px; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent); font-size: 10px; color: var(--muted)">
+<div style="position: relative"><span style="position: absolute; left: 8px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 40%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center">A</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 40%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">B</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 40%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">C</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 40%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">D</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 40%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">E</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 40%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">F</span></div>
+</div>
+
+<header style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 32px; padding: 16px 28px; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent); background: var(--bg)">
+<div style="display: flex; align-items: center; gap: 14px">
+<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" fill="none" stroke-width="1.2" style="stroke: var(--line)"></rect><path d="M10 1V29M20 1V29M1 10H29M10 20H29" fill="none" stroke-width="1" style="stroke: var(--line)"></path><rect x="20.5" y="10.5" width="8" height="9" style="fill: var(--accent)"></rect></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Michroma', sans-serif; font-size: 13px; letter-spacing: 0.12em">A. KIGARA</span>
+<span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">DRAWING SET · REV 01</span>
+</div>
+</div>
+<nav aria-label="Sheets" style="display: flex; flex-wrap: wrap; gap: 4px 26px">
+<a href="Main.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-000</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">COVER</span>
+</a>
+<a href="Profile.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-101</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">PROFILE</span>
+</a>
+<a href="#" aria-current="page" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid var(--accent); padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-201</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">ACADEMIC</span>
+</a>
+<a href="SideQuests.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-301</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">SIDE QUESTS</span>
+</a>
+<a href="Album.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-401</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">ALBUM</span>
+</a>
+</nav>
+<button type="button" onClick="{{toggleMode}}" aria-label="{{modeAria}}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); background: transparent; color: var(--fg); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; cursor: pointer">
+<span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--fg); background: linear-gradient(90deg, var(--fg) 50%, transparent 50%)"></span>
+<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px"><span style="font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">MODE</span><span>{{modeLabel}}</span></span>
+</button>
+</header>
+
+<section style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; padding: 48px 28px 28px; max-width: 760px">
+<p style="margin: 0; font-size: 12px; letter-spacing: 0.2em; color: var(--muted)">SHEET A-201 — ACADEMIC</p>
+<h1 style="margin: 0; font-family: 'Michroma', sans-serif; font-weight: 400; font-size: clamp(40px, 6vw, 84px); line-height: 1.05; letter-spacing: 0.05em">ACADEMIC</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6">Drexel is the foundation, each co-op is a floor, and Geico is the level I'm on now. The roof is still going up.</p>
+</section>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; padding: 0 0 36px">
+<div style="height: 8px; background: #A63D2A; margin: 0 -21px 0 46%"></div>
+<div style="height: 1px; background: color-mix(in srgb, var(--line) 50%, transparent); margin: 10px -21px 0 26%"></div>
+</div>
+
+<section aria-label="Building section of education and work history" style="position: relative; z-index: 1; padding: 0 28px 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-bottom: 10px; margin-bottom: 4px; border-bottom: 1px solid color-mix(in srgb, var(--line) 35%, transparent); font-size: 11px; letter-spacing: 0.2em">
+<span>BUILDING SECTION A—A</span>
+<span style="color: var(--muted)">LOOKING NORTH · DIMENSIONS IN YEARS</span>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 24px minmax(64px, 110px); padding-top: 18px">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 12px 14px 0; border-top: 1px dashed color-mix(in srgb, var(--line) 35%, transparent)">
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px dashed var(--accent)"></span><span style="font-size: 12px; letter-spacing: 0.14em">ROOF</span></div>
+<span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted); padding-left: 22px">EL. NEXT</span>
+</div>
+<div style="position: relative; border-top: 2px dashed var(--accent); border-left: 1px dashed color-mix(in srgb, var(--line) 40%, transparent); margin-right: -24px; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="align-self: flex-start; padding: 3px 8px; border: 1px solid var(--accent); color: var(--accent); font-size: 10px; letter-spacing: 0.18em">UNDER CONSTRUCTION</span>
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.08em">AI + CYBERSECURITY</span>
+<span style="font-size: 14px; line-height: 1.5; color: var(--soft)">The next floor. Scaffolding is up and the plans are still changing.</span>
+<span style="position: absolute; right: 36px; top: 12px; font-family: 'Architects Daughter', cursive; font-size: 17px; color: var(--accent); transform: rotate(-3deg)">pour date TBD</span>
+</div>
+<div></div>
+<div style="position: relative; border-left: 1px solid color-mix(in srgb, var(--line) 60%, transparent); padding: 12px 0 0 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--muted)">
+<span aria-hidden="true" style="position: absolute; left: -8px; top: 0; width: 16px; height: 1px; background: var(--line); transform: rotate(-45deg)"></span>NEXT
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 24px minmax(64px, 110px)">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 12px 14px 0; border-top: 1px dashed color-mix(in srgb, var(--line) 35%, transparent)">
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--line); background: linear-gradient(90deg, var(--line) 50%, transparent 50%)"></span><span style="font-size: 12px; letter-spacing: 0.14em">LEVEL 04</span></div>
+<span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted); padding-left: 22px">EL. +[YEAR]</span>
+</div>
+<div style="position: relative; border-top: 5px solid var(--line); border-left: 1px solid color-mix(in srgb, var(--line) 40%, transparent); margin-right: -24px; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 6px; background: color-mix(in srgb, var(--line) 7%, transparent)">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px">
+<span style="padding: 3px 8px; background: var(--fg); color: var(--bg); font-size: 10px; letter-spacing: 0.18em">CURRENT LEVEL</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 10px; letter-spacing: 0.18em; color: var(--accent)"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent)"></span>YOU ARE HERE</span>
+</div>
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.08em">SOFTWARE ENGINEER</span>
+<span style="font-size: 12px; letter-spacing: 0.1em; color: var(--muted)">Geico · [Start year] – present</span>
+<span style="font-size: 14px; line-height: 1.5; color: var(--soft)">[One line on the work, at the level you can share publicly.]</span>
+</div>
+<div></div>
+<div style="position: relative; border-left: 1px solid color-mix(in srgb, var(--line) 60%, transparent); padding: 12px 0 0 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--muted)">
+<span aria-hidden="true" style="position: absolute; left: -8px; top: 0; width: 16px; height: 1px; background: var(--line); transform: rotate(-45deg)"></span>+[YEAR]
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 24px minmax(64px, 110px)">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 12px 14px 0; border-top: 1px dashed color-mix(in srgb, var(--line) 35%, transparent)">
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--line); background: linear-gradient(90deg, var(--line) 50%, transparent 50%)"></span><span style="font-size: 12px; letter-spacing: 0.14em">LEVEL 03</span></div>
+<span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted); padding-left: 22px">EL. +[YEAR]</span>
+</div>
+<div style="position: relative; border-top: 5px solid var(--line); border-left: 1px solid color-mix(in srgb, var(--line) 40%, transparent); padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="align-self: flex-start; padding: 3px 8px; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">DREXEL CO-OP 03</span>
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.08em">[ROLE]</span>
+<span style="font-size: 12px; letter-spacing: 0.1em; color: var(--muted)">[Co-op employer] · [Season, year]</span>
+<span style="font-size: 14px; line-height: 1.5; color: var(--soft)">[What you built or learned there.]</span>
+</div>
+<div></div>
+<div style="position: relative; border-left: 1px solid color-mix(in srgb, var(--line) 60%, transparent); padding: 12px 0 0 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--muted)">
+<span aria-hidden="true" style="position: absolute; left: -8px; top: 0; width: 16px; height: 1px; background: var(--line); transform: rotate(-45deg)"></span>+[YEAR]
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 24px minmax(64px, 110px)">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 12px 14px 0; border-top: 1px dashed color-mix(in srgb, var(--line) 35%, transparent)">
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--line); background: linear-gradient(90deg, var(--line) 50%, transparent 50%)"></span><span style="font-size: 12px; letter-spacing: 0.14em">LEVEL 02</span></div>
+<span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted); padding-left: 22px">EL. +[YEAR]</span>
+</div>
+<div style="position: relative; border-top: 5px solid var(--line); border-left: 1px solid color-mix(in srgb, var(--line) 40%, transparent); margin-right: -24px; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="align-self: flex-start; padding: 3px 8px; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">DREXEL CO-OP 02</span>
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.08em">[ROLE]</span>
+<span style="font-size: 12px; letter-spacing: 0.1em; color: var(--muted)">[Co-op employer] · [Season, year]</span>
+<span style="font-size: 14px; line-height: 1.5; color: var(--soft)">[What you built or learned there.]</span>
+</div>
+<div></div>
+<div style="position: relative; border-left: 1px solid color-mix(in srgb, var(--line) 60%, transparent); padding: 12px 0 0 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--muted)">
+<span aria-hidden="true" style="position: absolute; left: -8px; top: 0; width: 16px; height: 1px; background: var(--line); transform: rotate(-45deg)"></span>+[YEAR]
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 24px minmax(64px, 110px)">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 12px 14px 0; border-top: 1px dashed color-mix(in srgb, var(--line) 35%, transparent)">
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--line); background: linear-gradient(90deg, var(--line) 50%, transparent 50%)"></span><span style="font-size: 12px; letter-spacing: 0.14em">LEVEL 01</span></div>
+<span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted); padding-left: 22px">EL. +[YEAR]</span>
+</div>
+<div style="position: relative; border-top: 5px solid var(--line); border-left: 1px solid color-mix(in srgb, var(--line) 40%, transparent); padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="align-self: flex-start; padding: 3px 8px; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">DREXEL CO-OP 01</span>
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.08em">[ROLE]</span>
+<span style="font-size: 12px; letter-spacing: 0.1em; color: var(--muted)">[Co-op employer] · [Season, year]</span>
+<span style="font-size: 14px; line-height: 1.5; color: var(--soft)">[What you built or learned there.]</span>
+</div>
+<div></div>
+<div style="position: relative; border-left: 1px solid color-mix(in srgb, var(--line) 60%, transparent); padding: 12px 0 0 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--muted)">
+<span aria-hidden="true" style="position: absolute; left: -8px; top: 0; width: 16px; height: 1px; background: var(--line); transform: rotate(-45deg)"></span>+[YEAR]
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; margin-right: -49px; padding: 0">
+<span style="font-size: 11px; letter-spacing: 0.18em; color: var(--fg); white-space: nowrap">GRADE ±0.00</span>
+<span aria-hidden="true" style="flex: 1; height: 2px; background: var(--fg)"></span>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 24px minmax(64px, 110px)">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 12px 14px 0">
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border: 1px solid var(--line); background: var(--line)"></span><span style="font-size: 12px; letter-spacing: 0.14em">FOUNDATION</span></div>
+<span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted); padding-left: 22px">EL. [YEAR]</span>
+</div>
+<div style="position: relative; border-top: 5px solid var(--line); border-left: 1px solid color-mix(in srgb, var(--line) 40%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 40%, transparent); padding: 18px 20px 24px; display: flex; flex-direction: column; gap: 6px; background-color: color-mix(in srgb, var(--line) 4%, transparent); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 13%, transparent) 0 1px, transparent 1px 9px)">
+<span style="align-self: flex-start; padding: 3px 8px; background: var(--bg); border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">FOUNDATION</span>
+<span style="align-self: flex-start; background: var(--bg); padding: 2px 6px 2px 0; font-family: 'Michroma', sans-serif; font-size: 18px; letter-spacing: 0.08em">DREXEL UNIVERSITY</span>
+<span style="align-self: flex-start; background: var(--bg); padding: 2px 6px 2px 0; font-size: 12px; letter-spacing: 0.1em; color: var(--muted)">[Degree], [Major] · [Start year] – [Grad year]</span>
+<span style="align-self: flex-start; max-width: 640px; background: var(--bg); padding: 4px 6px 4px 0; font-size: 14px; line-height: 1.5; color: var(--soft)">Coursework: [Key courses]. Activities: [Clubs, teams, research].</span>
+</div>
+<div></div>
+<div style="position: relative; border-left: 1px solid color-mix(in srgb, var(--line) 60%, transparent); padding: 12px 0 0 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--muted)">
+<span aria-hidden="true" style="position: absolute; left: -8px; top: 0; width: 16px; height: 1px; background: var(--line); transform: rotate(-45deg)"></span>[YEAR]
+<span aria-hidden="true" style="position: absolute; left: -8px; bottom: 0; width: 16px; height: 1px; background: var(--line); transform: rotate(-45deg)"></span>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 26px; max-width: 560px">
+<span aria-hidden="true" style="width: 38px; height: 38px; flex-shrink: 0; border: 1.5px solid var(--fg); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; line-height: 1.2"><span style="font-weight: 700">1</span><span style="width: 22px; height: 1px; background: var(--fg)"></span><span>A-201</span></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'Michroma', sans-serif; font-size: 13px; letter-spacing: 0.1em; padding-bottom: 4px; border-bottom: 1.5px solid var(--fg)">SECTION A—A · EDUCATION + WORK</span>
+<span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">FLOOR HEIGHTS NOT TO SCALE</span>
+</div>
+</div>
+</section>
+
+<section style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; padding: 28px 28px 44px">
+<div style="border: 1px solid color-mix(in srgb, var(--line) 35%, transparent); background: var(--bg)">
+<p style="margin: 0; padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 30%, transparent); font-size: 11px; letter-spacing: 0.2em">MATERIAL SCHEDULE</p>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px">
+<thead>
+<tr>
+<th scope="col" style="text-align: left; padding: 8px 14px; font-size: 10px; font-weight: 400; letter-spacing: 0.18em; color: var(--muted); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent); width: 64px">MARK</th>
+<th scope="col" style="text-align: left; padding: 8px 14px; font-size: 10px; font-weight: 400; letter-spacing: 0.18em; color: var(--muted); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent); width: 34%">MATERIAL</th>
+<th scope="col" style="text-align: left; padding: 8px 14px; font-size: 10px; font-weight: 400; letter-spacing: 0.18em; color: var(--muted); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">SPEC</th>
+</tr>
+</thead>
+<tbody>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent); color: var(--muted)">M-01</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">Languages</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">[Languages]</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent); color: var(--muted)">M-02</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">Frameworks</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">[Frameworks]</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent); color: var(--muted)">M-03</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">Infrastructure</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">[Cloud, CI/CD, containers]</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent); color: var(--muted)">M-04</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">Security</td><td style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 14%, transparent)">[Tools, practices]</td></tr>
+<tr><td style="padding: 10px 14px; color: var(--muted)">M-05</td><td style="padding: 10px 14px">AI / ML</td><td style="padding: 10px 14px">[Models, libraries]</td></tr>
+</tbody>
+</table>
+</div>
+<div style="border: 1px solid color-mix(in srgb, var(--line) 35%, transparent); background: var(--bg); display: flex; flex-direction: column">
+<p style="margin: 0; padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 30%, transparent); font-size: 11px; letter-spacing: 0.2em">INSPECTIONS PASSED</p>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 16px 14px">
+<div style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="font-size: 12px; color: var(--accent)">✓</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px">[Certification]</span><span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted)">[Issuer] · [Year]</span></div></div>
+<div style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="font-size: 12px; color: var(--accent)">✓</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px">[Award or honor]</span><span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted)">Drexel University · [Year]</span></div></div>
+<div style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="font-size: 12px; color: var(--accent)">✓</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px">[Certification]</span><span style="font-size: 11px; letter-spacing: 0.1em; color: var(--muted)">[Issuer] · [Year]</span></div></div>
+</div>
+</div>
+</section>
+
+<footer style="position: relative; z-index: 1; display: flex; flex-wrap: wrap; border-top: 1px solid color-mix(in srgb, var(--line) 35%, transparent); background: var(--bg)">
+<div style="flex: 999 1 380px; padding: 16px 28px; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box">
+<p style="margin: 0; font-size: 10px; letter-spacing: 0.22em; color: var(--muted)">GENERAL NOTES</p>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.5">
+<li>Floors are added as roles change. Nothing is demolished, only built on.</li>
+<li>Floor heights are not to scale; each floor is one chapter.</li>
+</ol>
+</div>
+<div style="flex: 1 1 520px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-left: 1px solid color-mix(in srgb, var(--line) 35%, transparent)">
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 18%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">PROJECT</p>
+<p style="margin: 0; font-size: 13px">Personal site</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 18%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">DRAWN BY</p>
+<p style="margin: 0; font-size: 13px">A. Kigara</p>
+</div>
+<div style="padding: 10px 12px; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">DATE</p>
+<p style="margin: 0; font-size: 13px">2026.11.07</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 18%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SHEET TITLE</p>
+<p style="margin: 0; font-size: 13px">Academic</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 18%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SCALE</p>
+<p style="margin: 0; font-size: 13px">Years</p>
+</div>
+<div style="padding: 10px 12px">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SHEET NO.</p>
+<p style="margin: 0; font-family: 'Michroma', sans-serif; font-size: clamp(16px, 2vw, 24px); letter-spacing: 0.04em; color: var(--accent)">A-201</p>
+</div>
+</div>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["dark","light","system"],"default":"dark"},"showGrid":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":1920}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { mode: null };
+}
+renderVals() {
+let base = this.props.mode ?? 'dark';
+if (base === 'system') {
+try { base = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { base = 'dark'; }
+}
+const mode = (this.state && this.state.mode) || base;
+return {
+mode: mode,
+modeLabel: mode === 'dark' ? 'BLUEPRINT' : 'TRACE PAPER',
+modeAria: mode === 'dark' ? 'Switch to trace paper (light mode)' : 'Switch to blueprint (dark mode)',
+toggleMode: () => this.setState({ mode: mode === 'dark' ? 'light' : 'dark' }),
+showGrid: this.props.showGrid ?? true
+};
+}
+}
+</script>
+</body>
+</html>

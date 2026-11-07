@@ -1,0 +1,218 @@
+---
+import { SHEETS } from '../lib/sheets';
+import Mark from './Mark.astro';
+import ModeToggle from './ModeToggle.astro';
+
+interface Props {
+  current: string;
+  rev: string;
+}
+const { current, rev } = Astro.props;
+---
+<header class="hdr">
+  <a class="brand" href="/">
+    <Mark size={30} />
+    <span class="brand-text">
+      <span class="brand-name">A. KIGARA</span>
+      <span class="brand-sub"><span class="full">DRAWING SET · </span>REV {rev}</span>
+    </span>
+  </a>
+
+  <nav class="nav" aria-label="Sheets">
+    {
+      SHEETS.map((s) => (
+        <a class="nav-link" href={s.href} aria-current={s.no === current ? 'page' : undefined}>
+          <span class="nav-no">{s.no}</span>
+          <span class="nav-name">{s.name}</span>
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="tools">
+    <ModeToggle variant="full" class="tool-full" />
+    <ModeToggle variant="icon" class="tool-icon" />
+    <a class="sheets-btn" href="/sheets" data-sheet-index-open aria-haspopup="dialog">
+      <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
+      SHEETS
+    </a>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'brand tools';
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--l18);
+    background: var(--bg);
+  }
+  .brand {
+    grid-area: brand;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    text-decoration: none;
+    justify-self: start;
+  }
+  .brand :global(.mark) {
+    width: 26px;
+    height: 26px;
+  }
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+  .brand-sub {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .brand-sub .full {
+    display: none;
+  }
+  .nav {
+    display: none;
+  }
+  .tools {
+    grid-area: tools;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tools :global(.tool-full) {
+    display: none;
+  }
+  .sheets-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--l55);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+  .burger {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .burger span {
+    width: 14px;
+    height: 1px;
+    background: currentColor;
+  }
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-no {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  .nav-name {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+  .nav-link[aria-current='page'] {
+    border-bottom-color: var(--accent);
+  }
+
+  /* iPad: brand and mode toggle, then five equal tabs */
+  @media (min-width: 640px) {
+    .hdr {
+      grid-template-areas: 'brand tools' 'nav nav';
+      row-gap: 14px;
+      padding: 14px 24px 0;
+    }
+    .brand {
+      gap: 14px;
+    }
+    .brand :global(.mark) {
+      width: 30px;
+      height: 30px;
+    }
+    .brand-name {
+      font-size: 13px;
+    }
+    .brand-sub {
+      font-size: 10px;
+    }
+    .brand-sub .full {
+      display: inline;
+    }
+    .tools :global(.tool-full) {
+      display: inline-flex;
+    }
+    .tools :global(.tool-icon),
+    .sheets-btn {
+      display: none;
+    }
+    .nav {
+      grid-area: nav;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin: 0 -24px;
+      border-top: 1px solid var(--l18);
+    }
+    .nav-link {
+      min-height: 56px;
+      padding: 10px 14px;
+      border-right: 1px solid var(--l18);
+    }
+    .nav-link:last-child {
+      border-right: 0;
+    }
+    .nav-link[aria-current='page'] {
+      background: var(--l07);
+    }
+    .tools :global(.tool-full) {
+      margin-bottom: 0;
+    }
+  }
+
+  /* Desktop: one row */
+  @media (min-width: 1024px) {
+    .hdr {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px 32px;
+      padding: 16px 28px;
+    }
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 26px;
+      margin: 0;
+      border: 0;
+    }
+    .nav-link {
+      min-height: 46px;
+      padding: 0 2px;
+      border-right: 0;
+    }
+    .nav-link[aria-current='page'] {
+      background: none;
+    }
+  }
+</style>

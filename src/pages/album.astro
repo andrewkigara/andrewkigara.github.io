@@ -1,0 +1,236 @@
+---
+import { getCollection } from 'astro:content';
+import ContactSheet from '../components/ContactSheet.astro';
+import KeyPlan from '../components/KeyPlan.astro';
+import Lightbox from '../components/Lightbox.astro';
+import TitleSection from '../components/TitleSection.astro';
+import WrightBand from '../components/WrightBand.astro';
+import SheetLayout from '../layouts/SheetLayout.astro';
+import { COLLECTIONS } from '../lib/album';
+
+const frames = (await getCollection('album')).map((e) => e.data).sort((a, b) => a.frame - b.frame);
+---
+<SheetLayout
+  sheet="A-401"
+  title="A-401 Album · Andrew Kigara"
+  description="Andrew Kigara's photo album: a field survey of photos he took and an archive of photos of him, every frame numbered and pinned to a key plan."
+  notes={[
+    'New frames: drop an image and a metadata file into /album, then push. The site rebuilds.',
+    'GPS data is stripped at build. Key plan positions are set by hand.',
+  ]}
+>
+  <TitleSection
+    eyebrow="SHEET A-401 — ALBUM"
+    title="ALBUM"
+    lead="Two collections on one light table. Every frame is numbered and pinned to the key plan, the way architects log site photos."
+    narrow
+  >
+    <div class="switch" role="group" aria-label="Collection" slot="aside" data-collection-switch>
+      {
+        COLLECTIONS.map((c) => (
+          <a class="sw" href={`?c=${c.key}#${c.key}`} data-c={c.key}>
+            <span class="sw-name">{c.name}</span>
+            <span class="sw-blurb">{c.blurb}</span>
+          </a>
+        ))
+      }
+    </div>
+  </TitleSection>
+
+  <WrightBand sheet="A-401" />
+
+  <div class="body" data-album>
+    <div class="kp-col"><KeyPlan frames={frames} /></div>
+    <div class="cs-col">
+      {COLLECTIONS.map((c) => <ContactSheet collection={c.key} frames={frames.filter((f) => f.collection === c.key)} />)}
+    </div>
+  </div>
+
+  <Lightbox />
+</SheetLayout>
+
+<style>
+  .switch {
+    display: flex;
+    border: 1px solid var(--line);
+    margin-top: 6px;
+  }
+  .sw {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 52px;
+    padding: 6px 12px;
+    border: 0;
+    background: transparent;
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-align: left;
+    text-decoration: none;
+  }
+  .sw + .sw {
+    border-left: 1px solid var(--line);
+  }
+  .sw:hover {
+    color: var(--fg);
+    background: var(--l10);
+  }
+  .sw:focus-visible {
+    outline-offset: -3px;
+  }
+  /* Pressed: field by default, archive when ?c=archive */
+  .sw[data-c='field'],
+  :global(:root[data-c='archive']) .sw[data-c='archive'] {
+    background: var(--line);
+    color: var(--bg);
+  }
+  :global(:root[data-c='archive']) .sw[data-c='field'] {
+    background: transparent;
+    color: var(--fg);
+  }
+  .body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 var(--side) 32px;
+  }
+  .kp-col,
+  .cs-col {
+    min-width: 0;
+  }
+  .cs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  @media (min-width: 640px) {
+    .switch {
+      flex-wrap: wrap;
+      margin-top: 0;
+    }
+    .sw {
+      flex: 0 0 auto;
+      min-height: 48px;
+      padding: 6px 18px;
+      font-size: 12px;
+    }
+    .body {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 32px;
+      padding-bottom: 40px;
+    }
+    .kp-col {
+      flex: 0 0 340px;
+    }
+    .cs-col {
+      flex: 1 1 0;
+    }
+  }
+  @media (min-width: 1024px) {
+    .kp-col {
+      flex-basis: clamp(340px, 31.25%, 420px);
+    }
+  }
+</style>
+
+<script>
+  import { COLLECTIONS } from '../lib/album';
+
+  const root = document.documentElement;
+  const keys = COLLECTIONS.map((c) => c.key) as string[];
+
+  // Collection switch: links without JavaScript, aria-pressed buttons with it.
+  const group = document.querySelector<HTMLElement>('[data-collection-switch]');
+  const buttons: HTMLButtonElement[] = [];
+  group?.querySelectorAll<HTMLAnchorElement>('a.sw').forEach((a) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    for (const { name, value } of Array.from(a.attributes)) if (name !== 'href') b.setAttribute(name, value);
+    b.append(...Array.from(a.childNodes));
+    a.replaceWith(b);
+    buttons.push(b);
+  });
+  const show = (c: string, push: boolean) => {
+    if (!keys.includes(c)) c = 'field';
+    root.dataset.c = c;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.c === c)));
+    if (push) {
+      const url = new URL(location.href);
+      url.searchParams.set('c', c);
+      url.hash = '';
+      history.replaceState(null, '', url);
+    }
+  };
+  buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.c!, true)));
+  show(new URLSearchParams(location.search).get('c') ?? 'field', false);
+
+  // Hovering or focusing a marker highlights its frame, and the reverse.
+  const album = document.querySelector<HTMLElement>('[data-album]');
+  if (album) {
+    const highlight = (id: string | null) => {
+      album.querySelectorAll('.is-hl').forEach((el) => el.classList.remove('is-hl'));
+      if (id) album.querySelectorAll(`[data-frame="${id}"]`).forEach((el) => el.classList.add('is-hl'));
+    };
+    const target = (e: Event) => (e.target as Element).closest<HTMLElement | SVGElement>('[data-frame]');
+    for (const [on, off] of [
+      ['pointerover', 'pointerout'],
+      ['focusin', 'focusout'],
+    ] as const) {
+      album.addEventListener(on, (e) => highlight(target(e)?.dataset.frame ?? null));
+      album.addEventListener(off, () => highlight(null));
+    }
+    // Clicking a marker scrolls to its frame (the link does that) and moves focus there.
+    album.querySelectorAll<SVGAElement>('.kp-mk').forEach((mk) => {
+      mk.addEventListener('click', (e) => {
+        const frame = document.getElementById(mk.dataset.frame!);
+        const opener = frame?.querySelector<HTMLElement>('[data-open-frame]');
+        if (!frame || !opener) return;
+        e.preventDefault();
+        const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+        frame.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+        opener.focus({ preventScroll: true });
+      });
+    });
+  }
+
+  // Lightbox
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  if (dialog && typeof dialog.showModal === 'function') {
+    const view = dialog.querySelector<HTMLElement>('[data-lb-view]')!;
+    const no = dialog.querySelector<HTMLElement>('[data-lb-no]')!;
+    const cap = dialog.querySelector<HTMLElement>('[data-lb-cap]')!;
+    const sub = dialog.querySelector<HTMLElement>('[data-lb-sub]')!;
+    document.querySelectorAll<HTMLElement>('[data-open-frame]').forEach((opener) => {
+      opener.addEventListener('click', (e) => {
+        e.preventDefault();
+        const figure = opener.closest('figure')!;
+        const media = opener.querySelector('picture, [data-placeholder]');
+        view.replaceChildren();
+        if (media) {
+          const copy = media.cloneNode(true) as HTMLElement;
+          copy.querySelectorAll('source, img').forEach((el) => {
+            el.setAttribute('sizes', '(min-width: 1240px) 1200px, 100vw');
+            el.removeAttribute('loading');
+          });
+          view.append(copy);
+        }
+        no.textContent = (figure.dataset.frame ?? '').split('-').pop() ?? '';
+        cap.textContent = figure.querySelector('.c1')?.textContent ?? '';
+        sub.textContent = figure.querySelector('.c2')?.textContent ?? '';
+        dialog.showModal();
+      });
+    });
+    // Click on the backdrop closes it.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => view.replaceChildren());
+  }
+</script>

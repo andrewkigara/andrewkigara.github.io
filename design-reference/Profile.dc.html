@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A-101 Profile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Michroma&amp;display=swap">
+<style>
+body{margin:0}
+.ds{--bg:#0a1626;--fg:#eaf2f6;--muted:#8fb3c7;--soft:#c9d8e2;--line:#5cc8e8;--accent:#e06a55;--fill:#0f2236;--water:#13304a}
+.ds[data-mode="light"]{--bg:#f3f0e8;--fg:#2b2b29;--muted:#5e5c57;--soft:#3d3c39;--line:#2b2b29;--accent:#9e3522;--fill:#e8e3d7;--water:#ddd7c9}
+.ds a{color:var(--fg)}.ds a:hover{color:var(--muted)}
+.ds a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ds button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+</style>
+</helmet>
+<div class="ds" data-mode="{{mode}}" style="background: var(--bg); color: var(--fg); font-family: 'JetBrains Mono', ui-monospace, monospace; padding: 20px; overflow: hidden; box-sizing: border-box">
+<div style="position: relative; max-width: 1400px; margin: 0 auto; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent)">
+
+<sc-if value="{{showGrid}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); pointer-events: none; z-index: 0">
+<div></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+</div>
+</sc-if>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); height: 34px; border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent); font-size: 10px; color: var(--muted)">
+<div style="position: relative"><span style="position: absolute; left: 8px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center">A</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">B</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">C</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">D</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">E</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">F</span></div>
+</div>
+
+<header style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 32px; padding: 16px 28px; border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent); background: var(--bg)">
+<div style="display: flex; align-items: center; gap: 14px">
+<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" fill="none" stroke-width="1.2" style="stroke: var(--line)"></rect><path d="M10 1V29M20 1V29M1 10H29M10 20H29" fill="none" stroke-width="1" style="stroke: var(--line)"></path><rect x="20.5" y="10.5" width="8" height="9" style="fill: var(--accent)"></rect></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Michroma', sans-serif; font-size: 13px; letter-spacing: 0.12em">A. KIGARA</span>
+<span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">DRAWING SET · REV 01</span>
+</div>
+</div>
+<nav aria-label="Sheets" style="display: flex; flex-wrap: wrap; gap: 4px 26px">
+<a href="Main.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-000</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">COVER</span>
+</a>
+<a href="#" aria-current="page" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid var(--accent); padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-101</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">PROFILE</span>
+</a>
+<a href="Academic.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-201</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">ACADEMIC</span>
+</a>
+<a href="SideQuests.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-301</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">SIDE QUESTS</span>
+</a>
+<a href="Album.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-401</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">ALBUM</span>
+</a>
+</nav>
+<button type="button" onClick="{{toggleMode}}" aria-label="{{modeAria}}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); background: transparent; color: var(--fg); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; cursor: pointer">
+<span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--fg); background: linear-gradient(90deg, var(--fg) 50%, transparent 50%)"></span>
+<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px"><span style="font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">MODE</span><span>{{modeLabel}}</span></span>
+</button>
+</header>
+
+<section style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; padding: 48px 28px 28px; max-width: 760px">
+<p style="margin: 0; font-size: 12px; letter-spacing: 0.2em; color: var(--muted)">SHEET A-101 — PROFILE</p>
+<h1 style="margin: 0; font-family: 'Michroma', sans-serif; font-weight: 400; font-size: clamp(40px, 6vw, 84px); line-height: 1.05; letter-spacing: 0.05em">PROFILE</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6">Software engineer at Geico, based in Maryland, trained at Drexel. Interested in AI, cybersecurity, and buildings I can't stop looking at.</p>
+</section>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; padding: 0 0 36px">
+<div style="height: 8px; background: #A63D2A; margin: 0 -21px 0 38%"></div>
+<div style="height: 1px; background: color-mix(in srgb, var(--line) 50%, transparent); margin: 10px -21px 0 16%"></div>
+</div>
+
+<section style="position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 40px; padding: 0 28px 44px; align-items: flex-start">
+
+<div style="flex: 1 1 340px; min-width: 0; max-width: 440px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; gap: 12px">
+<div aria-hidden="true" style="flex: 1; aspect-ratio: 4 / 5; border: 1px solid color-mix(in srgb, var(--line) 60%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px), repeating-linear-gradient(-45deg, color-mix(in srgb, var(--line) 6%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center">
+<span style="background: var(--bg); padding: 3px 8px; font-size: 11px; letter-spacing: 0.14em">[PORTRAIT]</span>
+</div>
+<div aria-hidden="true" style="width: 22px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">
+<span style="width: 14px; height: 1px; background: var(--line)"></span>
+<span style="flex: 1; width: 1px; background: color-mix(in srgb, var(--line) 55%, transparent)"></span>
+<span style="writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap">PORTRAIT · 4:5</span>
+<span style="flex: 1; width: 1px; background: color-mix(in srgb, var(--line) 55%, transparent)"></span>
+<span style="width: 14px; height: 1px; background: var(--line)"></span>
+</div>
+</div>
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 10px; padding-right: 34px; font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">
+<span style="width: 1px; height: 14px; background: var(--line); transform: rotate(45deg)"></span>
+<span style="flex: 1; height: 1px; background: color-mix(in srgb, var(--line) 55%, transparent)"></span>
+<span style="white-space: nowrap">MARYLAND, US</span>
+<span style="flex: 1; height: 1px; background: color-mix(in srgb, var(--line) 55%, transparent)"></span>
+<span style="width: 1px; height: 14px; background: var(--line); transform: rotate(45deg)"></span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 6px">
+<span aria-hidden="true" style="width: 34px; height: 34px; flex-shrink: 0; border: 1.5px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700">1</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<span style="font-family: 'Michroma', sans-serif; font-size: 13px; letter-spacing: 0.1em; padding-bottom: 4px; border-bottom: 1.5px solid var(--line)">ELEVATION — SUBJECT</span>
+<span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">SCALE 1:1</span>
+</div>
+</div>
+</div>
+
+<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; padding-bottom: 8px; border-bottom: 1px solid color-mix(in srgb, var(--line) 40%, transparent)">
+<span style="font-size: 11px; letter-spacing: 0.2em">NARRATIVE</span>
+<span style="font-family: 'Architects Daughter', cursive; font-size: 17px; color: var(--accent); transform: rotate(-2deg)">always under construction</span>
+</div>
+<p style="margin: 0; font-size: 15px; line-height: 1.7; max-width: 720px">I'm a software engineer at Geico, where I work on [what you can share about your team or domain]. I studied [major] at Drexel University, where the co-op program put me in [industries or roles] before I graduated. Outside work I'm usually deep in AI, security, or reading about architecture.</p>
+</div>
+
+<div style="display: flex; flex-direction: column">
+<p style="margin: 0; padding-bottom: 8px; border-bottom: 1px solid color-mix(in srgb, var(--line) 40%, transparent); font-size: 11px; letter-spacing: 0.2em">SPECIFICATIONS</p>
+<div style="display: grid; grid-template-columns: 44px minmax(110px, 180px) minmax(0, 1fr); gap: 0 12px; padding: 11px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent); font-size: 14px; line-height: 1.5">
+<span style="color: var(--muted)">01</span><span style="font-size: 11px; letter-spacing: 0.16em; color: var(--muted); padding-top: 2px">ROLE</span><span>Software engineer, Geico</span>
+</div>
+<div style="display: grid; grid-template-columns: 44px minmax(110px, 180px) minmax(0, 1fr); gap: 0 12px; padding: 11px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent); font-size: 14px; line-height: 1.5">
+<span style="color: var(--muted)">02</span><span style="font-size: 11px; letter-spacing: 0.16em; color: var(--muted); padding-top: 2px">EDUCATION</span><span>Drexel University · [Degree] · [Year]</span>
+</div>
+<div style="display: grid; grid-template-columns: 44px minmax(110px, 180px) minmax(0, 1fr); gap: 0 12px; padding: 11px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent); font-size: 14px; line-height: 1.5">
+<span style="color: var(--muted)">03</span><span style="font-size: 11px; letter-spacing: 0.16em; color: var(--muted); padding-top: 2px">BASE</span><span>Maryland, US</span>
+</div>
+<div style="display: grid; grid-template-columns: 44px minmax(110px, 180px) minmax(0, 1fr); gap: 0 12px; padding: 11px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent); font-size: 14px; line-height: 1.5">
+<span style="color: var(--muted)">04</span><span style="font-size: 11px; letter-spacing: 0.16em; color: var(--muted); padding-top: 2px">FOCUS</span><span>AI · Cybersecurity</span>
+</div>
+<div style="display: grid; grid-template-columns: 44px minmax(110px, 180px) minmax(0, 1fr); gap: 0 12px; padding: 11px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 18%, transparent); font-size: 14px; line-height: 1.5">
+<span style="color: var(--muted)">05</span><span style="font-size: 11px; letter-spacing: 0.16em; color: var(--muted); padding-top: 2px">INFLUENCES</span><span>Frank Lloyd Wright · Zaha Hadid</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px">
+<div style="display: flex; flex-direction: column; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent)">
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 30%, transparent); font-size: 11px; letter-spacing: 0.2em">
+<span>CURRENTLY ON SITE</span>
+<span style="color: var(--muted)">2026.11</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 16px 14px">
+<div style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="width: 8px; height: 8px; flex-shrink: 0; background: var(--accent)"></span><span style="width: 84px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: var(--muted)">BUILDING</span><span style="font-size: 14px">This site, as a drawing set</span></div>
+<div style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="width: 8px; height: 8px; flex-shrink: 0; background: var(--accent)"></span><span style="width: 84px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: var(--muted)">LEARNING</span><span style="font-size: 14px">[Topic]</span></div>
+<div style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="width: 8px; height: 8px; flex-shrink: 0; background: var(--accent)"></span><span style="width: 84px; flex-shrink: 0; font-size: 11px; letter-spacing: 0.16em; color: var(--muted)">READING</span><span style="font-size: 14px">[Book]</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent)">
+<div style="padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 30%, transparent); font-size: 11px; letter-spacing: 0.2em">CONSULTANTS &amp; CONTACT</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr))">
+<a href="#" style="display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 60px; padding: 8px 14px; text-decoration: none; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">GITHUB</span><span style="font-size: 13px">[@handle] ↗</span></a>
+<a href="#" style="display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 60px; padding: 8px 14px; text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">LINKEDIN</span><span style="font-size: 13px">[/in/handle] ↗</span></a>
+<a href="#" style="display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 60px; padding: 8px 14px; text-decoration: none; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent)"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">EMAIL</span><span style="font-size: 13px">[address]</span></a>
+<a href="#" style="display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 60px; padding: 8px 14px; text-decoration: none"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">RÉSUMÉ</span><span style="font-size: 13px">PDF ↓</span></a>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<footer style="position: relative; z-index: 1; display: flex; flex-wrap: wrap; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); background: var(--bg)">
+<div style="flex: 999 1 380px; padding: 16px 28px; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box">
+<p style="margin: 0; font-size: 10px; letter-spacing: 0.22em; color: var(--muted)">GENERAL NOTES</p>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.5">
+<li>Work details stay at the level Geico's public-profile policy allows.</li>
+<li>"Currently on site" is updated by hand; the date shows when it was last true.</li>
+</ol>
+</div>
+<div style="flex: 1 1 520px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-left: 1px solid color-mix(in srgb, var(--line) 55%, transparent)">
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">PROJECT</p>
+<p style="margin: 0; font-size: 13px">Personal site</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">DRAWN BY</p>
+<p style="margin: 0; font-size: 13px">A. Kigara</p>
+</div>
+<div style="padding: 10px 12px; border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">DATE</p>
+<p style="margin: 0; font-size: 13px">2026.11.07</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SHEET TITLE</p>
+<p style="margin: 0; font-size: 13px">Profile</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SCALE</p>
+<p style="margin: 0; font-size: 13px">1:1</p>
+</div>
+<div style="padding: 10px 12px">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SHEET NO.</p>
+<p style="margin: 0; font-family: 'Michroma', sans-serif; font-size: clamp(16px, 2vw, 24px); letter-spacing: 0.04em; color: var(--accent)">A-101</p>
+</div>
+</div>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["dark","light","system"],"default":"light"},"showGrid":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":1360}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { mode: null };
+}
+renderVals() {
+let base = this.props.mode ?? 'light';
+if (base === 'system') {
+try { base = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { base = 'light'; }
+}
+const mode = (this.state && this.state.mode) || base;
+return {
+mode: mode,
+modeLabel: mode === 'dark' ? 'BLUEPRINT' : 'TRACE PAPER',
+modeAria: mode === 'dark' ? 'Switch to trace paper (light mode)' : 'Switch to blueprint (dark mode)',
+toggleMode: () => this.setState({ mode: mode === 'dark' ? 'light' : 'dark' }),
+showGrid: this.props.showGrid ?? true
+};
+}
+}
+</script>
+</body>
+</html>

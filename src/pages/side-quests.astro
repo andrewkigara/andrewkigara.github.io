@@ -1,0 +1,131 @@
+---
+import { getCollection } from 'astro:content';
+import FloorPlan from '../components/FloorPlan.astro';
+import QuestLog from '../components/QuestLog.astro';
+import TitleSection from '../components/TitleSection.astro';
+import WrightBand from '../components/WrightBand.astro';
+import SheetLayout from '../layouts/SheetLayout.astro';
+import { pad2 } from '../lib/sheets';
+
+const quests = (await getCollection('quests')).map((q) => q.data).sort((a, b) => a.room - b.room);
+const count = (s: string) => quests.filter((q) => q.status === s).length;
+const stats = [
+  { label: 'QUESTS', value: quests.length, tone: '' },
+  { label: 'ACTIVE', value: count('active'), tone: 'accent' },
+  { label: 'DORMANT', value: count('dormant'), tone: '' },
+  { label: 'COMPLETE', value: count('complete'), tone: 'line' },
+];
+---
+<SheetLayout
+  sheet="A-301"
+  title="A-301 Side Quests · Andrew Kigara"
+  description="Andrew Kigara's hobbies and interests, drawn as a floor plan: architecture, photography, an AI lab and a security lab, each room with its own quest log."
+  notes={['Room size reflects time spent, not importance.', 'Dormant rooms stay on the plan. Nothing is demolished.']}
+>
+  <TitleSection
+    eyebrow="SHEET A-301 — SIDE QUESTS"
+    title="SIDE QUESTS"
+    lead="Every hobby gets a room. Walk into one to read its quest log."
+    class="sq-title"
+  >
+    <dl class="stats" slot="aside">
+      {
+        stats.map((s) => (
+          <div class="stat">
+            <dt>{s.label}</dt>
+            <dd class:list={[s.tone && `tone-${s.tone}`]}>{pad2(s.value)}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </TitleSection>
+
+  <WrightBand sheet="A-301" />
+
+  <div class="body">
+    <div class="plan-col"><FloorPlan quests={quests} /></div>
+    <div class="log-col"><QuestLog quests={quests} /></div>
+  </div>
+</SheetLayout>
+
+<style>
+  .sq-title :global(.sheet-title) {
+    font-size: clamp(34px, 5.6vw, 80px);
+    line-height: 1.08;
+  }
+  .stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border: 1px solid var(--l35);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+  }
+  .stat + .stat {
+    border-left: 1px solid var(--l18);
+  }
+  .stat dt {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+  .stat dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 16px;
+  }
+  .tone-accent {
+    color: var(--accent);
+  }
+  .tone-line {
+    color: var(--line);
+  }
+  .body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 var(--side) 32px;
+  }
+  .plan-col,
+  .log-col {
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .stats {
+      min-width: 300px;
+    }
+    .stat {
+      padding: 10px 14px;
+    }
+    .stat dt {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
+    .stat dd {
+      font-size: 20px;
+    }
+    .body {
+      gap: 32px;
+      padding-bottom: 44px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .body {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .plan-col {
+      flex: 999 1 620px;
+    }
+    .log-col {
+      flex: 1 1 340px;
+    }
+  }
+</style>

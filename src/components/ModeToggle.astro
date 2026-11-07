@@ -1,0 +1,137 @@
+---
+/**
+ * Blueprint / Trace Paper switch. `full` shows the MODE caption and the current
+ * mode name; `icon` is the 44×44 phone button. Both share one script.
+ */
+interface Props {
+  variant?: 'full' | 'icon';
+  class?: string;
+}
+const { variant = 'full', class: className } = Astro.props;
+---
+<button
+  type="button"
+  class:list={['mode', `mode--${variant}`, 'needs-js', className]}
+  data-mode-toggle
+  aria-label="Switch to trace paper (light mode)"
+>
+  <span class="mode-icon" aria-hidden="true"></span>
+  {
+    variant === 'full' && (
+      <span class="mode-text" aria-hidden="true">
+        <span class="mode-cap">MODE</span>
+        <span class="mode-name">
+          <span class="when-dark">BLUEPRINT</span>
+          <span class="when-light">TRACE PAPER</span>
+        </span>
+      </span>
+    )
+  }
+</button>
+
+<style>
+  .mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--l55);
+    background: transparent;
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+  .mode:hover {
+    border-color: var(--line);
+  }
+  .mode--icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+  }
+  .mode-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--fg);
+    background: linear-gradient(90deg, var(--fg) 50%, transparent 50%);
+  }
+  .mode--icon .mode-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .mode-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    text-align: left;
+  }
+  .mode-cap {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  :global(:root[data-mode='light']) .when-dark,
+  :global(:root:not([data-mode='light'])) .when-light {
+    display: none;
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const KEY = 'mode';
+  type Mode = 'light' | 'dark';
+
+  const current = (): Mode => (root.dataset.mode === 'light' ? 'light' : 'dark');
+  const stored = (): Mode | null => {
+    try {
+      const v = localStorage.getItem(KEY);
+      return v === 'light' || v === 'dark' ? v : null;
+    } catch {
+      return null;
+    }
+  };
+
+  function sync() {
+    const label =
+      current() === 'dark' ? 'Switch to trace paper (light mode)' : 'Switch to blueprint (dark mode)';
+    document.querySelectorAll('[data-mode-toggle]').forEach((b) => b.setAttribute('aria-label', label));
+  }
+
+  let fadeTimer = 0;
+  function apply(mode: Mode, persist: boolean) {
+    root.classList.add('mode-fading');
+    window.clearTimeout(fadeTimer);
+    fadeTimer = window.setTimeout(() => root.classList.remove('mode-fading'), 260);
+    root.dataset.mode = mode;
+    if (persist) {
+      try {
+        localStorage.setItem(KEY, mode);
+      } catch {
+        /* private mode: the choice lasts for this page only */
+      }
+    }
+    sync();
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = (event.target as Element | null)?.closest('[data-mode-toggle]');
+    if (button) apply(current() === 'dark' ? 'light' : 'dark', true);
+  });
+
+  // Follow the system until the visitor makes a choice.
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+    if (!stored()) apply(e.matches ? 'light' : 'dark', false);
+  });
+  // Keep other open tabs in step.
+  window.addEventListener('storage', (e) => {
+    if (e.key === KEY && (e.newValue === 'light' || e.newValue === 'dark')) apply(e.newValue, false);
+  });
+
+  sync();
+</script>

@@ -1,0 +1,236 @@
+---
+/**
+ * The quest log panel. Without JavaScript every log is stacked and the rooms
+ * link to them. With JavaScript only the selected room's log shows; before the
+ * script runs, CSS shows the log named in the URL hash (or the first room).
+ */
+import { questMeta, roomId, type Quest } from '../lib/quests';
+
+interface Props {
+  quests: Quest[];
+}
+const { quests } = Astro.props;
+---
+<section class="ql" aria-labelledby="ql-h">
+  <div class="panel__head">
+    <h2 id="ql-h" class="ql-h">QUEST LOG</h2>
+    <span class="aside">LEVEL 3</span>
+  </div>
+  <div class="ql-logs" data-quest-logs aria-live="polite">
+    {
+      quests.map((q, i) => (
+        <article
+          class="log"
+          id={roomId(q)}
+          data-log={q.room}
+          data-default={i === 0 ? '' : undefined}
+          aria-labelledby={`${roomId(q)}-name`}
+          tabindex="-1"
+        >
+          <div class="log-main">
+            <div class="log-head">
+              <p class="log-meta">{questMeta(q)}</p>
+              <h3 class="log-name" id={`${roomId(q)}-name`}>
+                {q.name}
+              </h3>
+            </div>
+            <p class="log-summary">{q.summary}</p>
+            <div class="log-entries">
+              <h4 class="log-label">LOG</h4>
+              <ul>
+                {q.log.map((l) => (
+                  <li>
+                    {l.date} — {l.entry}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div class="log-side">
+            {q.status === 'complete' ? (
+              <div class="box box--done">
+                <span class="box-k">STATUS</span>
+                <span class="box-v">Quest complete.</span>
+              </div>
+            ) : (
+              q.nextObjective && (
+                <div class="box">
+                  <span class="box-k">NEXT OBJECTIVE</span>
+                  <span class="box-v">{q.nextObjective}</span>
+                </div>
+              )
+            )}
+            {q.link && (
+              <a class="log-link" href={q.link.href}>
+                {q.link.label}
+              </a>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .ql {
+    border: 1px solid var(--l45);
+    background: var(--bg);
+    min-width: 0;
+    container: log / inline-size;
+  }
+  .ql-h {
+    font-size: inherit;
+  }
+  .log {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px 14px 18px;
+  }
+  .log + .log {
+    border-top: 1px dashed var(--l35);
+  }
+  .log:focus {
+    outline: none;
+  }
+  /* With JavaScript, one log at a time. */
+  :global(.js) .log {
+    display: none;
+    border-top: 0;
+  }
+  :global(.js) .ql-logs.is-ready .log.is-active,
+  :global(.js) .ql-logs:not(.is-ready) .log:target,
+  :global(.js) .ql-logs:not(.is-ready):not(:has(.log:target)) .log[data-default] {
+    display: flex;
+  }
+  .log-main,
+  .log-side {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .log-head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .log-meta {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  .log-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.06em;
+  }
+  .log-summary {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .log-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .log-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .log-entries ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    border: 1px dashed var(--l45);
+  }
+  .box--done {
+    border: 1px solid var(--line);
+  }
+  .box-k {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+  }
+  .box--done .box-k {
+    color: var(--line);
+  }
+  .box-v {
+    font-size: 13px;
+  }
+  .log-link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+  @media (min-width: 640px) {
+    .log {
+      gap: 16px;
+      padding: 18px 16px 20px;
+    }
+    .log-main,
+    .log-side {
+      gap: 16px;
+    }
+    .log-meta {
+      font-size: 11px;
+    }
+    .log-name {
+      font-size: 20px;
+    }
+    .log-summary {
+      font-size: 14px;
+    }
+    .log-entries {
+      gap: 8px;
+    }
+    .log-label {
+      font-size: 10px;
+    }
+    .log-entries ul {
+      gap: 8px;
+      font-size: 13px;
+    }
+    .box {
+      padding: 12px;
+    }
+    .box-k {
+      font-size: 10px;
+    }
+    .box-v {
+      font-size: 14px;
+    }
+    .log-link {
+      font-size: 12px;
+    }
+  }
+  /* Wide panel (iPad): summary and log on the left, next objective on the right. */
+  @container log (min-width: 600px) {
+    .log {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    :global(.js) .ql-logs.is-ready .log.is-active,
+    :global(.js) .ql-logs:not(.is-ready) .log:target,
+    :global(.js) .ql-logs:not(.is-ready):not(:has(.log:target)) .log[data-default] {
+      display: grid;
+    }
+  }
+</style>

@@ -1,0 +1,214 @@
+---
+/**
+ * The cover's field of 34 flowing curves (Hadid motion). Rendered as static SVG
+ * so it paints without JavaScript; the script below pulls the curves toward the
+ * pointer and eases them back. It frames itself with CSS per breakpoint: the
+ * full 1440×720 field on desktop, and the pinch point centred (phone) or pushed
+ * right of the text (iPad), matching a "380 60 900 640" viewBox.
+ */
+import { PINCH, RED_CURVE, pathD, readout, restCurves } from '../lib/curves';
+
+const curves = restCurves();
+const stops: [number, number][] = [
+  [0, 0.05],
+  [0.35, 0.14],
+  [0.56, 0.6],
+  [0.78, 0.32],
+  [1, 0.22],
+];
+const [px, py] = PINCH;
+---
+<svg
+  class="cf"
+  viewBox="0 0 1440 720"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+  data-curve-field
+>
+  <defs>
+    <linearGradient id="cf-fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
+      {stops.map(([offset, opacity]) => <stop class="cf-stop" offset={offset} stop-opacity={opacity} />)}
+    </linearGradient>
+  </defs>
+  <g class="cf-construct" fill="none">
+    <circle cx={px} cy={py} r="190" stroke-opacity="0.16" stroke-dasharray="3 7"></circle>
+    <line x1="0" y1={py} x2="1440" y2={py} stroke-opacity="0.12" stroke-dasharray="2 9"></line>
+    <line x1={px} y1="0" x2={px} y2="720" stroke-opacity="0.12" stroke-dasharray="2 9"></line>
+  </g>
+  <g class="cf-curves" fill="none" stroke="url(#cf-fade)">
+    {curves.map((c, i) => (i === RED_CURVE ? null : <path d={pathD(c)} data-i={i} />))}
+  </g>
+  <path class="cf-red" d={pathD(curves[RED_CURVE]!)} data-i={RED_CURVE} fill="none"></path>
+  <g class="cf-cross" fill="none">
+    <line x1={px - 26} y1={py} x2={px + 26} y2={py}></line>
+    <line x1={px} y1={py - 26} x2={px} y2={py + 26}></line>
+    <circle cx={px} cy={py} r="6"></circle>
+  </g>
+  <text class="cf-read" x="848" y="446" data-readout>{readout(830, 406.7)}</text>
+  <text class="cf-read" x="848" y="464">NODE 01 · PINCH POINT</text>
+</svg>
+
+<style>
+  .cf {
+    position: absolute;
+    display: block;
+    max-width: none;
+    /* phone: viewBox "380 60 900 640", pinch point centred */
+    top: -9.375%;
+    height: 112.5%;
+    width: auto;
+    aspect-ratio: 2 / 1;
+    left: 50%;
+    transform: translateX(-57.639%);
+    pointer-events: none;
+  }
+  .cf-stop {
+    stop-color: var(--line);
+  }
+  .cf-construct {
+    stroke: var(--line);
+  }
+  .cf-curves {
+    stroke-width: 1.2;
+  }
+  .cf-red {
+    stroke: var(--accent);
+    stroke-width: 1.6;
+  }
+  .cf-cross {
+    stroke: var(--fg);
+    stroke-width: 1.4;
+  }
+  .cf-read {
+    display: none;
+    fill: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+  /* iPad: same framing, with the pinch to the right of the text column */
+  @media (min-width: 640px) {
+    .cf {
+      left: 73%;
+    }
+    .cf-read {
+      display: inline;
+    }
+  }
+  /* Desktop: the whole 1440×720 field, sliced to the hero */
+  @media (min-width: 1024px) {
+    .cf {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      transform: none;
+    }
+    .cf-curves,
+    .cf-cross {
+      stroke-width: 1;
+    }
+  }
+</style>
+
+<script>
+  import { PINCH, pathD, readout, restCurves, type Pt } from '../lib/curves';
+
+  const SIGMA = 220;
+  const STRENGTH = 0.18;
+  const EASE = 0.12;
+  const KEYS = ['C2', 'M', 'C3'] as const;
+
+  const hero = document.querySelector<HTMLElement>('[data-curve-hero]');
+  const svg = hero?.querySelector<SVGSVGElement>('[data-curve-field]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (hero && svg) {
+    const field = svg;
+    const rest = restCurves();
+    const live = rest.map((c) => ({ ...c, C2: [...c.C2] as Pt, M: [...c.M] as Pt, C3: [...c.C3] as Pt }));
+    const paths = rest.map((_, i) => field.querySelector<SVGPathElement>(`[data-i="${i}"]`));
+    const read = field.querySelector<SVGTextElement>('[data-readout]');
+    const resting = read?.textContent ?? readout(...PINCH);
+    const twoSigma2 = 2 * SIGMA * SIGMA;
+
+    let target: Pt | null = null;
+    let dragging = false;
+    let raf = 0;
+
+    const step = () => {
+      raf = 0;
+      let moving = false;
+      for (let i = 0; i < rest.length; i++) {
+        const r = rest[i]!;
+        const c = live[i]!;
+        for (const k of KEYS) {
+          const [rx, ry] = r[k];
+          let tx = rx;
+          let ty = ry;
+          if (target) {
+            const dx = target[0] - rx;
+            const dy = target[1] - ry;
+            const w = STRENGTH * Math.exp(-(dx * dx + dy * dy) / twoSigma2);
+            tx += dx * w;
+            ty += dy * w;
+          }
+          const p = c[k];
+          p[0] += (tx - p[0]) * EASE;
+          p[1] += (ty - p[1]) * EASE;
+          if (Math.abs(tx - p[0]) > 0.05 || Math.abs(ty - p[1]) > 0.05) moving = true;
+        }
+        paths[i]?.setAttribute('d', pathD(c));
+      }
+      if (moving) {
+        raf = requestAnimationFrame(step);
+      } else if (!target) {
+        // Settled: snap exactly back to the static drawing.
+        rest.forEach((r, i) => {
+          for (const k of KEYS) live[i]![k] = [...r[k]] as Pt;
+          paths[i]?.setAttribute('d', pathD(r));
+        });
+      }
+    };
+    const kick = () => {
+      if (!raf) raf = requestAnimationFrame(step);
+    };
+
+    const toView = (e: PointerEvent): Pt | null => {
+      const m = field.getScreenCTM();
+      if (!m) return null;
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+      return [p.x, p.y];
+    };
+
+    const follow = (e: PointerEvent) => {
+      if (reduce.matches) return;
+      // Touch reacts only while a finger drags across the hero, never to scrolling.
+      if (e.pointerType === 'touch' && !dragging) return;
+      target = toView(e);
+      if (target && read) read.textContent = readout(target[0], target[1]);
+      kick();
+    };
+    const release = () => {
+      dragging = false;
+      target = null;
+      if (read) read.textContent = resting;
+      kick();
+    };
+
+    hero.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') {
+        dragging = true;
+        follow(e);
+      }
+    });
+    hero.addEventListener('pointermove', follow, { passive: true });
+    hero.addEventListener('pointerleave', release);
+    hero.addEventListener('pointerup', (e) => {
+      if (e.pointerType === 'touch') release();
+    });
+    hero.addEventListener('pointercancel', release);
+    reduce.addEventListener('change', () => reduce.matches && release());
+  }
+</script>

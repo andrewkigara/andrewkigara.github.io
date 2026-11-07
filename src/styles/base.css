@@ -1,0 +1,186 @@
+/* Resets, type, focus and links. Component styles live in each component. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: normal;
+  font-weight: 400;
+  /* The Wright band runs past the sheet to the viewport edge. */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+h1, h2, h3, h4, p, ol, ul, figure, dl, dd, blockquote {
+  margin: 0;
+}
+h1, h2, h3, h4 {
+  font-weight: 400;
+}
+img, svg, picture {
+  display: block;
+  max-width: 100%;
+}
+button {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+table {
+  border-collapse: collapse;
+}
+
+a {
+  color: var(--fg);
+}
+a:hover {
+  color: var(--muted);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Mode fade: only while the toggle is switching, so hovers stay instant. */
+@media (prefers-reduced-motion: no-preference) {
+  .mode-fading,
+  .mode-fading *,
+  .mode-fading *::before,
+  .mode-fading *::after {
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease !important;
+  }
+}
+
+/* Utilities */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: none;
+  color: var(--bg);
+}
+
+/* Shared type roles */
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+.label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.sheet-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 6vw, 84px);
+  line-height: 1.05;
+  letter-spacing: 0.05em;
+}
+.lead {
+  font-size: 14px;
+  line-height: 1.6;
+}
+@media (min-width: 640px) {
+  .eyebrow { font-size: 12px; }
+  .lead { font-size: 15px; }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.btn--primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+.btn--primary:hover {
+  color: var(--bg);
+  background: var(--soft);
+}
+.btn--secondary {
+  border-color: var(--l55);
+  background: transparent;
+}
+
+/* Panels */
+.panel {
+  border: 1px solid var(--l35);
+  background: var(--bg);
+}
+.panel__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--l30);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+.panel__head .aside {
+  color: var(--muted);
+}
+
+/* Responsive visibility helpers */
+@media (max-width: 639.98px) {
+  .not-phone { display: none !important; }
+}
+@media (min-width: 640px) {
+  .phone-only { display: none !important; }
+}
+/* Hide controls that need JavaScript when it is unavailable. */
+:root:not(.js) .needs-js {
+  display: none !important;
+}

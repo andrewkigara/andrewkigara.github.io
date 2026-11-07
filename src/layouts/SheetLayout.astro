@@ -1,0 +1,67 @@
+---
+import '@fontsource/michroma/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-500.css';
+import '@fontsource/jetbrains-mono/latin-700.css';
+import '@fontsource/architects-daughter/latin-400.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import michromaWoff2 from '@fontsource/michroma/files/michroma-latin-400-normal.woff2?url';
+import monoWoff2 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2?url';
+import Sheet from '../components/Sheet.astro';
+
+interface Props {
+  /** Sheet number. Omit for pages outside the set (the /sheets index). */
+  sheet?: string;
+  title: string;
+  description: string;
+  notesLabel?: 'GENERAL NOTES' | 'REVISIONS';
+  notes?: string[];
+}
+const { sheet, title, description, notesLabel, notes = [] } = Astro.props;
+const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, ''), Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Sets the color mode before first paint. Its hash is in the CSP. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement, m;
+        try { m = localStorage.getItem('mode'); } catch (e) {}
+        if (m !== 'light' && m !== 'dark') m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        d.setAttribute('data-mode', m);
+        d.classList.add('js');
+        var c = new URLSearchParams(location.search).get('c');
+        if (c === 'field' || c === 'archive') d.setAttribute('data-c', c);
+      })();
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={michromaWoff2} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={monoWoff2} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {
+      sheet ? (
+        <Sheet sheet={sheet} notesLabel={notesLabel} notes={notes}>
+          <slot />
+        </Sheet>
+      ) : (
+        <slot />
+      )
+    }
+  </body>
+</html>

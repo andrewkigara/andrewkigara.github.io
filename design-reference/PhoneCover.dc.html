@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phone A-000 Cover</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Michroma&amp;display=swap">
+<style>
+body{margin:0}
+.ds{--bg:#0a1626;--fg:#eaf2f6;--muted:#8fb3c7;--soft:#c9d8e2;--line:#5cc8e8;--accent:#e06a55;--fill:#0f2236;--water:#13304a;--band:#a63d2a}
+.ds[data-mode="light"]{--bg:#f3f0e8;--fg:#2b2b29;--muted:#5e5c57;--soft:#3d3c39;--line:#2b2b29;--accent:#9e3522;--fill:#e8e3d7;--water:#ddd7c9}
+.ds{--l07:color-mix(in srgb,var(--line) 7%,transparent);--l10:color-mix(in srgb,var(--line) 10%,transparent);--l13:color-mix(in srgb,var(--line) 13%,transparent);--l18:color-mix(in srgb,var(--line) 18%,transparent);--l30:color-mix(in srgb,var(--line) 30%,transparent);--l35:color-mix(in srgb,var(--line) 35%,transparent);--l40:color-mix(in srgb,var(--line) 40%,transparent);--l45:color-mix(in srgb,var(--line) 45%,transparent);--l50:color-mix(in srgb,var(--line) 50%,transparent);--l55:color-mix(in srgb,var(--line) 55%,transparent);--l60:color-mix(in srgb,var(--line) 60%,transparent);--b86:color-mix(in srgb,var(--bg) 86%,transparent)}
+.ds a{color:var(--fg)}.ds a:hover{color:var(--muted)}
+.ds a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ds button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.ds .bub{position:absolute;left:-11px;top:6px;width:20px;height:20px;border:1px solid var(--l40);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.ds .tbc{padding:10px 12px;border-right:1px solid var(--l18);border-bottom:1px solid var(--l18)}
+.ds .tbl{margin:0 0 4px;font-size:10px;letter-spacing:.2em;color:var(--muted)}
+.ds .tbv{margin:0;font-size:13px}
+</style>
+</helmet>
+<div class="ds" data-mode="{{mode}}" style="width: 390px; box-sizing: border-box; padding: 12px; background: var(--bg); color: var(--fg); font-family: 'JetBrains Mono', ui-monospace, monospace; overflow: hidden">
+<div style="position: relative; border: 1px solid var(--l35)">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); pointer-events: none; z-index: 0">
+<div></div>
+<div style="border-left: 1px dashed var(--l10)"></div>
+<div style="border-left: 1px dashed var(--l10)"></div>
+</div>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); height: 34px; border-bottom: 1px solid var(--l18); font-size: 10px; color: var(--muted)">
+<div style="position: relative"><span class="bub" style="left: 8px">A</span></div>
+<div style="position: relative"><span class="bub">B</span></div>
+<div style="position: relative"><span class="bub">C</span></div>
+</div>
+
+<header style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--l18); background: var(--bg)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" fill="none" stroke-width="1.2" style="stroke: var(--line)"></rect><path d="M10 1V29M20 1V29M1 10H29M10 20H29" fill="none" stroke-width="1" style="stroke: var(--line)"></path><rect x="20.5" y="10.5" width="8" height="9" style="fill: var(--accent)"></rect></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Michroma', sans-serif; font-size: 12px; letter-spacing: 0.12em">A. KIGARA</span>
+<span style="font-size: 9px; letter-spacing: 0.18em; color: var(--muted)">REV 01</span>
+</div>
+</div>
+<div style="display: flex; gap: 6px">
+<button type="button" onClick="{{toggleMode}}" aria-label="{{modeAria}}" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--l55); background: transparent; cursor: pointer"><span aria-hidden="true" style="width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--fg); background: linear-gradient(90deg, var(--fg) 50%, transparent 50%)"></span></button>
+<a href="PhoneMenu.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; box-sizing: border-box; border: 1px solid var(--l55); text-decoration: none; font-size: 11px; letter-spacing: 0.16em"><span aria-hidden="true" style="display: flex; flex-direction: column; gap: 3px"><span style="width: 14px; height: 1px; background: var(--fg)"></span><span style="width: 14px; height: 1px; background: var(--fg)"></span><span style="width: 14px; height: 1px; background: var(--fg)"></span></span>SHEETS</a>
+</div>
+</header>
+
+<nav aria-label="Previous and next sheet" style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--l18); background: var(--bg); font-size: 11px; letter-spacing: 0.12em">
+<a href="PhoneAlbum.dc.html" style="display: flex; align-items: center; min-height: 44px; padding: 0 12px; text-decoration: none; color: var(--muted)">← A-401</a>
+<span style="letter-spacing: 0.14em">A-000 · 01 / 05</span>
+<a href="PhoneProfile.dc.html" style="display: flex; align-items: center; justify-content: flex-end; min-height: 44px; padding: 0 12px; text-decoration: none; color: var(--muted)">A-101 →</a>
+</nav>
+
+<section style="position: relative; z-index: 1; overflow: hidden; border-bottom: 1px solid var(--l18)">
+<svg aria-hidden="true" viewBox="380 60 900 640" preserveAspectRatio="xMidYMid slice" style="position: absolute; inset: 0; width: 100%; height: 100%">
+<defs>
+<linearGradient id="pcfade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
+<stop offset="0" stop-opacity="0.05" style="stop-color: var(--line)"></stop>
+<stop offset="0.35" stop-opacity="0.14" style="stop-color: var(--line)"></stop>
+<stop offset="0.56" stop-opacity="0.6" style="stop-color: var(--line)"></stop>
+<stop offset="0.78" stop-opacity="0.32" style="stop-color: var(--line)"></stop>
+<stop offset="1" stop-opacity="0.22" style="stop-color: var(--line)"></stop>
+</linearGradient>
+</defs>
+<circle cx="830" cy="407" r="190" fill="none" stroke-opacity="0.16" stroke-dasharray="3 7" style="stroke: var(--line)"></circle>
+<line x1="0" y1="407" x2="1440" y2="407" stroke-opacity="0.12" stroke-dasharray="2 9" style="stroke: var(--line)"></line>
+<line x1="830" y1="0" x2="830" y2="720" stroke-opacity="0.12" stroke-dasharray="2 9" style="stroke: var(--line)"></line>
+<g fill="none" stroke="url(#pcfade)" stroke-width="1.2">
+<path d="M-40 40.0 C300 40.0 560 300.0 830 360.0 C1100 420.0 1250 -60.0 1480 -60.0"></path>
+<path d="M-40 60.0 C300 60.0 560 304.5 830 362.1 C1100 419.7 1250 -45.3 1480 -45.3"></path>
+<path d="M-40 80.0 C300 80.0 560 309.1 830 364.2 C1100 419.4 1250 -27.4 1480 -27.4"></path>
+<path d="M-40 100.0 C300 100.0 560 313.6 830 366.4 C1100 419.1 1250 -8.0 1480 -8.0"></path>
+<path d="M-40 120.0 C300 120.0 560 318.2 830 368.5 C1100 418.8 1250 12.4 1480 12.4"></path>
+<path d="M-40 140.0 C300 140.0 560 322.7 830 370.6 C1100 418.5 1250 33.6 1480 33.6"></path>
+<path d="M-40 160.0 C300 160.0 560 327.3 830 372.7 C1100 418.2 1250 55.5 1480 55.5"></path>
+<path d="M-40 180.0 C300 180.0 560 331.8 830 374.8 C1100 417.9 1250 77.8 1480 77.8"></path>
+<path d="M-40 200.0 C300 200.0 560 336.4 830 377.0 C1100 417.6 1250 100.7 1480 100.7"></path>
+<path d="M-40 220.0 C300 220.0 560 340.9 830 379.1 C1100 417.3 1250 124.0 1480 124.0"></path>
+<path d="M-40 240.0 C300 240.0 560 345.5 830 381.2 C1100 417.0 1250 147.7 1480 147.7"></path>
+<path d="M-40 260.0 C300 260.0 560 350.0 830 383.3 C1100 416.7 1250 171.8 1480 171.8"></path>
+<path d="M-40 280.0 C300 280.0 560 354.5 830 385.5 C1100 416.4 1250 196.2 1480 196.2"></path>
+<path d="M-40 300.0 C300 300.0 560 359.1 830 387.6 C1100 416.1 1250 220.9 1480 220.9"></path>
+<path d="M-40 320.0 C300 320.0 560 363.6 830 389.7 C1100 415.8 1250 245.9 1480 245.9"></path>
+<path d="M-40 340.0 C300 340.0 560 368.2 830 391.8 C1100 415.5 1250 271.2 1480 271.2"></path>
+<path d="M-40 360.0 C300 360.0 560 372.7 830 393.9 C1100 415.2 1250 296.7 1480 296.7"></path>
+<path d="M-40 380.0 C300 380.0 560 377.3 830 396.1 C1100 414.8 1250 322.4 1480 322.4"></path>
+<path d="M-40 400.0 C300 400.0 560 381.8 830 398.2 C1100 414.5 1250 348.4 1480 348.4"></path>
+<path d="M-40 420.0 C300 420.0 560 386.4 830 400.3 C1100 414.2 1250 374.6 1480 374.6"></path>
+<path d="M-40 440.0 C300 440.0 560 390.9 830 402.4 C1100 413.9 1250 401.0 1480 401.0"></path>
+<path d="M-40 460.0 C300 460.0 560 395.5 830 404.5 C1100 413.6 1250 427.6 1480 427.6"></path>
+<path d="M-40 500.0 C300 500.0 560 404.5 830 408.8 C1100 413.0 1250 481.4 1480 481.4"></path>
+<path d="M-40 520.0 C300 520.0 560 409.1 830 410.9 C1100 412.7 1250 508.5 1480 508.5"></path>
+<path d="M-40 540.0 C300 540.0 560 413.6 830 413.0 C1100 412.4 1250 535.9 1480 535.9"></path>
+<path d="M-40 560.0 C300 560.0 560 418.2 830 415.2 C1100 412.1 1250 563.4 1480 563.4"></path>
+<path d="M-40 580.0 C300 580.0 560 422.7 830 417.3 C1100 411.8 1250 591.0 1480 591.0"></path>
+<path d="M-40 600.0 C300 600.0 560 427.3 830 419.4 C1100 411.5 1250 618.8 1480 618.8"></path>
+<path d="M-40 620.0 C300 620.0 560 431.8 830 421.5 C1100 411.2 1250 646.8 1480 646.8"></path>
+<path d="M-40 640.0 C300 640.0 560 436.4 830 423.6 C1100 410.9 1250 674.9 1480 674.9"></path>
+<path d="M-40 660.0 C300 660.0 560 440.9 830 425.8 C1100 410.6 1250 703.1 1480 703.1"></path>
+<path d="M-40 680.0 C300 680.0 560 445.5 830 427.9 C1100 410.3 1250 731.5 1480 731.5"></path>
+<path d="M-40 700.0 C300 700.0 560 450.0 830 430.0 C1100 410.0 1250 760.0 1480 760.0"></path>
+</g>
+<path d="M-40 480.0 C300 480.0 560 400.0 830 406.7 C1100 413.3 1250 454.4 1480 454.4" fill="none" stroke-width="2" style="stroke: var(--accent)"></path>
+<g fill="none" stroke-width="1.4" style="stroke: var(--fg)">
+<line x1="804" y1="407" x2="856" y2="407"></line>
+<line x1="830" y1="381" x2="830" y2="433"></line>
+<circle cx="830" cy="407" r="6"></circle>
+</g>
+</svg>
+
+<div style="position: relative; z-index: 2; padding: 32px 16px 36px; display: flex; flex-direction: column; gap: 22px">
+<p style="margin: 0; font-size: 11px; letter-spacing: 0.2em; color: var(--muted)">SHEET A-000 — COVER</p>
+<h1 style="margin: 0; font-family: 'Michroma', sans-serif; font-weight: 400; font-size: 44px; line-height: 1.06; letter-spacing: 0.04em">
+<span style="display: block">ANDREW</span>
+<span style="display: block">KIGARA</span>
+</h1>
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.14em; color: var(--muted)">
+<span style="width: 1px; height: 14px; background: var(--line); transform: rotate(45deg)"></span>
+<span style="flex: 1; height: 1px; background: var(--l55)"></span>
+<span style="white-space: nowrap">SOFTWARE ENGINEER · GEICO</span>
+<span style="flex: 1; height: 1px; background: var(--l55)"></span>
+<span style="width: 1px; height: 14px; background: var(--line); transform: rotate(45deg)"></span>
+</div>
+<p style="margin: 0 0 0 auto; font-family: 'Architects Daughter', cursive; font-size: 18px; color: var(--accent); transform: rotate(-3deg)">drag across the lines →</p>
+<div style="border: 1px solid var(--l35); background: var(--b86); padding: 16px 18px">
+<p style="margin: 0 0 10px; font-size: 10px; letter-spacing: 0.22em; color: var(--muted)">GENERAL NOTES</p>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.5">
+<li>Software engineer at Geico.</li>
+<li>Graduate of Drexel University.</li>
+<li>Based in Maryland.</li>
+<li>Working interests: AI and cybersecurity.</li>
+</ol>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<a href="PhoneMenu.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 48px; background: var(--fg); color: var(--bg); text-decoration: none; font-size: 12px; letter-spacing: 0.14em">INDEX OF SHEETS ↓</a>
+<a href="#" style="display: flex; align-items: center; justify-content: center; min-height: 48px; border: 1px solid var(--l55); background: var(--b86); text-decoration: none; font-size: 12px; letter-spacing: 0.14em">CONTACT</a>
+</div>
+</div>
+</section>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; padding: 20px 0 0">
+<div style="height: 6px; background: var(--band); margin: 0 -13px 0 34%"></div>
+<div style="height: 1px; background: var(--l50); margin: 8px -13px 0 18%"></div>
+</div>
+
+<section style="position: relative; z-index: 1; padding: 28px 16px 28px">
+<div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--l35)">
+<h2 style="margin: 0; font-family: 'Michroma', sans-serif; font-weight: 400; font-size: 15px; letter-spacing: 0.12em">INDEX OF SHEETS</h2>
+<p style="margin: 0; font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">ALL DIMENSIONS IN YEARS</p>
+</div>
+<a href="PhoneProfile.dc.html" style="display: grid; grid-template-columns: 84px minmax(0, 1fr) 16px; align-items: center; gap: 10px; min-height: 76px; padding: 12px 0; border-bottom: 1px solid var(--l18); text-decoration: none">
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.04em">A-101</span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">PROFILE</span><span style="font-size: 13px; line-height: 1.45">Who I am, where I am, and what I'm working on.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+<a href="PhoneAcademic.dc.html" style="display: grid; grid-template-columns: 84px minmax(0, 1fr) 16px; align-items: center; gap: 10px; min-height: 76px; padding: 12px 0; border-bottom: 1px solid var(--l18); text-decoration: none">
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.04em">A-201</span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">ACADEMIC</span><span style="font-size: 13px; line-height: 1.45">Drexel to now, drawn as a building section.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+<a href="PhoneSideQuests.dc.html" style="display: grid; grid-template-columns: 84px minmax(0, 1fr) 16px; align-items: center; gap: 10px; min-height: 76px; padding: 12px 0; border-bottom: 1px solid var(--l18); text-decoration: none">
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.04em">A-301</span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">SIDE QUESTS</span><span style="font-size: 13px; line-height: 1.45">Hobbies and interests, room by room.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+<a href="PhoneAlbum.dc.html" style="display: grid; grid-template-columns: 84px minmax(0, 1fr) 16px; align-items: center; gap: 10px; min-height: 76px; padding: 12px 0; border-bottom: 1px solid var(--l18); text-decoration: none">
+<span style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.04em">A-401</span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">ALBUM</span><span style="font-size: 13px; line-height: 1.45">Photos of me, and photos I took, pinned to a key plan.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+</section>
+
+<footer style="position: relative; z-index: 1; border-top: 1px solid var(--l35); background: var(--bg)">
+<div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; border-bottom: 1px solid var(--l18)">
+<p class="tbl" style="margin: 0">REVISIONS</p>
+<p style="margin: 0; font-size: 12px; line-height: 1.5">R01 · 2026.11.07 · Concept mockup, cover sheet.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr))">
+<div class="tbc"><p class="tbl">SHEET NO.</p><p class="tbv" style="font-family: 'Michroma', sans-serif; font-size: 18px; color: var(--accent)">A-000</p></div>
+<div class="tbc" style="border-right: 0"><p class="tbl">SHEET TITLE</p><p class="tbv">Cover</p></div>
+<div class="tbc"><p class="tbl">DATE</p><p class="tbv">2026.11.07</p></div>
+<div class="tbc" style="border-right: 0"><p class="tbl">SCALE</p><p class="tbv">1:1</p></div>
+<div class="tbc" style="border-bottom: 0"><p class="tbl">PROJECT</p><p class="tbv">Personal site</p></div>
+<div class="tbc" style="border: 0"><p class="tbl">DRAWN BY</p><p class="tbv">A. Kigara</p></div>
+</div>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["dark","light","system"],"default":"dark"},"$preview":{"width":390,"height":1600}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { mode: null };
+}
+renderVals() {
+let base = this.props.mode ?? 'dark';
+if (base === 'system') {
+try { base = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { base = 'dark'; }
+}
+const mode = (this.state && this.state.mode) || base;
+return {
+mode: mode,
+modeAria: mode === 'dark' ? 'Switch to trace paper (light mode)' : 'Switch to blueprint (dark mode)',
+toggleMode: () => this.setState({ mode: mode === 'dark' ? 'light' : 'dark' })
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Phone sheet index</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Michroma&amp;display=swap">
+<style>
+body{margin:0}
+.ds{--bg:#0a1626;--fg:#eaf2f6;--muted:#8fb3c7;--soft:#c9d8e2;--line:#5cc8e8;--accent:#e06a55;--fill:#0f2236;--water:#13304a;--band:#a63d2a}
+.ds[data-mode="light"]{--bg:#f3f0e8;--fg:#2b2b29;--muted:#5e5c57;--soft:#3d3c39;--line:#2b2b29;--accent:#9e3522;--fill:#e8e3d7;--water:#ddd7c9}
+.ds{--l10:color-mix(in srgb,var(--line) 10%,transparent);--l18:color-mix(in srgb,var(--line) 18%,transparent);--l35:color-mix(in srgb,var(--line) 35%,transparent);--l40:color-mix(in srgb,var(--line) 40%,transparent);--l50:color-mix(in srgb,var(--line) 50%,transparent);--l55:color-mix(in srgb,var(--line) 55%,transparent)}
+.ds a{color:var(--fg)}.ds a:hover{color:var(--muted)}
+.ds a:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.ds button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.ds .bub{position:absolute;left:-11px;top:6px;width:20px;height:20px;border:1px solid var(--l40);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.ds .row{display:grid;grid-template-columns:minmax(0,1fr) 20px;align-items:center;gap:12px;min-height:88px;padding:14px 16px;border-bottom:1px solid var(--l18);text-decoration:none}
+.ds .no{font-family:'Michroma',sans-serif;font-size:26px;letter-spacing:.04em}
+.ds .nm{font-size:11px;letter-spacing:.18em;color:var(--muted)}
+.ds .de{font-size:12px;line-height:1.45}
+</style>
+</helmet>
+<div class="ds" data-mode="{{mode}}" style="width: 390px; min-height: 900px; box-sizing: border-box; padding: 12px; background: var(--bg); color: var(--fg); font-family: 'JetBrains Mono', ui-monospace, monospace; overflow: hidden">
+<div role="dialog" aria-label="Index of sheets" style="position: relative; min-height: 874px; display: flex; flex-direction: column; border: 1px solid var(--l35)">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); pointer-events: none; z-index: 0">
+<div></div>
+<div style="border-left: 1px dashed var(--l10)"></div>
+<div style="border-left: 1px dashed var(--l10)"></div>
+</div>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); height: 34px; border-bottom: 1px solid var(--l18); font-size: 10px; color: var(--muted)">
+<div style="position: relative"><span class="bub" style="left: 8px">A</span></div>
+<div style="position: relative"><span class="bub">B</span></div>
+<div style="position: relative"><span class="bub">C</span></div>
+</div>
+
+<header style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--l18); background: var(--bg)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" fill="none" stroke-width="1.2" style="stroke: var(--line)"></rect><path d="M10 1V29M20 1V29M1 10H29M10 20H29" fill="none" stroke-width="1" style="stroke: var(--line)"></path><rect x="20.5" y="10.5" width="8" height="9" style="fill: var(--accent)"></rect></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Michroma', sans-serif; font-size: 12px; letter-spacing: 0.12em">A. KIGARA</span>
+<span style="font-size: 9px; letter-spacing: 0.18em; color: var(--muted)">REV 01</span>
+</div>
+</div>
+<a href="PhoneCover.dc.html" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid var(--l55); text-decoration: none; font-size: 11px; letter-spacing: 0.16em">CLOSE <span aria-hidden="true">✕</span></a>
+</header>
+
+<div style="position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: baseline; padding: 24px 16px 12px; border-bottom: 1px solid var(--l35)">
+<span style="font-family: 'Michroma', sans-serif; font-size: 15px; letter-spacing: 0.12em">INDEX OF SHEETS</span>
+<span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">05 SHEETS</span>
+</div>
+
+<nav aria-label="Sheets" style="position: relative; z-index: 1; display: flex; flex-direction: column; background: var(--bg)">
+<a href="PhoneCover.dc.html" aria-current="page" class="row">
+<span style="display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; align-items: baseline; gap: 12px"><span class="no">A-000</span><span style="display: inline-flex; align-items: center; gap: 5px; font-size: 9px; letter-spacing: 0.16em; color: var(--accent)"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent)"></span>YOU ARE HERE</span></span>
+<span class="nm">COVER</span>
+<span class="de">Name, notes, and the field of lines.</span>
+</span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+<a href="PhoneProfile.dc.html" class="row">
+<span style="display: flex; flex-direction: column; gap: 4px"><span class="no">A-101</span><span class="nm">PROFILE</span><span class="de">Who I am, where I am, and what I'm working on.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+<a href="PhoneAcademic.dc.html" class="row">
+<span style="display: flex; flex-direction: column; gap: 4px"><span class="no">A-201</span><span class="nm">ACADEMIC</span><span class="de">Drexel to now, drawn as a building section.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+<a href="PhoneSideQuests.dc.html" class="row">
+<span style="display: flex; flex-direction: column; gap: 4px"><span class="no">A-301</span><span class="nm">SIDE QUESTS</span><span class="de">Hobbies and interests, room by room.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+<a href="PhoneAlbum.dc.html" class="row">
+<span style="display: flex; flex-direction: column; gap: 4px"><span class="no">A-401</span><span class="nm">ALBUM</span><span class="de">Photos of me, and photos I took.</span></span>
+<span aria-hidden="true" style="color: var(--accent)">→</span>
+</a>
+</nav>
+
+<div style="position: relative; z-index: 1; margin-top: auto; display: flex; flex-direction: column; gap: 16px; padding: 20px 16px 18px; border-top: 1px solid var(--l35); background: var(--bg)">
+<button type="button" onClick="{{toggleMode}}" aria-label="{{modeAria}}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid var(--l55); background: transparent; color: var(--fg); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; cursor: pointer">
+<span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--fg); background: linear-gradient(90deg, var(--fg) 50%, transparent 50%)"></span>
+<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px"><span style="font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">MODE</span><span>{{modeLabel}}</span></span>
+</button>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--l35)">
+<a href="#" style="display: flex; align-items: center; justify-content: center; min-height: 44px; border-right: 1px solid var(--l18); text-decoration: none; font-size: 10px; letter-spacing: 0.16em">GITHUB ↗</a>
+<a href="#" style="display: flex; align-items: center; justify-content: center; min-height: 44px; border-right: 1px solid var(--l18); text-decoration: none; font-size: 10px; letter-spacing: 0.16em">LINKEDIN ↗</a>
+<a href="#" style="display: flex; align-items: center; justify-content: center; min-height: 44px; text-decoration: none; font-size: 10px; letter-spacing: 0.16em">EMAIL</a>
+</div>
+<span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">DRAWING SET · REV 01 · 2026.11.07</span>
+</div>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; padding: 0 0 18px; background: var(--bg)">
+<div style="height: 6px; background: var(--band); margin: 0 -13px 0 34%"></div>
+<div style="height: 1px; background: var(--l50); margin: 8px -13px 0 18%"></div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["dark","light","system"],"default":"dark"},"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { mode: null };
+}
+renderVals() {
+let base = this.props.mode ?? 'dark';
+if (base === 'system') {
+try { base = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { base = 'dark'; }
+}
+const mode = (this.state && this.state.mode) || base;
+return {
+mode: mode,
+modeLabel: mode === 'dark' ? 'BLUEPRINT' : 'TRACE PAPER',
+modeAria: mode === 'dark' ? 'Switch to trace paper (light mode)' : 'Switch to blueprint (dark mode)',
+toggleMode: () => this.setState({ mode: mode === 'dark' ? 'light' : 'dark' })
+};
+}
+}
+</script>
+</body>
+</html>

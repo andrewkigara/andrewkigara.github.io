@@ -1,0 +1,105 @@
+---
+/** Drawing number bubble, underlined title and scale caption. */
+interface Props {
+  num: string;
+  /** Sheet reference under the number, e.g. "A-201". */
+  sheet?: string;
+  title: string;
+  caption: string;
+  size?: 'sm' | 'lg';
+}
+const { num, sheet, title, caption, size = 'sm' } = Astro.props;
+---
+<div class:list={['dt', `dt--${size}`]}>
+  <span class="dt-num" aria-hidden="true">
+    <span class="dt-n">{num}</span>
+    {sheet && <span class="dt-rule" />}
+    {sheet && <span class="dt-sheet">{sheet}</span>}
+  </span>
+  <p class="dt-text">
+    <span class="dt-title">{title}</span>
+    <span class="dt-cap">{caption}</span>
+  </p>
+</div>
+
+<style>
+  .dt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dt-num {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--fg);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .dt--lg .dt-num {
+    width: 36px;
+    height: 36px;
+    font-size: 9px;
+  }
+  .dt-n {
+    font-weight: 700;
+  }
+  .dt-rule {
+    width: 20px;
+    height: 1px;
+    background: var(--fg);
+  }
+  .dt-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .dt-title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid var(--fg);
+  }
+  .dt--lg .dt-title {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .dt-cap {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .dt--lg .dt-cap {
+    font-size: 9px;
+  }
+  @media (min-width: 640px) {
+    .dt-num {
+      width: 34px;
+      height: 34px;
+      font-size: 13px;
+    }
+    .dt--lg .dt-num {
+      width: 38px;
+      height: 38px;
+      font-size: 10px;
+    }
+    .dt--lg .dt-rule {
+      width: 22px;
+    }
+    .dt-title,
+    .dt--lg .dt-title {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+    }
+    .dt--lg .dt-cap {
+      font-size: 10px;
+    }
+  }
+</style>

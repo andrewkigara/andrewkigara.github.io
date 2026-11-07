@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A-401 Album</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Michroma&amp;display=swap">
+<style>
+body{margin:0}
+.ds{--bg:#0a1626;--fg:#eaf2f6;--muted:#8fb3c7;--soft:#c9d8e2;--line:#5cc8e8;--accent:#e06a55;--fill:#0f2236;--water:#13304a}
+.ds[data-mode="light"]{--bg:#f3f0e8;--fg:#2b2b29;--muted:#5e5c57;--soft:#3d3c39;--line:#2b2b29;--accent:#9e3522;--fill:#e8e3d7;--water:#ddd7c9}
+.ds a{color:var(--fg)}.ds a:hover{color:var(--muted)}
+.ds a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ds button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+</style>
+</helmet>
+<div class="ds" data-mode="{{mode}}" style="background: var(--bg); color: var(--fg); font-family: 'JetBrains Mono', ui-monospace, monospace; padding: 20px; overflow: hidden; box-sizing: border-box">
+<div style="position: relative; max-width: 1400px; margin: 0 auto; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent)">
+
+<sc-if value="{{showGrid}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); pointer-events: none; z-index: 0">
+<div></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+<div style="border-left: 1px dashed color-mix(in srgb, var(--line) 9%, transparent)"></div>
+</div>
+</sc-if>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); height: 34px; border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent); font-size: 10px; color: var(--muted)">
+<div style="position: relative"><span style="position: absolute; left: 8px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center">A</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">B</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">C</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">D</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">E</span></div>
+<div style="position: relative"><span style="position: absolute; left: -11px; top: 6px; width: 20px; height: 20px; border: 1px solid color-mix(in srgb, var(--line) 45%, transparent); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg)">F</span></div>
+</div>
+
+<header style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 32px; padding: 16px 28px; border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent); background: var(--bg)">
+<div style="display: flex; align-items: center; gap: 14px">
+<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" fill="none" stroke-width="1.2" style="stroke: var(--line)"></rect><path d="M10 1V29M20 1V29M1 10H29M10 20H29" fill="none" stroke-width="1" style="stroke: var(--line)"></path><rect x="20.5" y="10.5" width="8" height="9" style="fill: var(--accent)"></rect></svg>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Michroma', sans-serif; font-size: 13px; letter-spacing: 0.12em">A. KIGARA</span>
+<span style="font-size: 10px; letter-spacing: 0.18em; color: var(--muted)">DRAWING SET · REV 01</span>
+</div>
+</div>
+<nav aria-label="Sheets" style="display: flex; flex-wrap: wrap; gap: 4px 26px">
+<a href="Main.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-000</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">COVER</span>
+</a>
+<a href="Profile.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-101</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">PROFILE</span>
+</a>
+<a href="Academic.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-201</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">ACADEMIC</span>
+</a>
+<a href="SideQuests.dc.html" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-301</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">SIDE QUESTS</span>
+</a>
+<a href="#" aria-current="page" style="display: flex; flex-direction: column; justify-content: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid var(--accent); padding: 0 2px">
+<span style="font-size: 10px; letter-spacing: 0.16em; color: var(--muted)">A-401</span>
+<span style="font-size: 13px; letter-spacing: 0.08em">ALBUM</span>
+</a>
+</nav>
+<button type="button" onClick="{{toggleMode}}" aria-label="{{modeAria}}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); background: transparent; color: var(--fg); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; cursor: pointer">
+<span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--fg); background: linear-gradient(90deg, var(--fg) 50%, transparent 50%)"></span>
+<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px"><span style="font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">MODE</span><span>{{modeLabel}}</span></span>
+</button>
+</header>
+
+<section style="position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px 40px; padding: 48px 28px 28px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 620px">
+<p style="margin: 0; font-size: 12px; letter-spacing: 0.2em; color: var(--muted)">SHEET A-401 — ALBUM</p>
+<h1 style="margin: 0; font-family: 'Michroma', sans-serif; font-weight: 400; font-size: clamp(40px, 6vw, 84px); line-height: 1.05; letter-spacing: 0.05em">ALBUM</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6">Two collections on one light table. Every frame is numbered and pinned to the key plan, the way architects log site photos.</p>
+</div>
+<sc-if value="{{isField}}" hint-placeholder-val="{{ true }}">
+<div role="group" aria-label="Collection" style="display: flex; flex-wrap: wrap; border: 1px solid var(--line)">
+<button type="button" aria-pressed="true" onClick="{{showField}}" style="min-height: 48px; padding: 6px 18px; border: 0; background: var(--line); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; cursor: pointer; text-align: left">FIELD SURVEY<br>photos I took</button>
+<button type="button" aria-pressed="false" onClick="{{showArchive}}" style="min-height: 48px; padding: 6px 18px; border: 0; border-left: 1px solid var(--line); background: transparent; color: var(--fg); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; cursor: pointer; text-align: left">ARCHIVE<br>photos of me</button>
+</div>
+</sc-if>
+<sc-if value="{{isArchive}}" hint-placeholder-val="{{ false }}">
+<div role="group" aria-label="Collection" style="display: flex; flex-wrap: wrap; border: 1px solid var(--line)">
+<button type="button" aria-pressed="false" onClick="{{showField}}" style="min-height: 48px; padding: 6px 18px; border: 0; background: transparent; color: var(--fg); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; cursor: pointer; text-align: left">FIELD SURVEY<br>photos I took</button>
+<button type="button" aria-pressed="true" onClick="{{showArchive}}" style="min-height: 48px; padding: 6px 18px; border: 0; border-left: 1px solid var(--line); background: var(--line); color: var(--bg); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; cursor: pointer; text-align: left">ARCHIVE<br>photos of me</button>
+</div>
+</sc-if>
+</section>
+
+<div aria-hidden="true" style="position: relative; z-index: 1; padding: 0 0 32px">
+<div style="height: 8px; background: #A63D2A; margin: 0 -21px 0 42%"></div>
+<div style="height: 1px; background: color-mix(in srgb, var(--line) 50%, transparent); margin: 10px -21px 0 22%"></div>
+</div>
+
+<section style="position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 32px; padding: 0 28px 40px; align-items: flex-start">
+
+<div style="flex: 1 1 420px; min-width: 0; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); background: var(--bg)">
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--line) 30%, transparent); font-size: 11px; letter-spacing: 0.2em">
+<span>KEY PLAN</span>
+<span style="color: var(--muted)">NOT TO SCALE</span>
+</div>
+<svg role="img" aria-label="Key plan with six numbered camera positions and their viewing directions" viewBox="0 0 600 540" style="display: block; width: 100%; height: auto">
+<path d="M0 470 C140 440 220 520 360 488 C460 466 520 400 600 392 L600 406 C520 414 460 480 360 502 C220 534 140 454 0 484 Z" stroke-opacity="0.55" stroke-width="1" style="fill: var(--water); stroke: var(--line)"></path>
+<g fill="none" stroke-width="1" stroke-opacity="0.26" style="stroke: var(--line)">
+<path d="M384.0 250.0 L385.8 256.4 L383.7 262.6 L379.1 268.0 L373.4 272.7 L367.4 276.9 L360.8 280.6 L353.4 283.1 L345.2 283.8 L337.1 282.5 L330.0 280.2 L323.7 278.5 L317.2 278.3 L309.2 279.5 L299.2 280.6 L288.6 279.8 L280.2 276.1 L275.9 269.9 L276.3 262.6 L279.8 255.7 L284.0 250.0 L287.0 245.1 L288.6 240.3 L290.0 235.3 L292.5 230.4 L296.6 226.0 L302.1 222.3 L308.0 218.9 L314.3 215.3 L321.5 211.4 L330.0 208.2 L339.4 207.4 L348.1 209.8 L354.6 215.3 L357.9 222.3 L359.4 228.9 L361.1 233.8 L365.0 237.2 L371.4 240.3 L378.6 244.5 Z"></path>
+<path d="M428.8 254.0 L432.0 266.3 L426.0 277.9 L413.4 286.8 L398.6 293.0 L384.8 297.8 L372.9 302.4 L361.6 307.1 L349.7 310.9 L336.9 312.6 L324.0 312.3 L311.4 311.2 L298.4 310.8 L283.4 311.4 L266.0 311.4 L248.4 308.4 L234.6 300.7 L228.5 289.0 L231.1 275.7 L239.6 263.6 L248.8 254.0 L254.2 246.0 L254.8 237.8 L253.0 227.9 L252.9 216.8 L257.5 206.1 L267.1 197.6 L279.9 191.7 L294.0 187.6 L308.7 184.6 L324.0 182.7 L339.6 183.2 L354.0 187.6 L365.1 195.9 L371.8 206.6 L375.7 216.8 L380.3 224.6 L388.9 230.2 L402.3 235.7 L417.4 243.3 Z"></path>
+<path d="M474.6 258.0 L477.1 276.1 L465.4 292.5 L443.3 304.0 L418.3 310.4 L396.6 314.6 L380.6 320.0 L367.7 328.3 L354.2 338.2 L337.5 346.8 L318.0 351.5 L297.3 352.0 L276.6 349.8 L255.5 346.3 L233.8 341.5 L212.7 333.8 L196.3 321.7 L189.0 305.3 L192.3 287.4 L203.1 271.1 L214.6 258.0 L220.3 246.9 L218.1 234.6 L211.6 219.0 L207.9 200.4 L212.8 182.3 L227.7 168.5 L249.7 161.5 L273.9 160.2 L296.9 161.9 L318.0 164.3 L338.0 167.1 L356.9 171.7 L373.6 179.5 L386.6 190.0 L396.6 201.4 L406.7 211.6 L420.6 220.3 L439.6 229.6 L459.9 241.8 Z"></path>
+<path d="M541.0 266.0 L536.4 292.3 L517.8 315.6 L487.5 332.6 L453.3 343.0 L424.0 351.0 L403.5 362.6 L388.3 382.4 L370.3 408.5 L342.9 433.9 L306.0 449.3 L265.7 449.2 L229.9 434.7 L202.7 411.9 L182.8 388.1 L165.5 367.1 L148.0 348.6 L131.5 330.0 L119.9 309.5 L115.4 287.7 L116.0 266.0 L116.6 244.4 L113.6 221.0 L108.8 193.7 L109.5 163.2 L123.5 134.6 L153.7 115.1 L195.4 109.7 L239.0 117.5 L276.4 131.7 L306.0 143.3 L332.2 147.0 L361.2 143.6 L395.7 139.3 L432.6 140.5 L466.1 150.8 L491.9 168.8 L510.2 191.1 L524.1 215.0 L535.1 239.9 Z"></path>
+<path d="M554.7 270.0 L548.3 298.3 L534.6 324.9 L511.6 347.6 L482.4 365.4 L453.7 380.7 L429.7 398.5 L408.4 423.2 L382.9 453.7 L346.7 482.2 L300.0 498.3 L250.6 494.6 L208.9 471.8 L180.9 438.4 L163.8 405.0 L149.1 378.7 L128.5 359.7 L100.9 343.1 L71.9 323.4 L50.0 298.5 L39.7 270.0 L39.6 240.3 L44.8 210.3 L52.7 179.3 L65.8 147.5 L89.5 118.5 L127.0 98.5 L174.6 92.8 L223.7 101.0 L266.1 116.0 L300.0 127.5 L331.2 128.3 L368.1 119.2 L414.7 108.0 L466.5 105.0 L513.2 116.5 L545.2 141.7 L559.7 174.7 L561.7 208.8 L558.7 240.5 Z"></path>
+</g>
+<path d="M513.4 262.0 L512.7 284.9 L495.8 305.0 L466.6 318.7 L434.2 325.9 L407.1 330.5 L388.5 337.9 L375.3 351.4 L360.6 369.6 L339.5 387.1 L312.0 398.0 L281.8 399.3 L253.2 392.2 L228.2 380.5 L205.8 367.2 L185.5 353.1 L168.6 337.0 L158.6 318.3 L157.8 298.1 L164.8 278.8 L173.4 262.0 L176.9 246.6 L172.4 229.3 L163.7 207.6 L159.1 182.0 L166.7 157.4 L188.7 139.8 L220.9 133.3 L255.5 136.8 L286.3 145.3 L312.0 153.2 L335.0 157.5 L358.3 159.4 L382.5 162.4 L405.7 169.2 L425.9 180.0 L443.7 193.1 L461.5 207.2 L481.2 222.4 L500.6 240.5 Z" fill="none" stroke-width="1.5" stroke-opacity="0.45" style="stroke: var(--line)"></path>
+<g stroke-opacity="0.6" stroke-width="1" style="stroke: var(--line)">
+<line x1="0" y1="62" x2="600" y2="62"></line>
+<line x1="0" y1="74" x2="600" y2="74"></line>
+<line x1="464" y1="0" x2="464" y2="540"></line>
+<line x1="476" y1="0" x2="476" y2="540"></line>
+</g>
+<g fill-opacity="0.12" stroke-opacity="0.6" stroke-width="1" style="fill: var(--line); stroke: var(--line)">
+<rect x="490" y="90" width="44" height="28"></rect>
+<rect x="490" y="126" width="28" height="36"></rect>
+<rect x="414" y="88" width="36" height="30"></rect>
+</g>
+<g transform="translate(548 478)" fill="none" stroke-width="1" style="stroke: var(--line)">
+<circle r="18"></circle>
+<path d="M0 -14 L7 12 L0 6 L-7 12 Z" style="fill: var(--line)"></path>
+</g>
+<text x="548" y="452" text-anchor="middle" style="fill: var(--fg)" font-family="JetBrains Mono, monospace" font-size="12">N</text>
+<g font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">
+<g transform="translate(300 246)"><path transform="rotate(-30)" d="M0 0 L44 -17 A47 47 0 0 1 44 17 Z" fill-opacity="0.16" stroke-opacity="0.6" style="fill: var(--accent); stroke: var(--accent)"></path><circle r="12" stroke-width="1.5" style="fill: var(--bg); stroke: var(--accent)"></circle><text y="4" text-anchor="middle" style="fill: var(--accent)">1</text></g>
+<g transform="translate(176 330)"><path transform="rotate(200)" d="M0 0 L44 -17 A47 47 0 0 1 44 17 Z" fill-opacity="0.16" stroke-opacity="0.6" style="fill: var(--accent); stroke: var(--accent)"></path><circle r="12" stroke-width="1.5" style="fill: var(--bg); stroke: var(--accent)"></circle><text y="4" text-anchor="middle" style="fill: var(--accent)">2</text></g>
+<g transform="translate(432 196)"><path transform="rotate(150)" d="M0 0 L44 -17 A47 47 0 0 1 44 17 Z" fill-opacity="0.16" stroke-opacity="0.6" style="fill: var(--accent); stroke: var(--accent)"></path><circle r="12" stroke-width="1.5" style="fill: var(--bg); stroke: var(--accent)"></circle><text y="4" text-anchor="middle" style="fill: var(--accent)">3</text></g>
+<g transform="translate(520 300)"><path transform="rotate(230)" d="M0 0 L44 -17 A47 47 0 0 1 44 17 Z" fill-opacity="0.16" stroke-opacity="0.6" style="fill: var(--accent); stroke: var(--accent)"></path><circle r="12" stroke-width="1.5" style="fill: var(--bg); stroke: var(--accent)"></circle><text y="4" text-anchor="middle" style="fill: var(--accent)">4</text></g>
+<g transform="translate(128 186)"><path transform="rotate(10)" d="M0 0 L44 -17 A47 47 0 0 1 44 17 Z" fill-opacity="0.16" stroke-opacity="0.6" style="fill: var(--accent); stroke: var(--accent)"></path><circle r="12" stroke-width="1.5" style="fill: var(--bg); stroke: var(--accent)"></circle><text y="4" text-anchor="middle" style="fill: var(--accent)">5</text></g>
+<g transform="translate(360 436)"><path transform="rotate(-95)" d="M0 0 L44 -17 A47 47 0 0 1 44 17 Z" fill-opacity="0.16" stroke-opacity="0.6" style="fill: var(--accent); stroke: var(--accent)"></path><circle r="12" stroke-width="1.5" style="fill: var(--bg); stroke: var(--accent)"></circle><text y="4" text-anchor="middle" style="fill: var(--accent)">6</text></g>
+</g>
+</svg>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; padding: 10px 14px; border-top: 1px solid color-mix(in srgb, var(--line) 30%, transparent)">
+<span style="font-size: 11px; letter-spacing: 0.12em; color: var(--muted)">CIRCLE = FRAME NO. · WEDGE = CAMERA DIRECTION</span>
+<span style="font-family: 'Architects Daughter', cursive; font-size: 18px; color: var(--accent); transform: rotate(-2deg)">locations rounded on purpose</span>
+</div>
+</div>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+
+<sc-if value="{{isField}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; padding-bottom: 10px; border-bottom: 1px solid color-mix(in srgb, var(--line) 40%, transparent); font-size: 11px; letter-spacing: 0.2em">
+<span>CONTACT SHEET — FIELD SURVEY</span>
+<span style="color: var(--muted)">06 FRAMES</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 22px 16px">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 01]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">01 — [Location] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">[Camera] · [Lens] · [Settings]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 02]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">02 — [Location] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">[Camera] · [Lens] · [Settings]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 03]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">03 — [Location] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">[Camera] · [Lens] · [Settings]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">4</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 04]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">04 — [Location] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">[Camera] · [Lens] · [Settings]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">5</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 05]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">05 — [Location] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">[Camera] · [Lens] · [Settings]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">6</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 06]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">06 — [Location] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">[Camera] · [Lens] · [Settings]</span></figcaption>
+</figure>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isArchive}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; padding-bottom: 10px; border-bottom: 1px solid color-mix(in srgb, var(--line) 40%, transparent); font-size: 11px; letter-spacing: 0.2em">
+<span>CONTACT SHEET — ARCHIVE</span>
+<span style="color: var(--muted)">06 FRAMES</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 22px 16px">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 01]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">01 — Drexel commencement · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">Shot by [Name]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 02]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">02 — First week at Geico · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">Shot by [Name]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 03]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">03 — [Moment] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">Shot by [Name]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">4</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 04]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">04 — [Moment] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">Shot by [Name]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">5</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 05]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">05 — [Moment] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">Shot by [Name]</span></figcaption>
+</figure>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div aria-hidden="true" style="position: relative; aspect-ratio: 3 / 2; border: 1px solid color-mix(in srgb, var(--line) 50%, transparent); background-color: var(--fill); background-image: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--line) 10%, transparent) 0 1px, transparent 1px 10px); display: flex; align-items: center; justify-content: center"><span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--bg); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">6</span><span style="background: var(--bg); padding: 2px 6px; font-size: 11px; letter-spacing: 0.12em">[PHOTO 06]</span></div>
+<figcaption style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px">06 — [Moment] · [Year]</span><span style="font-size: 11px; letter-spacing: 0.06em; color: var(--muted)">Shot by [Name]</span></figcaption>
+</figure>
+</div>
+</div>
+</sc-if>
+
+</div>
+</section>
+
+<footer style="position: relative; z-index: 1; display: flex; flex-wrap: wrap; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); background: var(--bg)">
+<div style="flex: 999 1 380px; padding: 16px 28px; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box">
+<p style="margin: 0; font-size: 10px; letter-spacing: 0.22em; color: var(--muted)">GENERAL NOTES</p>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.5">
+<li>New frames: drop an image and a metadata file into /album, then push. The site rebuilds.</li>
+<li>GPS data is stripped at build. Key plan positions are set by hand.</li>
+</ol>
+</div>
+<div style="flex: 1 1 520px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-left: 1px solid color-mix(in srgb, var(--line) 55%, transparent)">
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">PROJECT</p>
+<p style="margin: 0; font-size: 13px">Personal site</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">DRAWN BY</p>
+<p style="margin: 0; font-size: 13px">A. Kigara</p>
+</div>
+<div style="padding: 10px 12px; border-bottom: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">DATE</p>
+<p style="margin: 0; font-size: 13px">2026.11.07</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SHEET TITLE</p>
+<p style="margin: 0; font-size: 13px">Album</p>
+</div>
+<div style="padding: 10px 12px; border-right: 1px solid color-mix(in srgb, var(--line) 20%, transparent)">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SCALE</p>
+<p style="margin: 0; font-size: 13px">NTS</p>
+</div>
+<div style="padding: 10px 12px">
+<p style="margin: 0 0 4px; font-size: 10px; letter-spacing: 0.2em; color: var(--muted)">SHEET NO.</p>
+<p style="margin: 0; font-family: 'Michroma', sans-serif; font-size: clamp(16px, 2vw, 24px); letter-spacing: 0.04em; color: var(--accent)">A-401</p>
+</div>
+</div>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["dark","light","system"],"default":"light"},"showGrid":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":1160}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { tab: 'field', mode: null };
+}
+renderVals() {
+const tab = (this.state && this.state.tab) || 'field';
+let base = this.props.mode ?? 'light';
+if (base === 'system') {
+try { base = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { base = 'light'; }
+}
+const mode = (this.state && this.state.mode) || base;
+return {
+mode: mode,
+modeLabel: mode === 'dark' ? 'BLUEPRINT' : 'TRACE PAPER',
+modeAria: mode === 'dark' ? 'Switch to trace paper (light mode)' : 'Switch to blueprint (dark mode)',
+toggleMode: () => this.setState({ mode: mode === 'dark' ? 'light' : 'dark' }),
+showGrid: this.props.showGrid ?? true,
+isField: tab === 'field',
+isArchive: tab === 'archive',
+showField: () => this.setState({ tab: 'field' }),
+showArchive: () => this.setState({ tab: 'archive' })
+};
+}
+}
+</script>
+</body>
+</html>

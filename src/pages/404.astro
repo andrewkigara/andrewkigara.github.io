@@ -1,0 +1,61 @@
+---
+import TitleSection from '../components/TitleSection.astro';
+import WrightBand from '../components/WrightBand.astro';
+import SheetLayout from '../layouts/SheetLayout.astro';
+import { SHEETS } from '../lib/sheets';
+---
+<SheetLayout
+  sheet="X-404"
+  title="Sheet not found · Andrew Kigara"
+  description="This sheet is not in the drawing set."
+  notes={['This sheet is not in the set. Pick one from the index below.']}
+>
+  <TitleSection
+    eyebrow="SHEET X-404 — NOT ON FILE"
+    title="NOT FOUND"
+    lead="There's no sheet at this address. It may have been renumbered; every sheet in the set is listed below."
+  />
+  <WrightBand sheet="A-101" />
+  <nav class="list" aria-label="All sheets">
+    <ul>
+      {
+        SHEETS.map((s) => (
+          <li>
+            <a href={s.href}>
+              <span class="no">{s.no}</span> {s.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</SheetLayout>
+
+<style>
+  .list {
+    position: relative;
+    z-index: 1;
+    padding: 0 var(--side) 44px;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--l35);
+  }
+  a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 56px;
+    border-bottom: 1px solid var(--l18);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+  .no {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--accent);
+  }
+</style>

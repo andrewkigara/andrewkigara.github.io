@@ -1,0 +1,19 @@
+---
+/** The art-glass mark: a Wright-style leaded window with one red pane. */
+interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 30, class: className } = Astro.props;
+---
+<svg class:list={['mark', className]} width={size} height={size} viewBox="0 0 30 30" aria-hidden="true" focusable="false">
+  <rect class="mark-l" x="1" y="1" width="28" height="28" fill="none" stroke-width="1.2"></rect>
+  <path class="mark-l" d="M10 1V29M20 1V29M1 10H29M10 20H29" fill="none" stroke-width="1"></path>
+  <rect class="mark-a" x="20.5" y="10.5" width="8" height="9"></rect>
+</svg>
+
+<style>
+  .mark { flex-shrink: 0; }
+  .mark-l { stroke: var(--line); }
+  .mark-a { fill: var(--accent); }
+</style>

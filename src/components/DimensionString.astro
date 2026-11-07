@@ -1,0 +1,93 @@
+---
+/** Tick, line, label, line, tick. Decorative, so hidden from assistive tech. */
+interface Props {
+  label: string;
+  vertical?: boolean;
+  /** `lg` for the cover hero; `sm` for drawings. */
+  size?: 'sm' | 'lg';
+  class?: string;
+}
+const { label, vertical = false, size = 'sm', class: className } = Astro.props;
+---
+<div class:list={['dim', vertical ? 'dim--v' : 'dim--h', `dim--${size}`, className]} aria-hidden="true">
+  <span class="tick"></span>
+  <span class="ln"></span>
+  <span class="lbl">{label}</span>
+  <span class="ln"></span>
+  <span class="tick"></span>
+</div>
+
+<style>
+  .dim {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  .lbl {
+    white-space: nowrap;
+  }
+  .ln {
+    flex: 1;
+    background: var(--l55);
+  }
+  .tick {
+    flex-shrink: 0;
+    background: var(--line);
+  }
+  .dim--h .ln {
+    height: 1px;
+  }
+  .dim--h .tick {
+    width: 1px;
+    height: 12px;
+    transform: rotate(45deg);
+  }
+  .dim--lg {
+    letter-spacing: 0.14em;
+  }
+  .dim--lg .tick {
+    height: 14px;
+  }
+  .dim--v {
+    flex-direction: column;
+    width: 20px;
+    font-size: 9px;
+  }
+  .dim--v .ln {
+    width: 1px;
+  }
+  .dim--v .tick {
+    width: 12px;
+    height: 1px;
+  }
+  .dim--v .lbl {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  @media (min-width: 640px) {
+    .dim {
+      gap: 10px;
+    }
+    .dim--h .tick {
+      height: 14px;
+    }
+    .dim--lg {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+    }
+    .dim--lg .tick {
+      height: 16px;
+    }
+    .dim--v {
+      width: 22px;
+      gap: 8px;
+      font-size: 10px;
+    }
+    .dim--v .tick {
+      width: 14px;
+    }
+  }
+</style>
