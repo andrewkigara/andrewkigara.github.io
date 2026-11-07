@@ -1,0 +1,389 @@
+---
+/**
+ * A-201's building section, data-driven from the `floors` collection:
+ * roof, levels (top to bottom), the grade line, then the foundation.
+ */
+import { getCollection } from 'astro:content';
+import DrawingTitle from './DrawingTitle.astro';
+import MarkupNote from './MarkupNote.astro';
+import StatusTag from './StatusTag.astro';
+
+const floors = (await getCollection('floors')).map((f) => f.data).sort((a, b) => a.order - b.order);
+const above = floors.filter((f) => f.kind !== 'foundation');
+const below = floors.filter((f) => f.kind === 'foundation');
+---
+<section class="bs" aria-labelledby="bs-title">
+  <div class="bs-head">
+    <h2 id="bs-title" class="bs-h">BUILDING SECTION A—A</h2>
+    <span class="bs-aside">LOOKING NORTH · DIMENSIONS IN YEARS</span>
+  </div>
+
+  <ol class="floors">
+    {
+      [...above, ...below].map((f) => (
+        <>
+          {f.kind === 'foundation' && (
+            <li class="grade" aria-hidden="true">
+              <span class="grade-l">GRADE ±0.00</span>
+              <span class="grade-line" />
+            </li>
+          )}
+          <li class:list={['floor', `floor--${f.kind}`, { 'floor--cant': f.cantilever }]}>
+            <div class="marker">
+              <span class="mk-row">
+                <span class:list={['sym', `sym--${f.kind}`]} aria-hidden="true" />
+                <span class="lvl">{f.level}</span>
+              </span>
+              <span class="el">EL. {f.elevation}</span>
+            </div>
+            <article class="slab" aria-label={`${f.level}: ${f.title}`}>
+              {f.kind === 'current' ? (
+                <div class="tags">
+                  <StatusTag status="current" label={f.tag} />
+                  <span class="here">
+                    <span class="here-dot" aria-hidden="true" />
+                    YOU ARE HERE
+                  </span>
+                </div>
+              ) : (
+                <StatusTag
+                  status={f.kind === 'roof' ? 'construction' : 'plain'}
+                  label={f.tag}
+                  class={f.kind === 'foundation' ? 'chip-tag' : undefined}
+                />
+              )}
+              <h3 class="ft">{f.title}</h3>
+              {f.meta && <p class="fm">{f.meta}</p>}
+              <p class="fd">{f.summary}</p>
+              {f.note && (
+                <span class="roof-note">
+                  <MarkupNote tilt={3} size="md">{f.note}</MarkupNote>
+                </span>
+              )}
+            </article>
+            <div class="gap" aria-hidden="true" />
+            <div class="dimc" aria-hidden="true">
+              <span class="tick" />
+              {f.elevation}
+              {f.kind === 'foundation' && <span class="tick tick--end" />}
+            </div>
+          </li>
+        </>
+      ))
+    }
+  </ol>
+
+  <div class="bs-title">
+    <DrawingTitle
+      num="1"
+      sheet="A-201"
+      title="SECTION A—A · EDUCATION + WORK"
+      caption="FLOOR HEIGHTS NOT TO SCALE"
+      size="lg"
+    />
+  </div>
+</section>
+
+<style>
+  .bs {
+    position: relative;
+    z-index: 1;
+    padding: 0 var(--side) 8px;
+  }
+  .bs-head {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--l35);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+  .bs-h {
+    font-size: inherit;
+  }
+  .bs-aside {
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .floors {
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Phone: the level marker is a header row above its slab. */
+  .marker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--l35);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+  .floor--roof .marker,
+  .floor--foundation .marker {
+    border-top-color: transparent;
+  }
+  .mk-row {
+    display: contents;
+  }
+  .el {
+    margin-left: auto;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .sym {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: linear-gradient(90deg, var(--line) 50%, transparent 50%);
+  }
+  .sym--roof {
+    border: 1px dashed var(--accent);
+    background: none;
+  }
+  .sym--foundation {
+    border-radius: 0;
+    background: var(--line);
+  }
+  .slab {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px 18px;
+    border-top: 5px solid var(--line);
+    border-left: 1px solid var(--l40);
+  }
+  .floor--cant .slab {
+    /* cantilevers to the viewport edge */
+    margin-right: calc(-1 * (var(--side) + var(--to-edge)));
+    padding-right: calc(var(--side) + var(--to-edge));
+  }
+  .floor--roof .slab {
+    border-top: 2px dashed var(--accent);
+    border-left-style: dashed;
+  }
+  .floor--current .slab {
+    background: var(--l07);
+  }
+  .floor--foundation .slab {
+    border-bottom: 1px solid var(--l40);
+    padding-bottom: 20px;
+    background-color: var(--l04);
+    background-image: repeating-linear-gradient(45deg, var(--l13) 0 1px, transparent 1px 9px);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+  }
+  .here {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+  }
+  .here-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .ft {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+  }
+  .fm {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .fd {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--soft);
+  }
+  /* Foundation: every text run sits on a --bg chip over the hatch. */
+  .floor--foundation .slab :global(.chip-tag),
+  .floor--foundation .ft,
+  .floor--foundation .fm,
+  .floor--foundation .fd {
+    align-self: flex-start;
+    background: var(--bg);
+  }
+  .floor--foundation .ft {
+    padding: 2px 6px 2px 0;
+    font-size: 16px;
+  }
+  .floor--foundation .fm {
+    padding: 2px 6px 2px 0;
+  }
+  .floor--foundation .fd {
+    max-width: 640px;
+    padding: 4px 6px 4px 0;
+  }
+  .roof-note {
+    align-self: flex-end;
+  }
+  .gap,
+  .dimc {
+    display: none;
+  }
+  .grade {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    margin-right: calc(-1 * (var(--side) + var(--to-edge)));
+  }
+  .grade-l {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+  }
+  .grade-line {
+    flex: 1;
+    height: 2px;
+    background: var(--fg);
+  }
+  .bs-title {
+    margin-top: 24px;
+    max-width: 560px;
+  }
+
+  /* iPad and desktop: marker | slab | gap | dimension column */
+  @media (min-width: 640px) {
+    .bs {
+      padding-bottom: 20px;
+    }
+    .bs-head {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px 16px;
+      margin-bottom: 4px;
+    }
+    .bs-aside {
+      font-size: 11px;
+    }
+    .floor {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 24px 90px;
+    }
+    .floor--roof {
+      padding-top: 18px;
+    }
+    .floors {
+      margin-top: 0;
+    }
+    .marker {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      padding: 14px 12px 14px 0;
+      font-size: 12px;
+    }
+    .floor--roof .marker {
+      border-top-color: var(--l35);
+    }
+    .mk-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .el {
+      margin-left: 0;
+      padding-left: 22px;
+      font-size: 11px;
+    }
+    .sym {
+      width: 14px;
+      height: 14px;
+    }
+    .slab {
+      padding: 16px 20px 20px;
+    }
+    .floor--cant .slab {
+      margin-right: -24px;
+      padding-right: 20px;
+    }
+    .floor--foundation .slab {
+      padding: 18px 20px 24px;
+    }
+    .ft {
+      font-size: 16px;
+    }
+    .floor--foundation .ft {
+      font-size: 18px;
+    }
+    .fm {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+    .fd {
+      font-size: 14px;
+    }
+    .here-dot {
+      width: 8px;
+      height: 8px;
+    }
+    .tags {
+      gap: 8px 14px;
+    }
+    .roof-note {
+      position: absolute;
+      right: 36px;
+      top: 12px;
+    }
+    .gap {
+      display: block;
+    }
+    .dimc {
+      display: block;
+      position: relative;
+      border-left: 1px solid var(--l60);
+      padding: 12px 0 0 12px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .tick {
+      position: absolute;
+      left: -8px;
+      top: 0;
+      width: 16px;
+      height: 1px;
+      background: var(--line);
+      transform: rotate(-45deg);
+    }
+    .tick--end {
+      top: auto;
+      bottom: 0;
+    }
+    .grade {
+      gap: 12px;
+      padding: 0;
+    }
+    .grade-l {
+      font-size: 11px;
+    }
+    .bs-title {
+      margin-top: 26px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .floor {
+      grid-template-columns: minmax(96px, 150px) minmax(0, 1fr) 24px minmax(64px, 110px);
+    }
+  }
+</style>

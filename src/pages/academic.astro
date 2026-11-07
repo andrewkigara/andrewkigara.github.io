@@ -1,0 +1,191 @@
+---
+import { getEntry } from 'astro:content';
+import BuildingSection from '../components/BuildingSection.astro';
+import TitleSection from '../components/TitleSection.astro';
+import WrightBand from '../components/WrightBand.astro';
+import SheetLayout from '../layouts/SheetLayout.astro';
+
+const site = (await getEntry('site', 'site'))!.data;
+---
+<SheetLayout
+  sheet="A-201"
+  title="A-201 Academic · Andrew Kigara"
+  description="Andrew Kigara's education and work history, drawn as a building section: Drexel University is the foundation, each co-op is a floor, and Geico is the current level."
+  notes={[
+    'Floors are added as roles change. Nothing is demolished, only built on.',
+    'Floor heights are not to scale; each floor is one chapter.',
+  ]}
+>
+  <TitleSection
+    eyebrow="SHEET A-201 — ACADEMIC"
+    title="ACADEMIC"
+    lead="Drexel is the foundation, each co-op is a floor, and Geico is the level I'm on now. The roof is still going up."
+  />
+
+  <WrightBand sheet="A-201" />
+
+  <BuildingSection />
+
+  <div class="schedules">
+    <section class="panel" aria-labelledby="materials-h">
+      <h2 id="materials-h" class="panel__head">MATERIAL SCHEDULE</h2>
+      <table class="materials">
+        <thead>
+          <tr>
+            <th scope="col" class="c-mark">MARK</th>
+            <th scope="col" class="c-mat">MATERIAL</th>
+            <th scope="col">SPEC</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            site.materials.map((m) => (
+              <tr>
+                <td class="c-mark">{m.mark}</td>
+                <th scope="row">{m.material}</th>
+                <td>{m.spec}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel" aria-labelledby="inspections-h">
+      <h2 id="inspections-h" class="panel__head">INSPECTIONS PASSED</h2>
+      <ul class="inspections">
+        {
+          site.inspections.map((i) => (
+            <li>
+              <span class="check" aria-hidden="true">✓</span>
+              <span class="ins">
+                <span class="ins-name">{i.name}</span>
+                <span class="ins-meta">
+                  {i.issuer} · {i.year}
+                </span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</SheetLayout>
+
+<style>
+  .schedules {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 24px var(--side) 32px;
+  }
+  .panel__head {
+    margin: 0;
+    padding: 10px 12px;
+    font-weight: 400;
+  }
+  .materials {
+    width: 100%;
+    font-size: 12px;
+  }
+  .materials th,
+  .materials td {
+    padding: 9px 10px;
+    text-align: left;
+    font-weight: 400;
+    border-bottom: 1px solid var(--l18);
+  }
+  .materials thead th {
+    padding: 8px 10px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .materials tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+  /* 48px of content plus cell padding */
+  .c-mark {
+    width: 68px;
+  }
+  td.c-mark {
+    color: var(--muted);
+  }
+  .inspections {
+    margin: 0;
+    padding: 14px 12px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .inspections li {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .check {
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .ins {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .ins-name {
+    font-size: 13px;
+  }
+  .ins-meta {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  @media (min-width: 640px) {
+    .schedules {
+      gap: 32px;
+      padding: 28px var(--side) 44px;
+    }
+    .panel__head {
+      padding: 10px 14px;
+    }
+    .materials {
+      font-size: 14px;
+    }
+    .materials th,
+    .materials td {
+      padding: 10px 14px;
+      border-bottom-color: var(--l13);
+    }
+    .materials thead th {
+      padding: 8px 14px;
+      font-size: 10px;
+      border-bottom-color: var(--l18);
+    }
+    .c-mark {
+      width: 92px;
+    }
+    .c-mat {
+      width: calc(34% + 28px);
+    }
+    .inspections {
+      padding: 16px 14px;
+    }
+    .inspections li {
+      gap: 12px;
+    }
+    .ins-name {
+      font-size: 14px;
+    }
+    .ins-meta {
+      font-size: 11px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .schedules {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+  }
+</style>
