@@ -83,7 +83,13 @@ try {
         await page.evaluate(() => document.fonts.ready);
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if (overflow > 0) problems.push(`${p.path} @${width} ${mode}: scrolls sideways by ${overflow}px`);
-        await page.screenshot({ path: resolve(out, 'site', `${p.slug}-${width}-${mode}.png`), fullPage: true });
+        // Grow the viewport to the page instead of using fullPage: Chrome's full-page capture
+        // drops touch emulation, so phone shots would show the mouse wording on the cover.
+        const viewport = page.viewportSize();
+        const height = await page.evaluate(() => document.documentElement.scrollHeight);
+        await page.setViewportSize({ width, height });
+        await page.screenshot({ path: resolve(out, 'site', `${p.slug}-${width}-${mode}.png`) });
+        await page.setViewportSize(viewport);
       }
       await context.close();
     }
