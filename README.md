@@ -1,6 +1,6 @@
-# andrewkigara.github.io
+# andrewkigara.com
 
-Andrew Kigara's personal site, drawn as an architectural drawing set. Every page is a sheet with a
+Source for https://andrewkigara.com: Andrew Kigara's personal site, drawn as an architectural drawing set. Every page is a sheet with a
 sheet number, a title block and a structural grid:
 
 | Sheet | Route | Page |
@@ -123,7 +123,23 @@ so only one floor says YOU ARE HERE. Delete a co-op file to remove that floor.
 Pushing to `master` runs `.github/workflows/deploy.yml`, which builds the site and publishes `dist/`
 to GitHub Pages (Settings → Pages → Source: GitHub Actions). Pushes to `source` and pull requests run
 the same build as a check without deploying. Day to day: work on `source`, then merge into `master`
-to publish.
+to publish. Only `master` may deploy to the `github-pages` environment.
+
+### Custom domain
+
+The site is served at `andrewkigara.com` (set under Settings → Pages → Custom domain; with an Actions
+deploy no `CNAME` file is needed). `andrewkigara.github.io` and `www.andrewkigara.com` redirect to it.
+DNS is on Cloudflare, with every record set to **DNS only** (grey cloud) so GitHub can issue the HTTPS
+certificate and Cloudflare doesn't inject scripts the CSP would block:
+
+| Type | Name | Content |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+| CNAME | `www` | `andrewkigara.github.io` |
+| TXT | `_github-pages-challenge-andrewkigara` | GitHub's domain-verification code |
+
+Keep the TXT record: it proves the domain is yours, so nobody else can point a GitHub Pages site at it.
 
 ## Security and privacy
 
@@ -134,4 +150,6 @@ to publish.
   `style=""` attributes, which the policy would block.
 - `/.well-known/security.txt` is generated at build time with an expiry one year out.
   Set your email in `site.json` (`links.email.href`) to replace the `[address]` placeholder.
-- HTTPS is enforced by GitHub Pages, and `github.io` is on the HSTS preload list.
+- HTTPS is enforced by GitHub Pages. Real response headers (HSTS, `nosniff`, `Permissions-Policy`)
+  would need Cloudflare's proxy in front, with SSL set to Full (strict) and Response Header Transform
+  Rules; it is off for now.
