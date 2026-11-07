@@ -1,0 +1,331 @@
+---
+import { getEntry } from 'astro:content';
+import CurveField from '../components/CurveField.astro';
+import DimensionString from '../components/DimensionString.astro';
+import MarkupNote from '../components/MarkupNote.astro';
+import WrightBand from '../components/WrightBand.astro';
+import SheetLayout from '../layouts/SheetLayout.astro';
+import { SHEETS } from '../lib/sheets';
+
+const site = (await getEntry('site', 'site'))!.data;
+const revisions = site.revisions.map((r) => `${r.rev} · ${r.date} · ${r.note}`);
+const cards = SHEETS.filter((s) => s.no !== 'A-000');
+---
+<SheetLayout
+  sheet="A-000"
+  title="Andrew Kigara · A-000 Cover"
+  description="Andrew Kigara is a software engineer at Geico, a Drexel University graduate based in Maryland, working on AI and cybersecurity. This site is drawn as an architectural drawing set."
+  notesLabel="REVISIONS"
+  notes={revisions}
+>
+  <section class="hero" data-curve-hero aria-labelledby="cover-name">
+    <CurveField />
+    <div class="hero-body">
+      <p class="eyebrow">SHEET A-000 — COVER</p>
+      <h1 id="cover-name" class="cover-name">
+        <span>{site.name.split(' ')[0]}</span>
+        <span>{site.name.split(' ').slice(1).join(' ')}</span>
+      </h1>
+      <DimensionString
+        label={`${site.role.toUpperCase()} · ${site.employer.toUpperCase()}`}
+        size="lg"
+        class="hero-dim"
+      />
+      <p class="hero-note">
+        <MarkupNote tilt={3} size="lg">
+          <span class="v v-pointer">the lines bend toward your cursor →</span>
+          <span class="v v-touch">drag across the lines →</span>
+          <span class="v v-static">the lines pinch at node 01 →</span>
+        </MarkupNote>
+      </p>
+      <div class="notes">
+        <h2 class="notes-label">GENERAL NOTES</h2>
+        <ol class="notes-list">
+          {site.coverNotes.map((n) => <li>{n}</li>)}
+        </ol>
+      </div>
+      <div class="actions">
+        <a class="btn btn--primary" href="#index">INDEX OF SHEETS ↓</a>
+        <a class="btn btn--secondary btn--veil" href="/profile#contact">CONTACT</a>
+      </div>
+    </div>
+  </section>
+
+  <WrightBand sheet="A-000" />
+
+  <section id="index" class="idx" aria-labelledby="idx-title">
+    <div class="idx-head">
+      <h2 id="idx-title" class="idx-title">INDEX OF SHEETS</h2>
+      <p class="idx-scale"><span class="not-phone">SCALE 1:1 · </span>ALL DIMENSIONS IN YEARS</p>
+    </div>
+    <ul class="idx-grid">
+      {
+        cards.map((s) => (
+          <li>
+            <a class="card" href={s.href}>
+              <span class="card-no">{s.no}</span>
+              <span class="card-meta">
+                <span class="card-name">{s.name}</span>
+                <span class="card-desc not-phone">{s.description}</span>
+                <span class="card-desc phone-only">{s.short}</span>
+              </span>
+              <span class="card-cta not-phone">OPEN SHEET →</span>
+              <span class="card-arrow phone-only" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</SheetLayout>
+
+<style>
+  .hero {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-bottom: 1px solid var(--l18);
+    touch-action: pan-y pinch-zoom;
+  }
+  .hero-body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 32px var(--side) 36px;
+  }
+  .cover-name {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 6.4vw, 92px);
+    line-height: 1.06;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .cover-name span {
+    display: block;
+  }
+  .hero-note {
+    margin-left: auto;
+  }
+  /* Which wording the markup note uses depends on how the field can react. */
+  .v {
+    display: none;
+  }
+  .v-static {
+    display: inline;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .v-static {
+      display: none;
+    }
+    :global(.js) .v-touch {
+      display: inline;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      :global(.js) .v-touch {
+        display: none;
+      }
+      :global(.js) .v-pointer {
+        display: inline;
+      }
+    }
+  }
+  .notes {
+    border: 1px solid var(--l32);
+    background: var(--b86);
+    padding: 16px 18px;
+  }
+  .notes-label {
+    margin: 0 0 10px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+  }
+  .notes-list {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .actions .btn {
+    min-height: 48px;
+    font-size: 12px;
+  }
+  .btn--veil {
+    background: var(--b86);
+  }
+
+  .idx {
+    position: relative;
+    z-index: 1;
+    padding: 28px var(--side);
+  }
+  .idx-head {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--l35);
+  }
+  .idx-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    letter-spacing: 0.12em;
+  }
+  .idx-scale {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .idx-grid {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr) 16px;
+    align-items: center;
+    gap: 10px;
+    min-height: 100px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--l18);
+    text-decoration: none;
+  }
+  .card-no {
+    font-family: var(--font-display);
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+  .card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .card-name {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .card-desc {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .card-arrow {
+    color: var(--accent);
+  }
+
+  @media (min-width: 640px) {
+    .hero-body {
+      gap: 26px;
+      max-width: 568px; /* 520px of content */
+      padding: 44px var(--side) 44px;
+    }
+    .notes {
+      max-width: 516px;
+      padding: 18px 22px;
+    }
+    .notes-label {
+      margin-bottom: 12px;
+      font-size: 11px;
+    }
+    .notes-list {
+      padding-left: 22px;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .actions .btn {
+      min-height: 44px;
+      font-size: 13px;
+    }
+    .btn--veil {
+      background: transparent;
+    }
+    .idx {
+      padding: 36px var(--side);
+    }
+    .idx-head {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px 24px;
+      padding-bottom: 0;
+      margin-bottom: 18px;
+      border-bottom: 0;
+    }
+    .idx-title {
+      font-size: 18px;
+    }
+    .idx-scale {
+      font-size: 11px;
+    }
+    .idx-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--l35);
+      border-left: 1px solid var(--l18);
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      height: 100%;
+      min-height: 208px;
+      padding: 20px;
+      border-right: 1px solid var(--l18);
+      background: var(--b90);
+    }
+    .card-meta {
+      display: contents;
+    }
+    .card-no {
+      font-size: 22px;
+      letter-spacing: 0.06em;
+    }
+    .card-name {
+      font-size: 12px;
+    }
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .card-cta {
+      margin-top: auto;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+    }
+  }
+  @media (min-width: 1024px) {
+    .hero-body {
+      max-width: 660px;
+      padding: 56px var(--side) 52px;
+    }
+    .notes-list {
+      font-size: 14px;
+    }
+    .idx-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+  }
+  @media (min-width: 640px) {
+    .hero-body :global(.hero-dim) {
+      max-width: 560px;
+    }
+  }
+</style>
