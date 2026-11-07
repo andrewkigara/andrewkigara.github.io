@@ -4,3 +4,4 @@ dist/
 .astro/
 .env
 shots/
+BUILD_PROMPT.md

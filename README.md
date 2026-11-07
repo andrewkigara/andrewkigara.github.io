@@ -12,8 +12,8 @@ sheet number, a title block and a structural grid:
 | A-401 | `/album` | Photo album pinned to a key plan |
 
 Built with [Astro](https://astro.build) (static output, TypeScript, no UI framework), self-hosted
-fonts and plain CSS. `BUILD_PROMPT.md` is the full spec; `design-reference/` holds the mockups
-(reference only, never imported).
+fonts and plain CSS. `design-reference/` holds the mockups (reference only, never imported). The
+build spec, `BUILD_PROMPT.md`, is kept locally and is git-ignored.
 
 ## Run it locally
 
