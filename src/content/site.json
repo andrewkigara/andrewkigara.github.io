@@ -1,0 +1,51 @@
+{
+  "name": "Andrew Kigara",
+  "shortName": "A. Kigara",
+  "role": "Software engineer",
+  "employer": "Geico",
+  "base": "Maryland, US",
+  "rev": "01",
+  "links": {
+    "github": { "label": "@andrewkigara", "href": "https://github.com/andrewkigara" },
+    "linkedin": { "label": "[/in/handle]", "href": null },
+    "email": { "label": "[address]", "href": null },
+    "resume": { "label": "PDF", "href": null }
+  },
+  "coverNotes": [
+    "Software engineer at Geico.",
+    "Graduate of Drexel University.",
+    "Based in Maryland.",
+    "Working interests: AI and cybersecurity."
+  ],
+  "narrative": "I'm a software engineer at Geico, where I work on [what you can share about your team or domain]. I studied [major] at Drexel University, where the co-op program put me in [industries or roles] before I graduated. Outside work I'm usually deep in AI, security, or reading about architecture.",
+  "specifications": [
+    { "label": "ROLE", "value": "Software engineer, Geico" },
+    { "label": "EDUCATION", "value": "Drexel University · [Degree] · [Year]" },
+    { "label": "BASE", "value": "Maryland, US" },
+    { "label": "FOCUS", "value": "AI · Cybersecurity" },
+    { "label": "INFLUENCES", "value": "Frank Lloyd Wright · Zaha Hadid" }
+  ],
+  "currentlyOnSite": {
+    "date": "2026.11",
+    "items": [
+      { "label": "BUILDING", "value": "This site, as a drawing set" },
+      { "label": "LEARNING", "value": "[Topic]" },
+      { "label": "READING", "value": "[Book]" }
+    ]
+  },
+  "materials": [
+    { "mark": "M-01", "material": "Languages", "spec": "[Languages]" },
+    { "mark": "M-02", "material": "Frameworks", "spec": "[Frameworks]" },
+    { "mark": "M-03", "material": "Infrastructure", "spec": "[Cloud, CI/CD, containers]" },
+    { "mark": "M-04", "material": "Security", "spec": "[Tools, practices]" },
+    { "mark": "M-05", "material": "AI / ML", "spec": "[Models, libraries]" }
+  ],
+  "inspections": [
+    { "name": "[Certification]", "issuer": "[Issuer]", "year": "[Year]" },
+    { "name": "[Award or honor]", "issuer": "Drexel University", "year": "[Year]" },
+    { "name": "[Certification]", "issuer": "[Issuer]", "year": "[Year]" }
+  ],
+  "revisions": [
+    { "rev": "R01", "date": "2026.11.07", "note": "Concept mockup, cover sheet." }
+  ]
+}
