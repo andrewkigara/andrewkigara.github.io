@@ -1,0 +1,134 @@
+---
+/** A native <dialog> styled as a sheet, with a mini title block. */
+---
+<dialog class="lb" aria-labelledby="lb-cap" data-lightbox>
+  <div class="lb-sheet">
+    <div class="lb-view" data-lb-view></div>
+    <div class="lb-tb">
+      <div class="lb-cell">
+        <span class="k">FRAME NO.</span>
+        <span class="v lb-no" data-lb-no></span>
+      </div>
+      <div class="lb-cell lb-cell--wide">
+        <span class="k">CAPTION</span>
+        <span class="v" id="lb-cap" data-lb-cap></span>
+        <span class="v2" data-lb-sub></span>
+      </div>
+      <div class="lb-cell lb-cell--sheet">
+        <span class="k">SHEET</span>
+        <span class="v">A-401</span>
+      </div>
+      <form method="dialog" class="lb-cell lb-cell--close">
+        <button class="lb-close" type="submit">CLOSE <span aria-hidden="true">✕</span></button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .lb {
+    width: min(1200px, calc(100vw - 2 * var(--page-pad)));
+    max-width: none;
+    max-height: calc(100dvh - 2 * var(--page-pad));
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--l55);
+    background: var(--bg);
+    color: var(--fg);
+  }
+  .lb::backdrop {
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+  }
+  .lb-sheet {
+    display: flex;
+    flex-direction: column;
+  }
+  .lb-view {
+    position: relative;
+    background: var(--fill);
+    border-bottom: 1px solid var(--l35);
+  }
+  .lb-view :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 2 * var(--page-pad) - 140px);
+    object-fit: contain;
+  }
+  .lb-view :global([data-placeholder]) {
+    position: relative;
+    display: flex;
+    aspect-ratio: 3 / 2;
+    max-height: calc(100dvh - 2 * var(--page-pad) - 140px);
+    margin: 0 auto;
+  }
+  .lb-tb {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1px;
+    background: var(--l18);
+  }
+  .lb-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    background: var(--bg);
+  }
+  .lb-cell--wide {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+  .lb-cell--sheet {
+    display: none;
+  }
+  .lb-cell--close {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+  }
+  .k {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .v {
+    font-size: 13px;
+  }
+  .v2 {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .lb-no {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--accent);
+  }
+  .lb-close {
+    min-height: 44px;
+    height: 100%;
+    padding: 0 18px;
+    border: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+  .lb-close:focus-visible {
+    outline-offset: -3px;
+  }
+  @media (min-width: 640px) {
+    .lb-tb {
+      grid-template-columns: 120px minmax(0, 1fr) 120px auto;
+    }
+    .lb-cell--wide {
+      grid-column: auto;
+      order: 0;
+    }
+    .lb-cell--sheet {
+      display: flex;
+    }
+  }
+</style>

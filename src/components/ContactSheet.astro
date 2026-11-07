@@ -1,0 +1,250 @@
+---
+/**
+ * One collection's contact sheet. Each frame opens in the lightbox; until a
+ * photo exists it shows a hatched placeholder (45° field, −45° archive).
+ */
+import { Picture, getImage } from 'astro:assets';
+import { COLLECTIONS, caption, frameId, subcaption, type CollectionKey, type Frame } from '../lib/album';
+import { pad2 } from '../lib/sheets';
+
+interface Props {
+  collection: CollectionKey;
+  frames: Frame[];
+}
+const { collection, frames } = Astro.props;
+const meta = COLLECTIONS.find((c) => c.key === collection)!;
+const WIDTHS = [320, 640, 960, 1440, 2048];
+const SIZES = '(min-width: 1024px) 280px, (min-width: 640px) calc(50vw - 235px), calc(50vw - 35px)';
+
+const items = await Promise.all(
+  frames.map(async (f, i) => {
+    if (!f.image) return { f, i };
+    const widths = WIDTHS.filter((w) => w <= f.image!.width);
+    if (!widths.length) widths.push(f.image.width);
+    const full = await getImage({ src: f.image, width: Math.min(2048, f.image.width), format: 'webp' });
+    const blur = await getImage({ src: f.image, width: 24, format: 'webp', quality: 40 });
+    return { f, i, widths, full: full.src, blur: blur.src };
+  }),
+);
+---
+<section class="cs" id={collection} data-collection={collection} aria-labelledby={`cs-${collection}-h`}>
+  <div class="cs-head">
+    <h2 id={`cs-${collection}-h`} class="cs-h">CONTACT SHEET — {meta.name}</h2>
+    <span class="cs-count">{pad2(frames.length)}<span class="not-phone"> FRAMES</span></span>
+  </div>
+  <ul class="cs-grid">
+    {
+      items.map(({ f, i, widths, full, blur }) => (
+        <li>
+          <figure class="frame" id={frameId(f)} data-frame={frameId(f)}>
+            {f.image ? (
+              <a
+                class="frame-btn"
+                href={full}
+                data-open-frame
+                aria-label={`Open frame ${pad2(f.frame)}: ${f.title}, ${f.year}`}
+              >
+                <img class="frame-blur" src={blur} alt="" aria-hidden="true" width="24" height="16" />
+                <Picture
+                  class="frame-img"
+                  src={f.image}
+                  alt={f.alt}
+                  formats={['avif', 'webp']}
+                  widths={widths}
+                  sizes={SIZES}
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
+                  decoding="async"
+                />
+                <span class="badge" aria-hidden="true">{f.frame}</span>
+              </a>
+            ) : (
+              <button
+                class="frame-btn"
+                type="button"
+                data-open-frame
+                aria-label={`Open frame ${pad2(f.frame)}: ${f.title}, ${f.year} (photo to come)`}
+              >
+                <span class="ph" data-placeholder>
+                  <span class="chip">[PHOTO {pad2(f.frame)}]</span>
+                </span>
+                <span class="badge" aria-hidden="true">{f.frame}</span>
+              </button>
+            )}
+            <figcaption class="cap">
+              <span class="c1">{caption(f)}</span>
+              <span class="c2">{subcaption(f)}</span>
+            </figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .cs {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    container: cs / inline-size;
+    scroll-margin-top: 16px;
+  }
+  .cs-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--l40);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  .cs-h {
+    font-size: inherit;
+  }
+  .cs-count {
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .cs-grid {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 12px;
+  }
+  .frame {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    scroll-margin-top: 24px;
+  }
+  .frame-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--l50);
+    background: var(--fill);
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .frame-btn:focus-visible,
+  .frame.is-hl .frame-btn,
+  .frame-btn:hover {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .frame-blur,
+  .frame-btn :global(.frame-img),
+  .frame-btn :global(picture) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .frame-blur {
+    filter: blur(10px);
+    transform: scale(1.15);
+  }
+  .ph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: repeating-linear-gradient(45deg, var(--l10) 0 1px, transparent 1px 9px);
+  }
+  [data-collection='archive'] .ph {
+    background-image: repeating-linear-gradient(-45deg, var(--l10) 0 1px, transparent 1px 9px);
+  }
+  .chip {
+    background: var(--bg);
+    padding: 2px 5px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+  .badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    background: var(--bg);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cap {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .c1 {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .c2 {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  /* Collection switch (JavaScript): one sheet at a time. */
+  :global(.js:not([data-c='archive'])) .cs[data-collection='archive'],
+  :global(.js[data-c='archive']) .cs[data-collection='field'] {
+    display: none;
+  }
+  @media (min-width: 640px) {
+    .cs {
+      gap: 18px;
+    }
+    .cs-head {
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+    }
+    .cs-grid {
+      gap: 22px 16px;
+    }
+    .ph {
+      background-image: repeating-linear-gradient(45deg, var(--l10) 0 1px, transparent 1px 10px);
+    }
+    [data-collection='archive'] .ph {
+      background-image: repeating-linear-gradient(-45deg, var(--l10) 0 1px, transparent 1px 10px);
+    }
+    .chip {
+      padding: 2px 6px;
+      font-size: 11px;
+    }
+    .badge {
+      top: 8px;
+      left: 8px;
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+    }
+    .c1 {
+      font-size: 13px;
+    }
+    .c2 {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+  }
+  @container cs (min-width: 600px) {
+    .cs-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+</style>
