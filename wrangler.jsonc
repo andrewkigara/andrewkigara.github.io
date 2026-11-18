@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Prod: built from `master` and served at andrewkigara.com.
+  "name": "andrewkigara",
+  "compatibility_date": "2026-11-18",
+  "assets": {
+    "directory": "./dist",
+    // /profile serves profile.html; /profile.html and /profile/ redirect to /profile.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // Until the domain moves over, prod is checked on its workers.dev address.
+  "workers_dev": true,
+  "preview_urls": false,
+  "env": {
+    // Dev: built from `source` and served at dev.andrewkigara.com.
+    "dev": {
+      "routes": [{ "pattern": "dev.andrewkigara.com", "custom_domain": true }],
+      "workers_dev": false,
+      "preview_urls": false
+    }
+  }
+}

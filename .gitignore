@@ -5,3 +5,4 @@ dist/
 .env
 shots/
 BUILD_PROMPT.md
+.wrangler/

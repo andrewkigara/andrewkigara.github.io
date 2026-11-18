@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import headers from './integrations/headers.mjs';
 import metaCsp from './integrations/meta-csp.mjs';
 
 // https://docs.astro.build/en/reference/configuration-reference/
@@ -7,7 +8,7 @@ export default defineConfig({
   site: 'https://andrewkigara.com',
   output: 'static',
   // /profile is served from profile.html, so links need no trailing slash
-  // and GitHub Pages never has to redirect.
+  // and the host never has to redirect.
   trailingSlash: 'never',
   build: { format: 'file' },
   devToolbar: { enabled: false },
@@ -23,5 +24,6 @@ export default defineConfig({
         "form-action 'self'",
       ],
     }),
+    headers(),
   ],
 });
